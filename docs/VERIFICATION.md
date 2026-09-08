@@ -1,23 +1,27 @@
-# Phase 2 verification
+# Phase 3 verification
 
-Verified application commit: 4f55299991528c38d0c89e9220f2f9253e896b10.
+Verified application commit: 70adedaf4f38a3f7229381760339203b40f9993e.
 
-- [GitHub Actions](https://github.com/292akhil2929-cmyk/pharmagenome/actions/runs/34201910098): success.
-- Backend: Ruff passed; 39 tests passed against PostgreSQL 17; backend Docker image built.
-- Frontend: TypeScript and production build passed; 7 Playwright tests passed.
-- Ingestion tests cover field validation, exclusions, duplicate conflicts, missing VAF, incomplete cohorts, pinned real snapshot replay, checksum tampering, manifest scope, transactional rollback, idempotency, snapshot history and production fixture rejection.
-- Browser cases cover empty/unavailable/recovery, synthetic populated states, provenance, JSON downloads and download failure/retry, dark-mode persistence, desktop/mobile overflow, keyboard drawer focus/Escape/restore.
-- Production frontend and backend reached Vercel Ready. API readiness reports 002_ingestion.
-- Anonymous live system response: 566 samples, 506 distinct variants, 10 genes, 0 drugs, 0 pathways.
-- Live import report: 966 downloaded = 839 accepted + 127 excluded + 0 invalid + 0 duplicate observations. All 127 exclusions are non-SNV.
-- Frontend report proxy returned HTTP 200, JSON provenance and the expected attachment header; raw snapshot link points to immutable import commit 678c250817dd7bc024671e79d057578d399fa014.
-- Anonymous HTML and all eight referenced JS/CSS assets returned 200.
-- Live in-app browser confirmed actual populated cohort, provenance and dark mobile view. At 390px there was no page overflow; captured console error list was empty.
-- Independent finish review found no material frontend defects in source and 1440px/390px populated/provenance screenshots; its conditional CI requirement is satisfied by the successful run above.
+- [GitHub Actions run 34203642122](https://github.com/292akhil2929-cmyk/pharmagenome/actions/runs/34203642122): success.
+- Backend: Ruff passed, 56 tests passed with PostgreSQL 17; Docker image built.
+- Frontend: TypeScript and production build passed; 11 Playwright tests passed.
+- New backend coverage: distinct sample numerator, full and gene-specific eligible denominator, cohort versus variant filters, empty cohort null frequency, missing/discordant VAF, histogram endpoint 1.0, literal search, sorting, pagination, profile deduplication, snapshot isolation and invalid API parameters.
+- Pinned public snapshot was imported into an isolated test schema and queried through FastAPI. TP53 result: 267 / 566, 181 unique SNVs; pagination leaves summary unchanged. Tests roll back the isolated schema.
+- New browser coverage: genomic chart/table rendering, inline gene and variant details, explicit missing metadata, JSON exports, filters, pagination, no-match result, service failure/recovery, dedicated explorer navigation, mobile overflow and reduced-motion dark captures.
+- Independent finish review: ship; explicit filter labels and settled dark 1440px/390px screenshots confirmed. Scientific computation was verified separately from the fixture screenshots.
+
+## Live verification
+The live public API returned 566 eligible samples, 459 matching samples, 506 unique SNVs, 839 sample–variant observations and 10 affected genes. The TP53 query returned 267 matching samples, 181 unique variants and frequency 267/566.
+
+Live API checks confirmed no overlapping variant IDs between two consecutive TP53 pages, unchanged cohort denominator across those pages, 566 eligible samples retained for an empty variant search, and 40 coded samples on matrix page 2.
+
+Chrome verified the populated Genomics view, TP53 filter, 47.2% display with numerator and denominator, variant page 2, dedicated explorer navigation and mobile dark rendering. Settled mobile page width remained within the viewport; captured console error list was empty.
+
+JSON export download events passed in Chromium CI. The desktop browser tool's live download observer timed out, so a saved live browser download is not claimed. Live source data and calculation responses were independently inspected.
 
 ## Evidence boundaries
-CI screenshots use explicitly synthetic populated fixtures; live database counts were verified separately. Chrome connection timed out twice during this final pass, so live checks used the in-app browser. Its download-event observer timed out; the download interaction passed in Chromium CI and the live report endpoint/attachment response was independently verified. Do not describe this as a confirmed saved download in the in-app browser.
+Browser screenshots use explicitly synthetic test fixtures; they are layout/interaction evidence, not scientific data. Actual counts above come from the pinned public source snapshot and live/API integration checks.
 
-[Public source capture workflow](https://github.com/292akhil2929-cmyk/pharmagenome/actions/runs/34200468520) completed successfully. Raw bytes, manifest and reconciliation report are committed in backend/data/luad_snv. Production data is real public source data, not the browser fixtures.
+This release supports descriptive genomics only within the ten-gene GRCh37 SNV subset. It does not provide full gene metadata, clinical annotation, population frequency, inferential statistics, sequence algorithms, drug response, ML or AI explanations. All accepted SNVs are included; this is not necessarily cBioPortal's default consequence-filtered alteration query. See [methods](GENOMICS.md) and [source provenance](../DATA_SOURCES.md).
 
-This release implements ingestion and provenance, not genomic-frequency explorers, sequence algorithms, statistics, drug response, ML or AI explanation. Ten selected genes and SNVs are the explicit scope. No clinical validity is claimed. Full Docker Compose runtime remains untested end-to-end; its backend image and PostgreSQL integration checks passed.
+Full Docker Compose runtime is not verified end-to-end; PostgreSQL integration tests and the backend Docker build passed.

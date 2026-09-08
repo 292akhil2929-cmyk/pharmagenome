@@ -1,7 +1,7 @@
 # Architecture
 
-## Phase 2: implemented scope
-Next.js renders the public research workspace. Its server route proxies the read-only FastAPI system and dataset-report endpoints. FastAPI accesses PostgreSQL through parameterized psycopg queries. Dataset counts are live database counts, not sample fixture values. The schema prepares later analytical modules; those modules are not yet implemented.
+## Phase 3: implemented scope
+Next.js renders the public research workspace. Its server route proxies the read-only FastAPI system and dataset-report endpoints. FastAPI accesses PostgreSQL through parameterized psycopg queries. Dataset counts are live database counts, not sample fixture values. Descriptive genomic exploration is implemented; sequence, drug and inferential modules remain planned.
 
 ```mermaid
 flowchart LR
