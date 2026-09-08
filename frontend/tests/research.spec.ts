@@ -16,7 +16,7 @@ async function setup(page:Page){
 }
 async function open(page:Page,width=1440){if(width===390)await page.getByRole("button",{name:"Open navigation",exact:true}).click();await page.getByRole("button",{name:"Research associations",exact:true}).click();await expect(page.getByRole("heading",{name:"Drug research catalogue",exact:true})).toBeVisible();}
 for(const width of [1440,390])test("research evidence, navigation and responsive states "+width,async({page},testInfo)=>{
- await page.setViewportSize({width,height:1000});await setup(page);await open(page,width);
+ await page.setViewportSize({width,height:1000});await page.emulateMedia({reducedMotion:"reduce"});await setup(page);await open(page,width);
  await expect(page.locator(".research-source")).toContainText("Synthetic development fixture");
  await page.screenshot({path:testInfo.outputPath("research-"+width+".png"),fullPage:true});
  await page.locator(".research-drugs").getByRole("button",{name:"Synthetic compound",exact:true}).click();
