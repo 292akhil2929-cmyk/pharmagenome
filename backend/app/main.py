@@ -12,6 +12,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 from app.db import connection
+from app.explanation import router as explanation_router
 from app.genomics import router as genomics_router
 from app.modeling import router as modeling_router
 from app.research import router as research_router
@@ -20,7 +21,7 @@ from app.statistics import router as statistics_router
 
 logger = logging.getLogger("pharmagenome")
 logging.basicConfig(level=logging.INFO)
-app = FastAPI(title="PharmaGenome", version="0.7.0",
+app = FastAPI(title="PharmaGenome", version="0.8.0",
               description="Research analytics foundation. No medical advice.")
 origins = [x.strip() for x in os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",") if x.strip()]
 app.add_middleware(CORSMiddleware, allow_origins=origins,
@@ -28,6 +29,7 @@ app.add_middleware(CORSMiddleware, allow_origins=origins,
 
 TABLES = ["samples", "variants", "genes", "drugs", "pathways"]
 app.include_router(genomics_router)
+app.include_router(explanation_router)
 app.include_router(sequences_router)
 app.include_router(research_router)
 app.include_router(statistics_router)
@@ -116,12 +118,13 @@ def system():
                     ORDER BY started_at DESC LIMIT 1
                 ) r ON true ORDER BY d.retrieved_at DESC LIMIT 100
             """).fetchall()
-    return {"service": "PharmaGenome", "version": app.version, "phase": 7,
+    return {"service": "PharmaGenome", "version": app.version, "phase": 8,
             "checked_at": datetime.now(UTC), "database": state,
             "counts": counts, "datasets": datasets,
             "limitations": ["The current import covers a ten-gene GRCh37 SNV subset, not an exome-wide catalogue.",
                             "Indels and other variant types are excluded and counted separately.",
                             "NCI-60 drug-response modeling is cell-line-only and has no clinical interpretation.",
+                            "GPT-6 Astra explanation is optional and only summarizes application-computed evidence.",
                             "Research and education only; not medical advice."]}
 
 

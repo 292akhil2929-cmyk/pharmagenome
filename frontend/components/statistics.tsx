@@ -5,6 +5,7 @@ import {CartesianGrid,Line,LineChart,ResponsiveContainer,Scatter,ScatterChart,To
 import {Button} from "@/components/ui/button";
 import {Textarea} from "@/components/ui/textarea";
 import {Table,TableHeader,TableBody,TableRow,TableHead,TableCell} from "@/components/ui/table";
+import {ResearchExplanation} from "@/components/research-explanation";
 
 type Tab="measurements"|"contingency"|"enrichment";
 type Method="welch"|"mann_whitney"|"pearson"|"spearman"|"anova"|"kruskal";
@@ -34,6 +35,9 @@ function parseGroups(text:string){
   if(parts.length<2||parts.length>500)throw new Error("Each group needs 2–500 values.");
   return parts.map(value=>{if(!/^[+-]?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?$/i.test(value)||!Number.isFinite(Number(value))||Math.abs(Number(value))>1e12)throw new Error("Use finite numbers between −10¹² and 10¹². Missing values and text are not accepted.");return Number(value);});
  });
+}
+function explanationEvidence(result:Result){
+ return {method:result.method,method_version:result.method_version,dataset:result.dataset?{name:result.dataset.name,sha256:result.dataset.sha256,retrieved_at:result.dataset.retrieved_at,is_fixture:result.dataset.is_fixture}:null,parameters:result.parameters,sample_sizes:result.descriptive?.map(value=>value.n),statistic:result.statistic,p_value:result.p_value,effect:result.effect,confidence_interval:result.confidence_interval,null_hypothesis:result.null_hypothesis,alternative_hypothesis:result.alternative_hypothesis,assumptions:result.assumptions,limitations:result.limitations,interpretation:result.interpretation,enrichment:result.rows?{tested_pathways:result.tested_pathways,rejected_by:result.rejected_by,rejected_bh:result.rejected_bh,top_pathways:result.rows.slice(0,5).map(row=>({id:row.id,name:row.name,overlap:row.overlap,pathway_genes_in_universe:row.pathway_genes_in_universe,expected_overlap:row.expected_overlap,fold_enrichment:row.fold_enrichment,p_value:row.p_value,q_bh:row.q_bh,q_by:row.q_by,genes:row.genes}))}:null,provenance:{computed_at:result.computed_at,code_revision:result.code_revision,input_sha256:result.input_sha256,software:result.software}};
 }
 function save(result:Result){const url=URL.createObjectURL(new Blob([JSON.stringify({kind:"statistical_analysis",...result},null,2)],{type:"application/json"}));const a=document.createElement("a");a.href=url;a.download="pharmagenome-statistics.json";a.click();URL.revokeObjectURL(url);}
 
@@ -104,8 +108,9 @@ export function Statistics(){
  {busy&&<p role="status" className="sequence-pending">Computing the declared test and its assumptions…</p>}
  {error&&<section role="alert" className="panel statistics-error"><h2>Check the analysis request</h2><p>{error}</p><p>Edit the input or method, then run again.</p></section>}
  {result&&<>
- <div className="sequence-result-heading"><div><h2 ref={resultHeading} tabIndex={-1} className="stat-result-heading">Analysis result</h2><p>{result.method in methods?methods[result.method as Method].name:result.method==="fisher"?"Fisher exact":result.method==="chi_square"?"Chi-square":result.method} · method v{result.method_version}</p></div><Button variant="outline" onClick={()=>save(result)}><Download size={15}/>Export statistics JSON</Button></div>
+ <div className="sequence-result-heading"><div><h2 id="statistics-analysis-result" ref={resultHeading} tabIndex={-1} className="stat-result-heading">Analysis result</h2><p>{result.method in methods?methods[result.method as Method].name:result.method==="fisher"?"Fisher exact":result.method==="chi_square"?"Chi-square":result.method} · method v{result.method_version}</p></div><Button variant="outline" onClick={()=>save(result)}><Download size={15}/>Export statistics JSON</Button></div>
  <p className="statistics-interpretation">{result.interpretation}</p>
+ <ResearchExplanation key={result.input_sha256||(result.dataset?.sha256||"source")+"-"+result.computed_at} analysisType="statistical_analysis" evidence={explanationEvidence(result)} underlyingId="statistics-analysis-result"/>
  {result.rows?<><section className="inventory sequence-inventory" aria-label="Enrichment summary">{[["Universe",result.parameters.universe?.length+" genes"],["Selected",result.parameters.selected_genes?.length+" genes"],["Test family",result.tested_pathways+" pathways"],["BY q < 0.05",String(result.rejected_by)]].map(([label,value])=><div key={label}><span>{label}</span><strong>{value}</strong></div>)}</section>
  <section className="panel"><h2>Pathway tests · complete family</h2><p className="body-copy">Ranked by BY-adjusted q, then raw p. Overlap lists selected genes in each pathway; pathway size counts only genes in the declared universe. No pathways are removed before correction.</p>{result.rejected_by===0&&<p className="example-note">No pathway meets BY q &lt; 0.05. This does not demonstrate the absence of a biological relationship.</p>}
  <Table><TableHeader><TableRow>{["Pathway","Overlap / pathway size","Expected","Fold","Raw p","BH q","BY q · primary"].map(h=><TableHead key={h}>{h}</TableHead>)}</TableRow></TableHeader><TableBody>{result.rows.slice((page-1)*20,page*20).map(r=><TableRow key={r.id}><TableCell><a href={r.url} target="_blank" rel="noreferrer">{r.name}</a><small className="stat-pathway-id">{r.id} · {r.genes.join(", ")||"No selected genes"}</small></TableCell><TableCell>{r.overlap} / {r.pathway_genes_in_universe}</TableCell><TableCell>{num(r.expected_overlap)}</TableCell><TableCell>{num(r.fold_enrichment)}</TableCell><TableCell>{pval(r.p_value)}</TableCell><TableCell>{pval(r.q_bh)}</TableCell><TableCell>{pval(r.q_by)}</TableCell></TableRow>)}</TableBody></Table>

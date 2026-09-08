@@ -8,6 +8,7 @@ const enriched={...meta,method:"one-sided hypergeometric over-representation",da
 async function setup(page:Page,width=1440){
  await page.setViewportSize({width,height:1000});await page.emulateMedia({reducedMotion:"reduce"});
  await page.route("**/api/system",route=>route.fulfill({json:{version:"0.6.0",phase:6,checked_at:meta.computed_at,database:{status:"ready",schema_version:"004_research_associations"},counts:{samples:566,variants:506,genes:10,drugs:183,pathways:220},datasets:[],limitations:[]}}));
+ await page.route("**/api/research/explain/status",route=>route.fulfill({json:{available:false,model:"gpt-6-astra",provider:"OpenAI Responses API",policy:"Optional explanation only.",reason:"Server-side OpenAI API access is not configured."}}));
  await page.route("**/api/statistics/measurements",route=>route.fulfill({json:stats}));
  await page.route("**/api/statistics/options",route=>route.fulfill({json:options}));
  await page.route("**/api/statistics/enrichment",route=>route.fulfill({json:enriched}));
@@ -93,4 +94,25 @@ test("paired plot, source retry and empty selection",async({page},info)=>{
  await expect(page.getByRole("button",{name:"Test pathway enrichment"})).toBeEnabled();
  await page.getByLabel("EGFR",{exact:true}).uncheck();
  await expect(page.getByRole("button",{name:"Test pathway enrichment"})).toBeDisabled();
+});
+
+test("evidence-constrained explanation preserves the underlying result",async({page})=>{
+ await setup(page);
+ await page.unroute("**/api/research/explain/status");
+ await page.route("**/api/research/explain/status",route=>route.fulfill({json:{available:true,model:"gpt-6-astra",provider:"OpenAI Responses API",policy:"Optional explanation only.",reason:null}}));
+ await page.route("**/api/research/explain",async route=>{
+  const request=route.request().postDataJSON();
+  expect(request.analysis_type).toBe("statistical_analysis");
+  expect(request.evidence.inputs).toBeUndefined();
+  expect(request.evidence.p_value).toBe(stats.p_value);
+  await route.fulfill({json:{summary:{statement:"The Welch result reports p = 0.0170716812337826.",evidence_ids:["method","p_value"]},findings:[{statement:"The submitted statistic is -3.",evidence_ids:["statistic"]}],caveats:[{statement:"The fixture is not biological evidence.",evidence_ids:["limitations.0"]}],model:"gpt-6-astra",provider:"OpenAI Responses API",response_id:"resp_fixture",generated_at:meta.computed_at,evidence_sha256:"e".repeat(64),boundary:"Underlying analysis remains authoritative."}});
+ });
+ await page.getByRole("button",{name:"Load synthetic example"}).click();
+ await page.getByRole("button",{name:"Run statistical test"}).click();
+ await expect(page.getByRole("button",{name:"Explain this analysis"})).toBeVisible();
+ await page.getByRole("button",{name:"Explain this analysis"}).click();
+ await expect(page.getByText("The Welch result reports p = 0.0170716812337826.")).toBeVisible();
+ await expect(page.getByLabel("Supporting evidence keys").first()).toContainText("statistic");
+ await page.getByRole("button",{name:"View underlying analysis"}).click();
+ await expect(page.getByRole("heading",{name:"Analysis result",exact:true})).toBeFocused();
 });

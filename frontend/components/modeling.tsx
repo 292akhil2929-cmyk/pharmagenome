@@ -3,6 +3,7 @@ import {useEffect,useRef,useState} from "react";
 import {Activity,BrainCircuit,Database,Download,FlaskConical,LoaderCircle,Play,RefreshCw,ShieldCheck} from "lucide-react";
 import {Bar,BarChart,CartesianGrid,Cell,ComposedChart,Line,ReferenceLine,ResponsiveContainer,Scatter,Tooltip,XAxis,YAxis} from "recharts";
 import {Button} from "@/components/ui/button";
+import {ResearchExplanation} from "@/components/research-explanation";
 
 type Dataset={id:number;name:string;version:string;sha256:string;retrieved_at:string;source:string;url:string;manifest:{activity_metric:string;database_version:string;selection:string}};
 type Drug={id:string;name:string;mechanism:string;status:string};
@@ -13,6 +14,9 @@ type ModelResult={dataset:Dataset;drug:Drug;method:string;algorithm:string;featu
 
 const nice=(value:number)=>Math.abs(value)<.001?value.toExponential(2):value.toLocaleString(undefined,{maximumFractionDigits:3});
 async function json<T>(url:string,init?:RequestInit):Promise<T>{const response=await fetch(url,{cache:"no-store",...init});const body=await response.json();if(!response.ok)throw new Error(body.detail||"Request failed.");return body;}
+function modelEvidence(model:ModelResult){
+ return {dataset:{name:model.dataset.name,version:model.dataset.version,sha256:model.dataset.sha256,retrieved_at:model.dataset.retrieved_at,source:model.dataset.source},drug:model.drug,method:model.method,algorithm:model.algorithm,features:model.features,n:model.n,target_threshold:model.threshold,class_counts:model.class_counts,metrics:model.metrics,baseline_metrics:model.baseline_metrics,confusion_matrix:model.confusion_matrix,importance:model.importance.slice(0,8),parameters:model.parameters,software:model.software,computed_at:model.computed_at,code_revision:model.code_revision,input_sha256:model.input_sha256,interpretation:model.interpretation,limitations:model.limitations};
+}
 function download(name:string,data:unknown){const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));const a=document.createElement("a");a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);}
 
 export function Modeling(){
@@ -71,13 +75,14 @@ export function Modeling(){
   </section>}
 
   {model&&<section className="modeling-results" aria-label="Model evaluation results">
-   <div className="model-result-heading"><div><h2 ref={resultHeading} tabIndex={-1}>Evaluation ledger</h2><p>{model.method} · {model.n} measured cell lines · positive above z={nice(model.threshold)}</p></div><Button variant="outline" onClick={()=>download("pharmagenome-model-evaluation.json",model)}><Download size={15}/>Export complete JSON</Button></div>
+   <div className="model-result-heading"><div><h2 id="modeling-analysis-result" ref={resultHeading} tabIndex={-1}>Evaluation ledger</h2><p>{model.method} · {model.n} measured cell lines · positive above z={nice(model.threshold)}</p></div><Button variant="outline" onClick={()=>download("pharmagenome-model-evaluation.json",model)}><Download size={15}/>Export complete JSON</Button></div>
    <section className="metric-ledger">{metrics.map(([label,key])=><div key={key}><span>{label}</span><strong>{nice(model.metrics[key].mean)}</strong><small>± {nice(model.metrics[key].standard_deviation)} across folds<br/>prior baseline {nice(model.baseline_metrics[key].mean)}</small></div>)}</section>
    <div className="model-evidence-grid">
     <section className="panel"><h3>Held-out ROC curve</h3><p>Pooled predictions from all 15 test folds; each cell line appears once per repeat.</p><div className="roc-chart"><ResponsiveContainer width="100%" height="100%"><ComposedChart data={model.roc_curve}><CartesianGrid strokeDasharray="2 5"/><XAxis dataKey="false_positive_rate" domain={[0,1]} type="number"/><YAxis domain={[0,1]}/><Tooltip/><Line dataKey="true_positive_rate" stroke="var(--accent)" dot={false} strokeWidth={2}/><ReferenceLine segment={[{x:0,y:0},{x:1,y:1}]} strokeDasharray="4 4"/></ComposedChart></ResponsiveContainer></div></section>
     <section className="panel confusion-panel"><h3>Pooled confusion matrix</h3><p>Rows are actual class; columns are predicted at probability 0.5.</p><div className="confusion-grid" aria-label="Confusion matrix"><span/><b>Predicted lower</b><b>Predicted sensitive</b><b>Actual lower</b><strong>{model.confusion_matrix[0][0]}</strong><strong>{model.confusion_matrix[0][1]}</strong><b>Actual sensitive</b><strong>{model.confusion_matrix[1][0]}</strong><strong>{model.confusion_matrix[1][1]}</strong></div></section>
    </div>
    <section className="panel importance-panel"><h3>What changed held-out discrimination?</h3><p>Mean ROC-AUC decrease after permuting one feature inside each test fold. Negative values can occur through sampling noise.</p><div className="importance-chart"><ResponsiveContainer width="100%" height="100%"><BarChart data={model.importance.slice(0,8)} layout="vertical" margin={{left:24,right:30}}><CartesianGrid strokeDasharray="2 5" horizontal={false}/><XAxis type="number"/><YAxis dataKey="feature" type="category" width={112} tickFormatter={v=>String(v).replace("expression_","")}/><Tooltip formatter={v=>nice(Number(v))}/><Bar dataKey="mean_decrease_roc_auc" fill="var(--accent)" radius={[0,3,3,0]}/></BarChart></ResponsiveContainer></div></section>
+   <ResearchExplanation key={model.input_sha256} analysisType="drug_response_model" evidence={modelEvidence(model)} underlyingId="modeling-analysis-result"/>
    <section className="panel model-boundary"><ShieldCheck size={20}/><div><h3>Read this as internal panel performance</h3><p>{model.interpretation}</p><ul>{model.limitations.map(x=><li key={x}>{x}</li>)}</ul><code>input {model.input_sha256.slice(0,16)}… · revision {model.code_revision.slice(0,12)}</code></div></section>
   </section>}
  </div>;

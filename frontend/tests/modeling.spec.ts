@@ -11,6 +11,7 @@ const model={dataset,drug:drugs[0],method:"Regularized logistic regression",algo
 async function setup(page:Page,width=1440){
  await page.setViewportSize({width,height:1000});await page.emulateMedia({reducedMotion:"reduce"});
  await page.route("**/api/system",route=>route.fulfill({json:{version:"0.7.0",phase:7,checked_at:"2026-09-08T16:00:00Z",database:{status:"ready",schema_version:"005_drug_response_modeling"},counts:{samples:626,variants:506,genes:10,drugs:193,pathways:220},datasets:[],limitations:[]}}));
+ await page.route("**/api/research/explain/status",route=>route.fulfill({json:{available:false,model:"gpt-6-astra",provider:"OpenAI Responses API",policy:"Optional explanation only.",reason:"Server-side OpenAI API access is not configured."}}));
  await page.route("**/api/modeling/options",route=>route.fulfill({json:options}));
  await page.route("**/api/modeling/response*",route=>route.fulfill({json:comparison}));
  await page.route("**/api/modeling/evaluate",route=>route.fulfill({json:model}));
