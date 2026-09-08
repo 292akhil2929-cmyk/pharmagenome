@@ -13,8 +13,13 @@ function StatementRow({item,index}:{item:Statement;index:string}){
 }
 
 export function ResearchExplanation({analysisType,evidence,underlyingId}:Props){
- const [status,setStatus]=useState<Status|null>(null),[result,setResult]=useState<Explanation|null>(null),[error,setError]=useState(""),[busy,setBusy]=useState(false);
- useEffect(()=>{let active=true;fetch("/api/research/explain/status",{cache:"no-store"}).then(async response=>{const body=await response.json();if(active)setStatus(body);}).catch(()=>{if(active)setStatus({available:false,model:"gpt-6-astra",provider:"OpenAI Responses API",policy:"Optional explanation only.",reason:"Explanation status is unavailable."});});return()=>{active=false};},[]);
+ const [status,setStatus]=useState<Status|null>(null),[statusFailed,setStatusFailed]=useState(false),[result,setResult]=useState<Explanation|null>(null),[error,setError]=useState(""),[busy,setBusy]=useState(false);
+ async function checkStatus(){
+  setStatus(null);setStatusFailed(false);
+  try{const response=await fetch("/api/research/explain/status",{cache:"no-store"});const body=await response.json();setStatus(body);setStatusFailed(!response.ok||body.reason==="Explanation status is unavailable.");}
+  catch{setStatusFailed(true);setStatus({available:false,model:"gpt-6-astra",provider:"OpenAI Responses API",policy:"Optional explanation only.",reason:"Explanation status is unavailable."});}
+ }
+ useEffect(()=>{void checkStatus();},[]);
  async function explain(){
   setBusy(true);setError("");setResult(null);
   try{const response=await fetch("/api/research/explain",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({analysis_type:analysisType,evidence})});const body=await response.json();if(!response.ok)throw new Error(body.detail||"AI explanation unavailable.");setResult(body);}
@@ -25,7 +30,7 @@ export function ResearchExplanation({analysisType,evidence,underlyingId}:Props){
   <div className="assistant-rail" aria-hidden="true"><BrainCircuit size={21}/></div>
   <div className="assistant-body">
    <header><div><h2 id={"assistant-title-"+analysisType}>Read the result with its evidence attached.</h2></div><span className="assistant-model">{status?.model||"GPT-6 Astra"}</span></header>
-   {!status?<p role="status" className="assistant-status"><RefreshCw className="spin" size={15}/>Checking server-side model access…</p>:!status.available?<div className="assistant-unavailable"><LockKeyhole size={18}/><div><strong>Explanation unavailable</strong><p>{status.reason} The calculated result above remains complete and authoritative.</p></div></div>:!result?<div className="assistant-ready"><p>Send only the compact computed evidence shown in this result. Raw measurements and identifiers stay outside the explanation request.</p><Button onClick={explain} disabled={busy}>{busy?<RefreshCw className="spin" size={15}/>:<Sparkles size={15}/>} {busy?"Generating from evidence…":"Explain this analysis"}</Button></div>:<>
+   {!status?<p role="status" className="assistant-status"><RefreshCw className="spin" size={15}/>Checking server-side model access…</p>:!status.available?<div className="assistant-unavailable"><LockKeyhole size={18}/><div><strong>Explanation unavailable</strong><p>{status.reason} The calculated result above remains complete and authoritative.</p>{statusFailed&&<Button variant="outline" onClick={checkStatus}>Retry model status</Button>}</div></div>:!result?<div className="assistant-ready"><p>Send only the compact computed evidence shown in this result. Raw measurements and sample or person identifiers stay outside the explanation request; source names and provenance hashes are included.</p><Button onClick={explain} disabled={busy}>{busy?<RefreshCw className="spin" size={15}/>:<Sparkles size={15}/>} {busy?"Generating from evidence…":"Explain this analysis"}</Button></div>:<>
     <div className="assistant-summary"><span>Evidence-bound reading</span><p>{result.summary.statement}</p><div className="assistant-citations">{result.summary.evidence_ids.map(id=><code key={id}>{id}</code>)}</div></div>
     <div className="assistant-columns"><div><h3>Supported findings</h3><ol>{result.findings.map((item,index)=><StatementRow key={index} item={item} index={String(index+1).padStart(2,"0")}/>)}</ol></div><div><h3>Scope checks</h3><ol>{result.caveats.map((item,index)=><StatementRow key={index} item={item} index={"C"+(index+1)}/>)}</ol></div></div>
     <p className="assistant-provenance">Generated {new Date(result.generated_at).toISOString()} · {result.provider} · evidence <code>{result.evidence_sha256.slice(0,16)}…</code></p>

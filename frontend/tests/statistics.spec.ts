@@ -116,3 +116,16 @@ test("evidence-constrained explanation preserves the underlying result",async({p
  await page.getByRole("button",{name:"View underlying analysis"}).click();
  await expect(page.getByRole("heading",{name:"Analysis result",exact:true})).toBeFocused();
 });
+
+test("model status failure can be retried",async({page})=>{
+ await setup(page);
+ await page.unroute("**/api/research/explain/status");
+ let checks=0;
+ await page.route("**/api/research/explain/status",route=>{checks++;return route.fulfill({json:checks===1?{available:false,model:"gpt-6-astra",provider:"OpenAI Responses API",policy:"Optional explanation only.",reason:"Explanation status is unavailable."}:{available:true,model:"gpt-6-astra",provider:"OpenAI Responses API",policy:"Optional explanation only.",reason:null}});});
+ await page.getByRole("button",{name:"Load synthetic example"}).click();
+ await page.getByRole("button",{name:"Run statistical test"}).click();
+ await expect(page.getByRole("button",{name:"Retry model status"})).toBeVisible();
+ await page.getByRole("button",{name:"Retry model status"}).click();
+ await expect(page.getByRole("button",{name:"Explain this analysis"})).toBeVisible();
+ expect(checks).toBe(2);
+});
