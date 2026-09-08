@@ -40,9 +40,9 @@ for(const width of [1440,390]){
 }
 test("feature guard, reset and service error are recoverable",async({page})=>{
  await setup(page);
- for(const feature of features.slice(0,10))await page.getByLabel(feature.replace("expression_","").replace("_"," "),{exact:true}).uncheck();
+ for(const feature of features.slice(0,10)){const name=feature.replace("expression_","").replace("_"," ");await page.locator(".modeling-features label").filter({hasText:name}).getByRole("checkbox").uncheck();}
  await expect(page.getByRole("button",{name:"Run repeated cross-validation"})).toBeDisabled();
- await page.getByLabel("BRAF",{exact:true}).check();
+ await page.locator(".modeling-features label").filter({hasText:"BRAF"}).getByRole("checkbox").check();
  await expect(page.getByRole("button",{name:"Run repeated cross-validation"})).toBeEnabled();
  await page.unroute("**/api/modeling/evaluate");await page.route("**/api/modeling/evaluate",route=>route.fulfill({status:422,json:{detail:"At least 30 response measurements are required."}}));
  await page.getByRole("button",{name:"Run repeated cross-validation"}).click();
