@@ -18,9 +18,13 @@ def schema():
 
 
 def test_migration_is_idempotent():
+    with connection() as conn:
+        before = conn.execute("SELECT version,checksum FROM schema_migrations ORDER BY version").fetchall()
     migrate()
     with connection() as conn:
-        assert conn.execute("SELECT count(*) AS n FROM schema_migrations").fetchone()["n"] == 3
+        after = conn.execute("SELECT version,checksum FROM schema_migrations ORDER BY version").fetchall()
+    assert before == after
+    assert any(row["version"] == "004_research_associations" for row in after)
 
 
 def test_readiness_and_empty_counts():

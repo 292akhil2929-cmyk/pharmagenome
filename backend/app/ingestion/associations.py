@@ -76,7 +76,9 @@ def capture(root):
                 "license": "Open Targets CC0 1.0; underlying source attribution retained.",
                 "license_url": "https://platform-docs.opentargets.org/licence"}
     (root / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
-    return replay(root)
+    result = replay(root)
+    (root / "quality-report.json").write_text(json.dumps(result[1]["report"], indent=2) + "\n", encoding="utf-8")
+    return result
 
 
 def replay(root=ROOT):
@@ -95,7 +97,6 @@ def replay(root=ROOT):
             raise ValueError("Research raw checksum mismatch: " + name)
         payload[name] = json.loads(raw)
     data = normalize(payload)
-    (root / "quality-report.json").write_text(json.dumps(data["report"], indent=2) + "\n", encoding="utf-8")
     return manifest, data
 
 
