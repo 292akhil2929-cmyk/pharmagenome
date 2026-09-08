@@ -1,18 +1,23 @@
-# Phase 1 verification
+# Phase 2 verification
 
-Verified application commit: ad64f9dbe4f3d0f7b0a1389a6695290199c53c03.
+Verified application commit: 4f55299991528c38d0c89e9220f2f9253e896b10.
 
-- GitHub Actions: https://github.com/292akhil2929-cmyk/pharmagenome/actions/runs/34199020989 — success.
-- Python: lint passed, 12 tests passed against PostgreSQL 17; backend Docker image built.
-- Frontend: TypeScript and production build passed; 5 Playwright tests passed.
-- Browser cases: empty ready database, unavailable inventory and recovery, source/architecture navigation, JSON download, theme persistence, 1440px/390px layout, mobile inert/focus trap/Escape/restore.
-- Vercel production frontend and FastAPI backend reached Ready.
-- Anonymous GET /api/health and /api/ready returned 200. Readiness reported schema_version 001_foundation.
-- Anonymous API /api/system and frontend /api/system returned a ready database and five zero inventory counts.
-- All eight referenced JS/CSS assets returned 200 without authentication.
-- Live Chrome: source and architecture views, light/dark themes, responsive mobile navigation and Escape focus restoration checked.
-- Independent finish review: both material findings scored resolved; ship Phase 1.
+- [GitHub Actions](https://github.com/292akhil2929-cmyk/pharmagenome/actions/runs/34201910098): success.
+- Backend: Ruff passed; 39 tests passed against PostgreSQL 17; backend Docker image built.
+- Frontend: TypeScript and production build passed; 7 Playwright tests passed.
+- Ingestion tests cover field validation, exclusions, duplicate conflicts, missing VAF, incomplete cohorts, pinned real snapshot replay, checksum tampering, manifest scope, transactional rollback, idempotency, snapshot history and production fixture rejection.
+- Browser cases cover empty/unavailable/recovery, synthetic populated states, provenance, JSON downloads and download failure/retry, dark-mode persistence, desktop/mobile overflow, keyboard drawer focus/Escape/restore.
+- Production frontend and backend reached Vercel Ready. API readiness reports 002_ingestion.
+- Anonymous live system response: 566 samples, 506 distinct variants, 10 genes, 0 drugs, 0 pathways.
+- Live import report: 966 downloaded = 839 accepted + 127 excluded + 0 invalid + 0 duplicate observations. All 127 exclusions are non-SNV.
+- Frontend report proxy returned HTTP 200, JSON provenance and the expected attachment header; raw snapshot link points to immutable import commit 678c250817dd7bc024671e79d057578d399fa014.
+- Anonymous HTML and all eight referenced JS/CSS assets returned 200.
+- Live in-app browser confirmed actual populated cohort, provenance and dark mobile view. At 390px there was no page overflow; captured console error list was empty.
+- Independent finish review found no material frontend defects in source and 1440px/390px populated/provenance screenshots; its conditional CI requirement is satisfied by the successful run above.
 
-The CI browser screenshots use an explicit empty-database fixture. They demonstrate layout, not scientific evidence. Live PostgreSQL is also empty because Phase 2 ingestion has not started.
+## Evidence boundaries
+CI screenshots use explicitly synthetic populated fixtures; live database counts were verified separately. Chrome connection timed out twice during this final pass, so live checks used the in-app browser. Its download-event observer timed out; the download interaction passed in Chromium CI and the live report endpoint/attachment response was independently verified. Do not describe this as a confirmed saved download in the in-app browser.
 
-Limits: no claim of a completed analytical product; no dataset ingestion, sequence analysis, statistics, ML, drug response or AI explanations delivered in Phase 1. Full Docker Compose runtime was not exercised end-to-end; the backend image built and PostgreSQL integration tests ran in CI.
+[Public source capture workflow](https://github.com/292akhil2929-cmyk/pharmagenome/actions/runs/34200468520) completed successfully. Raw bytes, manifest and reconciliation report are committed in backend/data/luad_snv. Production data is real public source data, not the browser fixtures.
+
+This release implements ingestion and provenance, not genomic-frequency explorers, sequence algorithms, statistics, drug response, ML or AI explanation. Ten selected genes and SNVs are the explicit scope. No clinical validity is claimed. Full Docker Compose runtime remains untested end-to-end; its backend image and PostgreSQL integration checks passed.
