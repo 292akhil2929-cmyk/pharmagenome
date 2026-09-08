@@ -158,3 +158,13 @@ def test_source_enrichment_family_and_snapshot_provenance(monkeypatch):
     assert body["parameters"]["selected_genes"] == ["EGFR"]
     assert client.post("/api/statistics/enrichment", json={"genes": ["OUTSIDE"]}).status_code == 422
     assert client.post("/api/statistics/enrichment", json={"genes": ["EGFR"], "dataset_id": 99999999}).status_code == 404
+
+
+def test_production_and_ci_dependency_manifests_agree():
+    import tomllib
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[1]
+    declared = tomllib.loads((root / "pyproject.toml").read_text())["project"]["dependencies"]
+    requirements = [line.strip() for line in (root / "requirements.txt").read_text().splitlines()
+                    if line.strip() and not line.startswith("#")]
+    assert set(declared) == set(requirements)
