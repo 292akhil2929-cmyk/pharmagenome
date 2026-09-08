@@ -23,6 +23,11 @@ test("API error remains unavailable and can recover",async({page})=>{
  await page.goto("/");
  await expect(page.getByRole("status")).toContainText("API unavailable");
  await expect(page.getByRole("button",{name:"Export system snapshot"})).toBeDisabled();
+ await expect(page.getByRole("heading",{name:"Collection unavailable."})).toBeVisible();
+ await expect(page.getByRole("heading",{name:"No datasets imported yet."})).toHaveCount(0);
+ await page.getByRole("button",{name:"Data sources",exact:true}).click();
+ await expect(page.getByText("Imported dataset inventory unavailable.")).toBeVisible();
+ await expect(page.getByText(/Unknown registered versions/)).toBeVisible();
  await page.unroute("**/api/system");
  await page.route("**/api/system",route=>route.fulfill({json:snapshot}));
  await page.getByRole("button",{name:"Refresh connection"}).click();
@@ -43,3 +48,21 @@ for(const width of [1440,390]){
   }
  });
 }
+
+test("mobile drawer handles keyboard focus and Escape",async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.route("**/api/system",route=>route.fulfill({json:snapshot}));
+ await page.goto("/");
+ await expect(page.locator("#research-navigation")).toHaveAttribute("inert","");
+ const trigger=page.getByRole("button",{name:"Open navigation"});
+ await trigger.click();
+ await expect(page.getByRole("dialog")).toBeVisible();
+ await expect(page.locator(".mobile-menu")).toHaveAttribute("aria-expanded","true");
+ await page.keyboard.press("Shift+Tab");
+ await expect(page.getByRole("link",{name:"Source code",exact:true})).toBeFocused();
+ await page.keyboard.press("Tab");
+ await expect(page.locator("#research-navigation .brand")).toBeFocused();
+ await page.keyboard.press("Escape");
+ await expect(page.locator("#research-navigation")).toHaveAttribute("inert","");
+ await expect(page.getByRole("button",{name:"Open navigation"})).toBeFocused();
+});
