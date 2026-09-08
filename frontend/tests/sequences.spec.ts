@@ -50,7 +50,7 @@ test("file input, validation, retry and keyboard tabs",async({page})=>{
  await page.unroute("**/api/sequences/statistics");
  await page.route("**/api/sequences/statistics",route=>route.fulfill({status:422,json:{detail:"DNA must contain only A, C, G, T or N."}}));
  await page.getByRole("button",{name:"Calculate statistics"}).click();
- await expect(page.getByRole("alert")).toContainText("DNA must contain only");
+ await expect(page.locator(".sequence-error")).toContainText("DNA must contain only");
  await expect(page.getByRole("button",{name:"Calculate statistics"})).toBeEnabled();
  await page.unroute("**/api/sequences/statistics");
  await page.route("**/api/sequences/statistics",route=>route.fulfill({json:stats}));
