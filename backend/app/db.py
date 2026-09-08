@@ -1,5 +1,6 @@
 import os
 from contextlib import contextmanager
+
 import psycopg
 from psycopg.rows import dict_row
 

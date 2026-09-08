@@ -46,3 +46,5 @@ FastAPI is supported by Vercel's Python runtime: https://vercel.com/docs/framewo
 ## Security and limitations
 Read-only public routes; bounded pagination and symbol input; SQL parameters; request IDs without secret logging; bounded database and HTTP timeouts; restrictive CORS. Public read access is limited to scientific catalog/system metadata. No uploads, PHI, patient identifiers or arbitrary execution are exposed.
 The platform is educational/research software. Phase 1 has no clinical claims, analytical calculations, AI explanations or model training.
+
+The initial Vercel API build applies idempotent migrations in its trusted build environment. Subsequent schema releases should move migration execution to a controlled release job before traffic switches; do not use destructive migrations in preview builds.

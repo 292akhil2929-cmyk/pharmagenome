@@ -2,7 +2,7 @@ import logging
 import os
 import time
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import psycopg
 from fastapi import FastAPI, HTTPException, Query, Request
@@ -104,7 +104,7 @@ def system():
                 ) r ON true ORDER BY d.retrieved_at DESC LIMIT 100
             """).fetchall()
     return {"service": "PharmaGenome", "version": app.version, "phase": 1,
-            "checked_at": datetime.now(timezone.utc), "database": state,
+            "checked_at": datetime.now(UTC), "database": state,
             "counts": counts, "datasets": datasets,
             "limitations": ["No analytical modules are released in Phase 1.",
                             "No datasets are seeded automatically.",

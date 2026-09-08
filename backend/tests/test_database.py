@@ -1,6 +1,7 @@
 import os
-import pytest
+
 import psycopg
+import pytest
 from fastapi.testclient import TestClient
 
 from app.db import connection
@@ -36,28 +37,25 @@ def test_readiness_and_empty_counts():
     ("1", 2, "U", "T"), ("1", 2, "A", "A"),
 ])
 def test_invalid_variant_rejected(chromosome, position, ref, alt):
-    with pytest.raises(psycopg.errors.CheckViolation):
-        with connection() as conn:
-            conn.execute("""
-                INSERT INTO variants(assembly,chromosome,position,reference_allele,alternate_allele,variant_type)
-                VALUES ('GRCh38',%s,%s,%s,%s,'SNV')
-            """, (chromosome, position, ref, alt))
+    with pytest.raises(psycopg.errors.CheckViolation), connection() as conn:
+        conn.execute("""
+            INSERT INTO variants(assembly,chromosome,position,reference_allele,alternate_allele,variant_type)
+            VALUES ('GRCh38',%s,%s,%s,%s,'SNV')
+        """, (chromosome, position, ref, alt))
 
 
 def test_variant_deduplication():
-    with pytest.raises(psycopg.errors.UniqueViolation):
-        with connection() as conn:
-            query = """INSERT INTO variants(assembly,chromosome,position,
-                reference_allele,alternate_allele,variant_type)
-                VALUES ('GRCh38','1',123,'A','T','SNV')"""
-            conn.execute(query)
-            conn.execute(query)
+    with pytest.raises(psycopg.errors.UniqueViolation), connection() as conn:
+        query = """INSERT INTO variants(assembly,chromosome,position,
+            reference_allele,alternate_allele,variant_type)
+            VALUES ('GRCh38','1',123,'A','T','SNV')"""
+        conn.execute(query)
+        conn.execute(query)
 
 
 def test_orphan_gene_relationship_rejected():
-    with pytest.raises(psycopg.errors.ForeignKeyViolation):
-        with connection() as conn:
-            conn.execute("INSERT INTO variant_genes(variant_id,gene_id) VALUES (99999999,99999999)")
+    with pytest.raises(psycopg.errors.ForeignKeyViolation), connection() as conn:
+        conn.execute("INSERT INTO variant_genes(variant_id,gene_id) VALUES (99999999,99999999)")
 
 
 def test_sql_input_is_literal():
