@@ -67,19 +67,21 @@ def normalize(payload):
         source = f"mutations-{gene_id}.json"
         rows = payload[source]
         if not isinstance(rows, list):
-            raise ValueError("Mutation response is not a list")
+            raise TypeError("Mutation response is not a list")
         for index, raw in enumerate(rows):
             downloaded += 1
             try:
                 m = Mutation.model_validate(raw)
-                chromosome = m.chr.removeprefix("chr").upper().replace("M", "MT") if m.chr == "M" else m.chr.removeprefix("chr").upper()
+                chromosome = m.chr.removeprefix("chr").upper()
+                if chromosome == "M":
+                    chromosome = "MT"
                 if m.studyId != STUDY or m.molecularProfileId != PROFILE:
                     raise ValueError("wrong_study_or_profile")
                 if m.entrezGeneId != gene_id or m.sampleId not in samples:
                     raise ValueError("orphan_gene_or_sample")
                 if m.ncbiBuild not in ("GRCh37", "hg19", "37"):
                     raise ValueError("assembly_mismatch")
-                if chromosome not in lengths or not 1 <= m.startPosition <= m.endPosition <= lengths[chromosome]:
+                if chromosome not in lengths or not (1 <= m.startPosition <= lengths[chromosome] and 1 <= m.endPosition <= lengths[chromosome]):
                     raise ValueError("invalid_chromosomal_position")
                 ref, alt = m.referenceAllele.upper(), m.variantAllele.upper()
                 if ref == alt:

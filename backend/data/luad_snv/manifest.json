@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "study_id": "luad_tcga_pan_can_atlas_2018",
+  "profile_id": "luad_tcga_pan_can_atlas_2018_mutations",
+  "sample_list_id": "luad_tcga_pan_can_atlas_2018_sequenced",
+  "selected_gene_ids": [
+    673,
+    1956,
+    3845,
+    4233,
+    4763,
+    5290,
+    5925,
+    6794,
+    7157,
+    9817
+  ],
+  "is_fixture": false,
+  "retrieved_at": "2026-09-08T07:40:20.009916+00:00",
+  "files": {
+    "study.json": {
+      "url": "https://www.cbioportal.org/api/studies/luad_tcga_pan_can_atlas_2018",
+      "sha256": "8f62a4a566df5f061e2a5d1bd826df933e56ecb2db1dc3f66cb0a26c386d9670",
+      "bytes": 2167,
+      "retrieved_at": "2026-09-08T07:40:10.719427+00:00"
+    },
+    "profile.json": {
+      "url": "https://www.cbioportal.org/api/molecular-profiles/luad_tcga_pan_can_atlas_2018_mutations",
+      "sha256": "cb5eaacb69d9410d87119066913d1c98382d753eb2ba8bb37d52b7143931750b",
+      "bytes": 1021,
+      "retrieved_at": "2026-09-08T07:40:10.934427+00:00"
+    },
+    "sample_ids.json": {
+      "url": "https://www.cbioportal.org/api/sample-lists/luad_tcga_pan_can_atlas_2018_sequenced/sample-ids",
+      "sha256": "a61281da57226879b6206ef8b8c95cabbd9bbece86858c67ad2ab3421e012102",
+      "bytes": 10189,
+      "retrieved_at": "2026-09-08T07:40:11.165329+00:00"
+    },
+    "samples.json": {
+      "url": "https://www.cbioportal.org/api/studies/luad_tcga_pan_can_atlas_2018/samples?projection=DETAILED&pageSize=1000&pageNumber=0",
+      "sha256": "6c2de7cfd4e4bac0f222a690998fb3ef77b949b78b062eafc8470e79f9aa8794",
+      "bytes": 192507,
+      "retrieved_at": "2026-09-08T07:40:11.737253+00:00"
+    },
+    "assembly.json": {
+      "url": "https://grch37.rest.ensembl.org/info/assembly/homo_sapiens?content-type=application/json",
+      "sha256": "566a12e55089e59273d8324f429c035bd400d0235c8fbdc15464f2f92c6d026e",
+      "bytes": 5964,
+      "retrieved_at": "2026-09-08T07:40:12.782436+00:00"
+    },
+    "gene-673.json": {
+      "url": "https://www.cbioportal.org/api/genes/673",
+      "sha256": "3624bca4ad3452cd2e44b110abd305334421ce9449075cffce7aa9db19e05903",
+      "bytes": 68,
+      "retrieved_at": "2026-09-08T07:40:13.040874+00:00"
+    },
+    "mutations-673.json": {
+      "url": "https://www.cbioportal.org/api/molecular-profiles/luad_tcga_pan_can_atlas_2018_mutations/mutations?sampleListId=luad_tcga_pan_can_atlas_2018_sequenced&entrezGeneId=673&projection=DETAILED&pageSize=100000&pageNumber=0",
+      "sha256": "31e39ebdf932a0dc84082bec28639c4d02635348bc4ddad8d45b837224113fc2",
+      "bytes": 38266,
+      "retrieved_at": "2026-09-08T07:40:13.441792+00:00"
+    },
+    "gene-1956.json": {
+      "url": "https://www.cbioportal.org/api/genes/1956",
+      "sha256": "23c8218ba35cb665cc100b5634c814a58fd904a3e2cff5049d8c46f6f11a4539",
+      "bytes": 69,
+      "retrieved_at": "2026-09-08T07:40:13.733796+00:00"
+    },
+    "mutations-1956.json": {
+      "url": "https://www.cbioportal.org/api/molecular-profiles/luad_tcga_pan_can_atlas_2018_mutations/mutations?sampleListId=luad_tcga_pan_can_atlas_2018_sequenced&entrezGeneId=1956&projection=DETAILED&pageSize=100000&pageNumber=0",
+      "sha256": "301b9f5ceb4d1cf0607670043f920e770bfebdf2a204b2a2e1fba3502fdbed35",
+      "bytes": 72734,
+      "retrieved_at": "2026-09-08T07:40:14.261176+00:00"
+    },
+    "gene-3845.json": {
+      "url": "https://www.cbioportal.org/api/genes/3845",
+      "sha256": "18076e7b61b0dc5cb09a4b18851e1c9f6805ccd994fe061a46567eb8e5dcbcdd",
+      "bytes": 69,
+      "retrieved_at": "2026-09-08T07:40:14.545019+00:00"
+    },
+    "mutations-3845.json": {
+      "url": "https://www.cbioportal.org/api/molecular-profiles/luad_tcga_pan_can_atlas_2018_mutations/mutations?sampleListId=luad_tcga_pan_can_atlas_2018_sequenced&entrezGeneId=3845&projection=DETAILED&pageSize=100000&pageNumber=0",
+      "sha256": "bb5ccff5dba73bd7d98d2aed4bcc1d0b555dc65b32ab8ba6ed6b53a137a9a951",
+      "bytes": 145748,
+      "retrieved_at": "2026-09-08T07:40:15.091903+00:00"
+    },
+    "gene-4233.json": {
+      "url": "https://www.cbioportal.org/api/genes/4233",
+      "sha256": "d3b3e190ca5697692e4ba52d72e33a659d00df2b6a21cfda80d209ee10d64010",
+      "bytes": 68,
+      "retrieved_at": "2026-09-08T07:40:15.327085+00:00"
+    },
+    "mutations-4233.json": {
+      "url": "https://www.cbioportal.org/api/molecular-profiles/luad_tcga_pan_can_atlas_2018_mutations/mutations?sampleListId=luad_tcga_pan_can_atlas_2018_sequenced&entrezGeneId=4233&projection=DETAILED&pageSize=100000&pageNumber=0",
+      "sha256": "2782f8d7d0478d2ec707c12db62a03f1f638487391afbff39aa424c828ce35ba",
+      "bytes": 17886,
+      "retrieved_at": "2026-09-08T07:40:15.697023+00:00"
+    },
+    "gene-4763.json": {
+      "url": "https://www.cbioportal.org/api/genes/4763",
+      "sha256": "89ca15c0bca2bc9945b17950109087eb9f9bfb19c85208199ca5c6a7d60f961e",
+      "bytes": 68,
+      "retrieved_at": "2026-09-08T07:40:15.925901+00:00"
+    },
+    "mutations-4763.json": {
+      "url": "https://www.cbioportal.org/api/molecular-profiles/luad_tcga_pan_can_atlas_2018_mutations/mutations?sampleListId=luad_tcga_pan_can_atlas_2018_sequenced&entrezGeneId=4763&projection=DETAILED&pageSize=100000&pageNumber=0",
+      "sha256": "755cb08d8e8549b0d9fc24071fd97b6f8ad059c07e22f67e11a1e9fb654adc05",
+      "bytes": 66595,
+      "retrieved_at": "2026-09-08T07:40:16.397816+00:00"
+    },
+    "gene-5290.json": {
+      "url": "https://www.cbioportal.org/api/genes/5290",
+      "sha256": "15b8af48cc9528497b9a184cc2819f36ceae9e99b02aa8b01953c740a37a55a1",
+      "bytes": 71,
+      "retrieved_at": "2026-09-08T07:40:16.632279+00:00"
+    },
+    "mutations-5290.json": {
+      "url": "https://www.cbioportal.org/api/molecular-profiles/luad_tcga_pan_can_atlas_2018_mutations/mutations?sampleListId=luad_tcga_pan_can_atlas_2018_sequenced&entrezGeneId=5290&projection=DETAILED&pageSize=100000&pageNumber=0",
+      "sha256": "b8dd1bb998e81b791e6ce3acaee4fe340e87a46a48d0c92a038aed214afddd08",
+      "bytes": 24859,
+      "retrieved_at": "2026-09-08T07:40:17.005713+00:00"
+    },
+    "gene-5925.json": {
+      "url": "https://www.cbioportal.org/api/genes/5925",
+      "sha256": "213d84280272dd38b96f6011daf77c328b2c2fc656fd165d8f06170e05230bb1",
+      "bytes": 68,
+      "retrieved_at": "2026-09-08T07:40:17.244075+00:00"
+    },
+    "mutations-5925.json": {
+      "url": "https://www.cbioportal.org/api/molecular-profiles/luad_tcga_pan_can_atlas_2018_mutations/mutations?sampleListId=luad_tcga_pan_can_atlas_2018_sequenced&entrezGeneId=5925&projection=DETAILED&pageSize=100000&pageNumber=0",
+      "sha256": "810bb677dda085ea7ae6b3620a7d19e1cf6bd8fc979cdb9c0ce418094f6f0265",
+      "bytes": 29692,
+      "retrieved_at": "2026-09-08T07:40:17.605155+00:00"
+    },
+    "gene-6794.json": {
+      "url": "https://www.cbioportal.org/api/genes/6794",
+      "sha256": "6d87a8122e304fa161529971012f35e93e544118ec0beb0c5d9fe4683001b60d",
+      "bytes": 70,
+      "retrieved_at": "2026-09-08T07:40:17.844305+00:00"
+    },
+    "mutations-6794.json": {
+      "url": "https://www.cbioportal.org/api/molecular-profiles/luad_tcga_pan_can_atlas_2018_mutations/mutations?sampleListId=luad_tcga_pan_can_atlas_2018_sequenced&entrezGeneId=6794&projection=DETAILED&pageSize=100000&pageNumber=0",
+      "sha256": "43c64b5b861341bb2a10889590e3a25e1943b012e50a38dd7f47fc1fa71640c7",
+      "bytes": 70415,
+      "retrieved_at": "2026-09-08T07:40:18.316291+00:00"
+    },
+    "gene-7157.json": {
+      "url": "https://www.cbioportal.org/api/genes/7157",
+      "sha256": "31434a004cc24f99ecd2bd3dd6ed82f2ab5c20016b2e6bec7d45ea3b0482efac",
+      "bytes": 69,
+      "retrieved_at": "2026-09-08T07:40:18.531604+00:00"
+    },
+    "mutations-7157.json": {
+      "url": "https://www.cbioportal.org/api/molecular-profiles/luad_tcga_pan_can_atlas_2018_mutations/mutations?sampleListId=luad_tcga_pan_can_atlas_2018_sequenced&entrezGeneId=7157&projection=DETAILED&pageSize=100000&pageNumber=0",
+      "sha256": "0b520e12b20530b0f984f081bf61918c4fb538b38f861ce1ddd4e52c7997df14",
+      "bytes": 267676,
+      "retrieved_at": "2026-09-08T07:40:19.190197+00:00"
+    },
+    "gene-9817.json": {
+      "url": "https://www.cbioportal.org/api/genes/9817",
+      "sha256": "ae59ae12a21122eb752b587ad09061bb50b654b53adac07af12449a75f5183de",
+      "bytes": 70,
+      "retrieved_at": "2026-09-08T07:40:19.460071+00:00"
+    },
+    "mutations-9817.json": {
+      "url": "https://www.cbioportal.org/api/molecular-profiles/luad_tcga_pan_can_atlas_2018_mutations/mutations?sampleListId=luad_tcga_pan_can_atlas_2018_sequenced&entrezGeneId=9817&projection=DETAILED&pageSize=100000&pageNumber=0",
+      "sha256": "3d9ec3585d5f4781ca855cd3bf6c381f76e6a1f66d51ae5f165cbd4205f0c616",
+      "bytes": 87897,
+      "retrieved_at": "2026-09-08T07:40:20.009898+00:00"
+    }
+  },
+  "sha256": "aae580bb94295d59dfa7e18676fd7ce62547881958bd0919169f0b1bcc1ca78f",
+  "limitations": [
+    "Ten selected genes only; not an exome-wide mutation catalogue.",
+    "Only unambiguous single-nucleotide variants are loaded. Other types are reported as excluded.",
+    "Profile membership does not establish per-base callability or confirm a wild-type genotype.",
+    "Coordinates are GRCh37/hg19. No liftover or reference-sequence allele verification is performed.",
+    "VAF is calculated from tumour alternate and reference read counts, not population frequency.",
+    "Gene symbols and types come from cBioPortal; full gene names and gene coordinates are not supplied.",
+    "No drug, pathway, response, statistical, predictive or clinical conclusions are supplied by this import."
+  ],
+  "license": "ODC Open Database License; cite cBioPortal and TCGA, Cell 2018.",
+  "license_url": "https://docs.cbioportal.org/user-guide/faq/",
+  "assembly_source": "Ensembl GRCh37 REST assembly metadata"
+}

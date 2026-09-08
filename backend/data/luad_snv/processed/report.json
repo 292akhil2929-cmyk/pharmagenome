@@ -1,0 +1,782 @@
+{
+  "downloaded": 966,
+  "valid": 839,
+  "invalid": 0,
+  "excluded": 127,
+  "duplicates": 0,
+  "unique_variants": 506,
+  "samples": 566,
+  "genes": 10,
+  "missing_vaf": 0,
+  "validation_reasons": {},
+  "exclusion_reasons": {
+    "non_SNV": 127
+  },
+  "accepted_fraction": 0.8685300207039337,
+  "method": "GRCh37 SNV import v1",
+  "rejected_records": [
+    {
+      "file": "mutations-673.json",
+      "row": 35,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 3,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 8,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 10,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 13,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 14,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 15,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 21,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 25,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 28,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 30,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 31,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 34,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 36,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 39,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 41,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 42,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 47,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 51,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 52,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 53,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 56,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 62,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 64,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 66,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 72,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 75,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 76,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 78,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 80,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-1956.json",
+      "row": 84,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4233.json",
+      "row": 9,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4233.json",
+      "row": 12,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4233.json",
+      "row": 20,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4763.json",
+      "row": 1,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4763.json",
+      "row": 6,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4763.json",
+      "row": 19,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4763.json",
+      "row": 23,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4763.json",
+      "row": 24,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4763.json",
+      "row": 27,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4763.json",
+      "row": 29,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4763.json",
+      "row": 30,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4763.json",
+      "row": 31,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4763.json",
+      "row": 40,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4763.json",
+      "row": 53,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4763.json",
+      "row": 56,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4763.json",
+      "row": 60,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4763.json",
+      "row": 62,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4763.json",
+      "row": 69,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4763.json",
+      "row": 71,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-4763.json",
+      "row": 77,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-5290.json",
+      "row": 22,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-5925.json",
+      "row": 6,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-5925.json",
+      "row": 7,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-5925.json",
+      "row": 9,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-5925.json",
+      "row": 22,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-5925.json",
+      "row": 23,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-5925.json",
+      "row": 24,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-5925.json",
+      "row": 25,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-5925.json",
+      "row": 29,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-5925.json",
+      "row": 33,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 1,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 18,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 26,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 29,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 32,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 35,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 38,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 43,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 44,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 46,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 47,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 51,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 52,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 53,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 54,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 55,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 59,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 63,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 67,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 70,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 74,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-6794.json",
+      "row": 75,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 3,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 4,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 6,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 38,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 42,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 61,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 91,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 99,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 116,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 118,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 132,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 133,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 134,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 136,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 139,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 149,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 155,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 172,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 192,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 193,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 194,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 206,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 211,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 222,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 224,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 236,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 238,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 253,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 254,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 256,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 257,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 264,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-7157.json",
+      "row": 287,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-9817.json",
+      "row": 9,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-9817.json",
+      "row": 12,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-9817.json",
+      "row": 23,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-9817.json",
+      "row": 24,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-9817.json",
+      "row": 46,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-9817.json",
+      "row": 62,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-9817.json",
+      "row": 74,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-9817.json",
+      "row": 78,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-9817.json",
+      "row": 87,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-9817.json",
+      "row": 97,
+      "status": "excluded",
+      "reason": "non_SNV"
+    },
+    {
+      "file": "mutations-9817.json",
+      "row": 99,
+      "status": "excluded",
+      "reason": "non_SNV"
+    }
+  ],
+  "coverage": "10 selected genes; unambiguous SNVs only; full mutation-profile cohort"
+}
