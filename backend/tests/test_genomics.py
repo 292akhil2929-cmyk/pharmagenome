@@ -101,7 +101,8 @@ def test_api_rejects_invalid_filters(query):
 
 
 @pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="PostgreSQL required")
-def test_api_snapshot_scope_and_pagination(monkeypatch, isolated_database):
+@pytest.mark.usefixtures("isolated_database")
+def test_api_snapshot_scope_and_pagination(monkeypatch):
     monkeypatch.setattr(genomics, "connection", load.connection)
     data = normalize(fixture_payload())
     first = load.load_validated(fixture_manifest(), data)
