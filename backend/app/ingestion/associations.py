@@ -108,7 +108,7 @@ def required(value, pattern=None):
 def safe_url(value):
     if value is None:
         return None
-    return required(value, r"https://[^\s]+")
+    return required(value, r"https?://[^\s]+")
 
 
 def normalize(payload):

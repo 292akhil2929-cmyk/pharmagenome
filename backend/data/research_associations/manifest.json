@@ -1,0 +1,212 @@
+{
+  "schema_version": 1,
+  "is_fixture": false,
+  "genes": {
+    "BRAF": 673,
+    "EGFR": 1956,
+    "KRAS": 3845,
+    "MET": 4233,
+    "NF1": 4763,
+    "PIK3CA": 5290,
+    "RB1": 5925,
+    "STK11": 6794,
+    "TP53": 7157,
+    "KEAP1": 9817
+  },
+  "retrieved_at": "2026-09-08T13:52:07.254788+00:00",
+  "files": {
+    "gene-BRAF.json": {
+      "url": "https://rest.ensembl.org/lookup/symbol/homo_sapiens/BRAF?content-type=application/json",
+      "query": null,
+      "variables": null,
+      "sha256": "96f17a9284d7991332b9b4b507b5ce7c726d3e8ab86bbf4e8cccfccffd39521c",
+      "bytes": 456,
+      "retrieved_at": "2026-09-08T13:51:54.996700+00:00"
+    },
+    "target-BRAF.json": {
+      "url": "https://api.platform.opentargets.org/api/v4/graphql",
+      "query": "query($id: String!) { target(ensemblId:$id) {\n id approvedSymbol approvedName pathways { pathwayId pathway }\n drugAndClinicalCandidates { count rows { id maxClinicalStage\n drug { id name drugType maximumClinicalStage mechanismsOfAction {\n rows { mechanismOfAction actionType targets { id approvedSymbol } } } }\n diseases { disease { id name } } clinicalReports { id source url }\n } } } }",
+      "variables": {
+        "id": "ENSG00000157764"
+      },
+      "sha256": "7abed2d3862f46a06e459ca38adf7394ef1e2f18ab750b0c5c48a7f501c7aa5f",
+      "bytes": 181492,
+      "retrieved_at": "2026-09-08T13:51:55.680206+00:00"
+    },
+    "gene-EGFR.json": {
+      "url": "https://rest.ensembl.org/lookup/symbol/homo_sapiens/EGFR?content-type=application/json",
+      "query": null,
+      "variables": null,
+      "sha256": "cc56317e2444e14877d50650206c48b9812c0913958cf030f55526390fdce1f7",
+      "bytes": 440,
+      "retrieved_at": "2026-09-08T13:51:57.632648+00:00"
+    },
+    "target-EGFR.json": {
+      "url": "https://api.platform.opentargets.org/api/v4/graphql",
+      "query": "query($id: String!) { target(ensemblId:$id) {\n id approvedSymbol approvedName pathways { pathwayId pathway }\n drugAndClinicalCandidates { count rows { id maxClinicalStage\n drug { id name drugType maximumClinicalStage mechanismsOfAction {\n rows { mechanismOfAction actionType targets { id approvedSymbol } } } }\n diseases { disease { id name } } clinicalReports { id source url }\n } } } }",
+      "variables": {
+        "id": "ENSG00000146648"
+      },
+      "sha256": "fbbacc6472945233b2514b1d614923deb663fd42232751b46c625a0a5d5cf098",
+      "bytes": 545887,
+      "retrieved_at": "2026-09-08T13:51:58.250600+00:00"
+    },
+    "gene-KRAS.json": {
+      "url": "https://rest.ensembl.org/lookup/symbol/homo_sapiens/KRAS?content-type=application/json",
+      "query": null,
+      "variables": null,
+      "sha256": "89031ee5f7b3d9f4fe95e78040b1192f78bebda5d920db62bf99036600336232",
+      "bytes": 437,
+      "retrieved_at": "2026-09-08T13:51:58.896354+00:00"
+    },
+    "target-KRAS.json": {
+      "url": "https://api.platform.opentargets.org/api/v4/graphql",
+      "query": "query($id: String!) { target(ensemblId:$id) {\n id approvedSymbol approvedName pathways { pathwayId pathway }\n drugAndClinicalCandidates { count rows { id maxClinicalStage\n drug { id name drugType maximumClinicalStage mechanismsOfAction {\n rows { mechanismOfAction actionType targets { id approvedSymbol } } } }\n diseases { disease { id name } } clinicalReports { id source url }\n } } } }",
+      "variables": {
+        "id": "ENSG00000133703"
+      },
+      "sha256": "09eb6b0724ffd11c4fd33b3a2e141a2e3465073bba0a7977452b1fcafeebe0a2",
+      "bytes": 18781,
+      "retrieved_at": "2026-09-08T13:51:59.123869+00:00"
+    },
+    "gene-MET.json": {
+      "url": "https://rest.ensembl.org/lookup/symbol/homo_sapiens/MET?content-type=application/json",
+      "query": null,
+      "variables": null,
+      "sha256": "8c5049bd61ecd1e4cd588fe45a027bf2f9cab19161d05a23c7b767de220155cd",
+      "bytes": 453,
+      "retrieved_at": "2026-09-08T13:51:59.474385+00:00"
+    },
+    "target-MET.json": {
+      "url": "https://api.platform.opentargets.org/api/v4/graphql",
+      "query": "query($id: String!) { target(ensemblId:$id) {\n id approvedSymbol approvedName pathways { pathwayId pathway }\n drugAndClinicalCandidates { count rows { id maxClinicalStage\n drug { id name drugType maximumClinicalStage mechanismsOfAction {\n rows { mechanismOfAction actionType targets { id approvedSymbol } } } }\n diseases { disease { id name } } clinicalReports { id source url }\n } } } }",
+      "variables": {
+        "id": "ENSG00000105976"
+      },
+      "sha256": "cb2fd365564b44e8c0bfe33d9d61e575d1c3670dfbb2a514f7fe716a78748732",
+      "bytes": 122601,
+      "retrieved_at": "2026-09-08T13:51:59.854844+00:00"
+    },
+    "gene-NF1.json": {
+      "url": "https://rest.ensembl.org/lookup/symbol/homo_sapiens/NF1?content-type=application/json",
+      "query": null,
+      "variables": null,
+      "sha256": "d22e1dc5a19d00fdaf22b717b08df7a0da421067b3694f78156b7d10c1ff875b",
+      "bytes": 423,
+      "retrieved_at": "2026-09-08T13:52:00.275972+00:00"
+    },
+    "target-NF1.json": {
+      "url": "https://api.platform.opentargets.org/api/v4/graphql",
+      "query": "query($id: String!) { target(ensemblId:$id) {\n id approvedSymbol approvedName pathways { pathwayId pathway }\n drugAndClinicalCandidates { count rows { id maxClinicalStage\n drug { id name drugType maximumClinicalStage mechanismsOfAction {\n rows { mechanismOfAction actionType targets { id approvedSymbol } } } }\n diseases { disease { id name } } clinicalReports { id source url }\n } } } }",
+      "variables": {
+        "id": "ENSG00000196712"
+      },
+      "sha256": "80fd3766a93a42d68606b48e9ef191b0197c8a5ef8cbdfa844c308453996c4cb",
+      "bytes": 331,
+      "retrieved_at": "2026-09-08T13:52:00.383893+00:00"
+    },
+    "gene-PIK3CA.json": {
+      "url": "https://rest.ensembl.org/lookup/symbol/homo_sapiens/PIK3CA?content-type=application/json",
+      "query": null,
+      "variables": null,
+      "sha256": "e426f191e49fd8f1b2196e5c59a361b7ccc10e81b0372b3cd5bebfa737226339",
+      "bytes": 481,
+      "retrieved_at": "2026-09-08T13:52:00.788906+00:00"
+    },
+    "target-PIK3CA.json": {
+      "url": "https://api.platform.opentargets.org/api/v4/graphql",
+      "query": "query($id: String!) { target(ensemblId:$id) {\n id approvedSymbol approvedName pathways { pathwayId pathway }\n drugAndClinicalCandidates { count rows { id maxClinicalStage\n drug { id name drugType maximumClinicalStage mechanismsOfAction {\n rows { mechanismOfAction actionType targets { id approvedSymbol } } } }\n diseases { disease { id name } } clinicalReports { id source url }\n } } } }",
+      "variables": {
+        "id": "ENSG00000121879"
+      },
+      "sha256": "a0cdd34ba85208879657ea94ea933be877aa43774a3a6463772190b6ce447aa8",
+      "bytes": 103823,
+      "retrieved_at": "2026-09-08T13:52:01.168207+00:00"
+    },
+    "gene-RB1.json": {
+      "url": "https://rest.ensembl.org/lookup/symbol/homo_sapiens/RB1?content-type=application/json",
+      "query": null,
+      "variables": null,
+      "sha256": "bc1bc0eff2b09b1ed01bd5432176d7479343ddcea3107db39271956db94e4962",
+      "bytes": 440,
+      "retrieved_at": "2026-09-08T13:52:01.847751+00:00"
+    },
+    "target-RB1.json": {
+      "url": "https://api.platform.opentargets.org/api/v4/graphql",
+      "query": "query($id: String!) { target(ensemblId:$id) {\n id approvedSymbol approvedName pathways { pathwayId pathway }\n drugAndClinicalCandidates { count rows { id maxClinicalStage\n drug { id name drugType maximumClinicalStage mechanismsOfAction {\n rows { mechanismOfAction actionType targets { id approvedSymbol } } } }\n diseases { disease { id name } } clinicalReports { id source url }\n } } } }",
+      "variables": {
+        "id": "ENSG00000139687"
+      },
+      "sha256": "0721eebea71611a3b1e3c6a93ec101f71a386a1fedded868324988ef3a74f34c",
+      "bytes": 1940,
+      "retrieved_at": "2026-09-08T13:52:02.092473+00:00"
+    },
+    "gene-STK11.json": {
+      "url": "https://rest.ensembl.org/lookup/symbol/homo_sapiens/STK11?content-type=application/json",
+      "query": null,
+      "variables": null,
+      "sha256": "4f9f51d07c7c5041d27b506293173092a6ddf05d595da8eef6274902fe8d3954",
+      "bytes": 436,
+      "retrieved_at": "2026-09-08T13:52:02.606626+00:00"
+    },
+    "target-STK11.json": {
+      "url": "https://api.platform.opentargets.org/api/v4/graphql",
+      "query": "query($id: String!) { target(ensemblId:$id) {\n id approvedSymbol approvedName pathways { pathwayId pathway }\n drugAndClinicalCandidates { count rows { id maxClinicalStage\n drug { id name drugType maximumClinicalStage mechanismsOfAction {\n rows { mechanismOfAction actionType targets { id approvedSymbol } } } }\n diseases { disease { id name } } clinicalReports { id source url }\n } } } }",
+      "variables": {
+        "id": "ENSG00000118046"
+      },
+      "sha256": "229d959544fb89d1d906a4d61abf3e3464e425a4724f23c714ccbf78ad97dce9",
+      "bytes": 548,
+      "retrieved_at": "2026-09-08T13:52:02.925843+00:00"
+    },
+    "gene-TP53.json": {
+      "url": "https://rest.ensembl.org/lookup/symbol/homo_sapiens/TP53?content-type=application/json",
+      "query": null,
+      "variables": null,
+      "sha256": "ac709c12f1649c4bf6b0f775237214c58e6188db89884cad19fe68d69db47231",
+      "bytes": 426,
+      "retrieved_at": "2026-09-08T13:52:03.313010+00:00"
+    },
+    "target-TP53.json": {
+      "url": "https://api.platform.opentargets.org/api/v4/graphql",
+      "query": "query($id: String!) { target(ensemblId:$id) {\n id approvedSymbol approvedName pathways { pathwayId pathway }\n drugAndClinicalCandidates { count rows { id maxClinicalStage\n drug { id name drugType maximumClinicalStage mechanismsOfAction {\n rows { mechanismOfAction actionType targets { id approvedSymbol } } } }\n diseases { disease { id name } } clinicalReports { id source url }\n } } } }",
+      "variables": {
+        "id": "ENSG00000141510"
+      },
+      "sha256": "9481a30e1ab628e6f7f9a14d24869c40ccebed834ff21acf664710e171f7ad03",
+      "bytes": 25620,
+      "retrieved_at": "2026-09-08T13:52:03.450941+00:00"
+    },
+    "gene-KEAP1.json": {
+      "url": "https://rest.ensembl.org/lookup/symbol/homo_sapiens/KEAP1?content-type=application/json",
+      "query": null,
+      "variables": null,
+      "sha256": "5b06a23afd57d8b2a1611c94679e7d4258a25071f56dd160d806cf9a56edf0fa",
+      "bytes": 448,
+      "retrieved_at": "2026-09-08T13:52:07.087112+00:00"
+    },
+    "target-KEAP1.json": {
+      "url": "https://api.platform.opentargets.org/api/v4/graphql",
+      "query": "query($id: String!) { target(ensemblId:$id) {\n id approvedSymbol approvedName pathways { pathwayId pathway }\n drugAndClinicalCandidates { count rows { id maxClinicalStage\n drug { id name drugType maximumClinicalStage mechanismsOfAction {\n rows { mechanismOfAction actionType targets { id approvedSymbol } } } }\n diseases { disease { id name } } clinicalReports { id source url }\n } } } }",
+      "variables": {
+        "id": "ENSG00000079999"
+      },
+      "sha256": "11b153807694e1668b97aaa826a23f07e97c00ef3e0f72a5ccb2e568ed9ce4c9",
+      "bytes": 20498,
+      "retrieved_at": "2026-09-08T13:52:07.254744+00:00"
+    }
+  },
+  "sha256": "a203c4635eac2cdb679f4081c1163a730d70f78745b54f17b566ebf5b5c3b3cb",
+  "limitations": [
+    "Ten selected genes; a bounded source snapshot, not the complete drug or pathway universe.",
+    "Drug links require a source mechanism that explicitly maps to the selected Ensembl target.",
+    "Target mapping can include protein complexes; it does not establish selective binding or variant response.",
+    "Disease labels and clinical report counts describe source-associated research, not approved indications.",
+    "Maximum clinical stage is the source's historical drug-level label, not current regulatory advice.",
+    "Pathway overlap counts selected genes; no enrichment, p-value, causal or treatment claim.",
+    "Absence of a source link is not evidence that no biological relationship exists.",
+    "No drug-response measurements or individual patient matching are included."
+  ],
+  "license": "Open Targets CC0 1.0; underlying source attribution retained.",
+  "license_url": "https://platform-docs.opentargets.org/licence"
+}
