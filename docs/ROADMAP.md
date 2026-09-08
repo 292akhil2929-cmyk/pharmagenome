@@ -1,6 +1,6 @@
 # Incremental delivery
 
-Phases 1–7 are delivered: foundation, ingestion, genomic explorers, sequence tools, source-linked drug/target/pathway research associations, transparent statistical analysis, and NCI-60 drug-response modeling. Phase 8 optional explanation remains gated on verified API model access. It does not claim the complete master brief is delivered.
+Phases 1–7 are delivered. Phase 8's server-only GPT-6 Astra integration, evidence contract and unavailable state are delivered; live generation remains gated on a configured API key and verified model access. It does not claim the complete master brief is delivered.
 
 | Phase | Scope | Gate |
 |---|---|---|
@@ -11,7 +11,7 @@ Phases 1–7 are delivered: foundation, ingestion, genomic explorers, sequence t
 | 5 | Drugs, targets, pathway membership | Source-linked research associations, no recommendations |
 | 6 | Hypothesis tests, correlations, enrichment | Null/alternative, assumptions, effect size, correction, reference tests |
 | 7 | Drug-response ML | Delivered: aligned CellMiner data, repeated stratified CV, baseline, multiple metrics, held-out importance |
-| 8 | Optional explanation | Verified API model access, server-only key, evidence-constrained output |
+| 8 | Optional explanation | Integration delivered; production generation awaits server-only API access verification |
 | 9 | Full analytical dashboard | Real results, working controls, desktop/mobile accessibility |
 | 10 | Full portfolio release | Reproducible demo, documentation, all applicable tests |
 

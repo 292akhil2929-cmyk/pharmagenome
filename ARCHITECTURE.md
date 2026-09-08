@@ -1,6 +1,6 @@
 # Architecture
 
-## Phase 7: implemented scope
+## Phase 8: implemented scope
 Next.js renders the public research workspace. Its server route proxies the read-only FastAPI system and dataset-report endpoints. FastAPI accesses PostgreSQL through parameterized psycopg queries. Dataset counts are live database counts, not sample fixture values. Descriptive genomic exploration and stateless sequence algorithms are implemented; drug-target/pathway associations, bounded statistical inference and CellMiner cell-line response modeling are implemented.
 
 ```mermaid
@@ -83,3 +83,11 @@ Migration 005 adds snapshot-scoped cell-line features while reusing the original
 `GET /api/modeling/options` declares the source snapshot, drugs, eligible mutation groups, allowed predictors and fixed validation protocol. `GET /api/modeling/response` computes an exploratory mutation-stratified response comparison. `POST /api/modeling/evaluate` uses a predeclared activity z-score boundary of zero, then trains only inside repeated stratified folds. The target boundary is independent of held-out outcomes. Imputation and scaling live inside the scikit-learn pipeline, preventing test-fold distribution information from fitting preprocessing. Response fields are outside the predictor allowlist.
 
 The three fixed estimators share identical splits and are compared with a prior-probability dummy classifier. API results include fold summaries, every held-out prediction, pooled ROC coordinates, confusion counts, permutation importance, data/code hashes and explicit interpretation limits. The frontend proxy enforces fixed paths, query allowlists, bounded request size and timeouts. See [modeling methods](docs/MODELING.md).
+
+## Phase 8 evidence-constrained explanation
+
+`GET /api/research/explain/status` reports only whether server-side model access is configured; it never reveals credentials. `POST /api/research/explain` is separate from every analytical endpoint. Statistics and drug-response modeling compute first, then the browser sends a compact result envelope that excludes raw measurement groups, tables, cell-line points, ROC coordinates and individual predictions.
+
+The API validates JSON size, depth, field counts, finite numbers and machine-readable evidence keys. GPT-6 Astra receives inert evidence rows through the OpenAI Responses API with `store: false`, low reasoning effort and a strict JSON schema. Every generated statement must cite submitted evidence IDs. A post-generation verifier rejects unknown citations and any numeric token absent from the canonical evidence document. The returned envelope includes the model, provider, response ID, generation time and evidence SHA-256.
+
+`OPENAI_API_KEY` exists only in the backend runtime. Missing credentials produce an explicit unavailable state while computed results, provenance and exports remain fully functional. The deployment has not produced or claimed a live model explanation because the production key is not configured. See [explanation contract](docs/AI_EXPLANATIONS.md).

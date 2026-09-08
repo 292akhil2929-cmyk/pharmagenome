@@ -1,4 +1,19 @@
-# Phase 7 verification
+# Verification evidence
+
+## Phase 8 explanation integration
+
+Verified application commit: `a651cee7c2074e5b334f524ed7faef2add6aa528`.
+
+- [GitHub Actions run 34255566590](https://github.com/292akhil2929-cmyk/pharmagenome/actions/runs/34254481171): success.
+- Backend: Ruff passed; 141 tests passed against PostgreSQL 17; backend Docker image built.
+- Frontend: TypeScript and production build passed; 28 Playwright tests passed.
+- Backend tests cover missing-key behavior, request-bound evidence validation, exact model/request settings, structured claim references and rejection of an invented numeric claim.
+- Browser tests verify compact evidence construction, omission of raw inputs, the explanation action, rendered evidence keys, recoverable model-status failure and focus return to the underlying result.
+- Production reports version 0.8.0 and Phase 8. The explanation status names `gpt-6-astra` and returns `available: false`; a direct POST returns 503 because no server-side OpenAI API key is configured.
+- Live Chrome executed the real statistics flow at 1440px and 390px. The computed result retained focus, the unavailable explanation state was visible, and document scroll width equaled viewport width at both sizes.
+- The deployed UI does not claim a generated answer. Core statistics, modeling, exports and provenance remain usable without an LLM.
+
+## Phase 7 verification
 
 Verified application commit: c17926609e0a7aef7a63d9f95e25dac9490813e4.
 
