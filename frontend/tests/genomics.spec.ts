@@ -34,6 +34,7 @@ for(const width of [1440,390]){
   expect((await download).suggestedFilename()).toBe("pharmagenome-genomics-dataset-1.json");
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   await page.screenshot({path:info.outputPath("genomics-"+width+".png"),fullPage:true});
+  await page.emulateMedia({reducedMotion:"reduce"});
   await page.getByRole("button",{name:"Switch to dark mode"}).click();
   await page.screenshot({path:info.outputPath("genomics-dark-"+width+".png"),fullPage:true});
  });

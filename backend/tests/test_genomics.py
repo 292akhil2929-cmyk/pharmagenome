@@ -121,3 +121,23 @@ def test_api_snapshot_scope_and_pagination(monkeypatch):
     assert newer["summary"]["variants"] == 0
     assert newer["summary"]["eligible_samples"] == 2
     assert client.get("/api/genomics?dataset_id=99999999").status_code == 404
+
+
+@pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="PostgreSQL required")
+@pytest.mark.usefixtures("isolated_database")
+def test_pinned_public_snapshot_end_to_end(monkeypatch):
+    monkeypatch.setattr(genomics, "connection", load.connection)
+    imported = load.load_snapshot()
+    response = client.get("/api/genomics", params={"dataset_id": imported["dataset_id"], "gene": "TP53"})
+    assert response.status_code == 200
+    body = response.json()
+    assert body["summary"]["eligible_samples"] == 566
+    assert body["summary"]["mutated_samples"] == 267
+    assert body["summary"]["variants"] == 181
+    assert body["genes"][0]["frequency"] == 267 / 566
+    assert body["dataset"]["sha256"] == "aae580bb94295d59dfa7e18676fd7ce62547881958bd0919169f0b1bcc1ca78f"
+    page = client.get("/api/genomics", params={"dataset_id": imported["dataset_id"],
+                                             "gene": "TP53", "page": 2, "page_size": 10}).json()
+    assert page["summary"] == body["summary"]
+    assert len(page["variants"]["items"]) == 10
+    assert sum(b["count"] for b in page["vaf_histogram"]) == body["summary"]["observations"]
