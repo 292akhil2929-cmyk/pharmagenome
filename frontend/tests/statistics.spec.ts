@@ -39,9 +39,9 @@ for(const width of [1440,390]){
   await page.getByLabel("EGFR",{exact:true}).check();
   await page.getByRole("button",{name:"Test pathway enrichment"}).click();
   await expect(page.getByText("No pathway meets BY",{exact:false})).toBeVisible();
-  await expect(page.getByRole("cell",{name:"Synthetic pathway 20",{exact:false}})).toHaveCount(0);
+  await expect(page.getByRole("cell",{name:"Synthetic pathway 20",exact:false})).toHaveCount(0);
   await page.getByRole("button",{name:"Next pathway test page"}).click();
-  await expect(page.getByRole("cell",{name:"Synthetic pathway 20",{exact:false}})).toBeVisible();
+  await expect(page.getByRole("cell",{name:"Synthetic pathway 20",exact:false})).toBeVisible();
   const full=page.waitForEvent("download");await page.getByRole("button",{name:"Export statistics JSON"}).click();
   expect(JSON.parse(await readFile((await (await full).path())!,"utf8")).rows).toHaveLength(21);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
