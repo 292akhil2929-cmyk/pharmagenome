@@ -27,7 +27,7 @@ for(const width of [1440,390]){
   await expect(page.locator(".genomics .data-table").first()).toContainText("33.3%");
   await page.getByRole("button",{name:"TP53",exact:true}).click();
   await expect(page.getByText("Full name / gene coordinates")).toBeVisible();
-  await expect(page.getByText("Not yet imported",{exact:true})).toBeVisible();
+  await expect(page.getByRole("button",{name:"Inspect gene-level research associations",exact:true})).toBeVisible();
   await page.getByRole("button",{name:"17:100:A>T",exact:true}).click();
   await expect(page.getByText("Not supplied; no clinical interpretation")).toBeVisible();
   const download=page.waitForEvent("download");await page.getByRole("button",{name:"Export analysis JSON"}).click();
