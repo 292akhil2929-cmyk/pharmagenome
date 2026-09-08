@@ -27,14 +27,14 @@ GRCh37 chromosome bounds are captured from [Ensembl assembly metadata](https://g
 
 Gene identifiers, symbols and types come from cBioPortal. Full names and genomic gene locations remain absent. Tumour VAF is alternate reads / (alternate + reference reads); missing, sentinel or zero-total counts produce null. This is not population allele frequency.
 
-## Remaining sources
-| Source | Planned data | State |
+## Source coverage
+| Source | Data scope | State |
 |---|---|---|
 | [NCBI Gene](https://www.ncbi.nlm.nih.gov/gene/) | Full names and assembly-specific locations | Not retrieved |
-| [ChEMBL](https://www.ebi.ac.uk/chembl/) | Compounds, targets, research evidence | Not retrieved |
-| [Reactome](https://reactome.org/) | Human gene-pathway memberships | Not retrieved |
+| [ChEMBL](https://www.ebi.ac.uk/chembl/) | Compounds, targets, research evidence | Imported via Open Targets |
+| [Reactome](https://reactome.org/) | Human gene-pathway memberships | Imported via Open Targets |
 
-Record release, license and attribution before adding these sources. No drug/pathway records or clinical conclusions are supplied by the current import. Drug-response and ML modules remain gated on usable data, coherent units and defensible group-aware evaluation.
+The genomic import does not itself supply drug/pathway records. Phase 5 adds the separately versioned Open Targets research snapshot below, retaining source attribution and retrieval times. No clinical conclusions are supplied. Drug-response and ML modules remain gated on usable data, coherent units and defensible group-aware evaluation.
 
 ## Import contract
 Official APIs only. Preserve raw bytes and retrieval times. Verify every checksum before normalization. Reject inconsistent cohorts, assemblies and manifests. Classify invalid, excluded and duplicate rows separately. Reconcile downloaded = accepted + invalid + excluded + duplicates. Production promotion fails on invalid records. Import all rows atomically under an advisory transaction lock. Identical snapshots are no-ops; later snapshots preserve separate observation profiles.

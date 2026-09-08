@@ -49,3 +49,15 @@ Add Genomics, Gene explorer and Variant explorer to the existing rail. All use t
 
 ## Phase 4 sequence workspace
 Retain the forest/sage research identity. Use shadcn-derived textareas with explicit labels, single-record file input and IBM Plex Mono for sequences and numerical matrices. Tabs support arrow keys. Input changes clear stale results. Show scoring, base denominators, limits and synthetic example disclosure next to the controls. Alignments and matrices scroll inside keyboard-focusable regions; exports preserve complete results. Desktop/mobile light/dark evidence and independent finish review passed.
+
+## Phase 5 research associations
+
+Extend the forest/sage workspace with existing light/dark semantic tokens (--bg, --surface, --ink, --muted, --line, --accent, --soft), bordered panels, shadcn-derived buttons/tables and Lucide icons. Retain Manrope headings, IBM Plex Sans controls and IBM Plex Mono network identifiers.
+
+Stack filters, snapshot provenance/export, four summary counts, focused association network, drug catalogue, pathway overlap and methods. Native labeled controls cover snapshot, drug query/type, source stage, disease and ordering; gene checkboxes require at least one selection. Apply commits draft filters and resets result pagination; pending changes are announced. Loading, retryable errors and empty results remain explicit.
+
+The network shows one selected gene between up to three pathways and three drugs from the current result pages. Selecting a node or table link opens inline evidence, moves keyboard focus and scrolls to the detail. Drug details expose mechanisms, expandable disease labels and distinct source reports paginated ten at a time. Pathway details explain the selected-gene denominator. External links lead to source records; JSON export includes the response with its declared scope.
+
+Filters change from three columns to two at 1000px and one at 650px. Mobile summaries use two columns; the network stacks with its gene first and removes connector strokes. Source actions and pagination wrap, while tables retain contained horizontal scrolling. Inputs and inline details receive accent focus outlines; existing reduced-motion behavior applies.
+
+Keep snapshot/fixture identity, retrieval date, checksum, computation time, revision and limitations visible. Source stage is historical metadata; report counts do not establish efficacy, pathway overlap is not enrichment, and network links do not predict variant response or cohort treatment.

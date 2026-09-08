@@ -9,7 +9,8 @@ flowchart LR
   Next --> API[FastAPI on Vercel]
   API --> PG[(PostgreSQL / Neon)]
   Import[Validated snapshot ingestion] --> PG
-  PG -.-> Compute[Future Python analytical services]
+  PG --> Compute[Genomics / research overlap]
+  API --> Sequence[Stateless DNA algorithms]
   Compute -.-> Explain[Optional result explanation]
 ```
 

@@ -1,29 +1,35 @@
-# Phase 4 verification
+# Phase 5 verification
 
-Verified application commit: 52a3bcf8cc4ed5556c4a45648a6a864020f05fed.
+Verified application commit: 5e5ed40275d874c3829209cb6b25e48037411f62.
 
-- [GitHub Actions run 34205739558](https://github.com/292akhil2929-cmyk/pharmagenome/actions/runs/34205739558): success.
-- Backend: Ruff passed, 94 tests passed with PostgreSQL 17; backend Docker build passed.
-- Frontend: TypeScript and production build passed; 15 Playwright tests passed.
-- Algorithm coverage includes 180 deterministic score comparisons against Biopython 1.88; returned tracebacks independently reconstruct inputs and recompute scores.
-- Edge cases cover all-N sequences, overlapping k-mers, multiple FASTA records, invalid symbols, strict scores, local zero-score behavior, deterministic ties and 1,000-by-1,000 alignment.
-- Browser coverage includes empty inputs, explicit teaching examples, file input, validation/retry, keyboard tabs, result invalidation, JSON downloads, no-positive alignment and all-N statistics. Previous genomic and workspace regression tests also pass.
-- Independent finish review: ship, with no blocking frontend findings after source and desktop/mobile light/dark evidence review.
+- [GitHub Actions run 34236752371](https://github.com/292akhil2929-cmyk/pharmagenome/actions/runs/34236752371): success.
+- Backend: Ruff passed, 110 tests passed with PostgreSQL 17; backend Docker image built.
+- Frontend: TypeScript and production build passed; 19 Playwright tests passed.
+- Public-source pipeline tests reconcile 186 target links, verify raw/manifest SHA, reject mismatched/truncated source data, and validate EGFR's 82 drugs and 37 pathways through PostgreSQL and FastAPI.
+- Tests cover idempotency, older-snapshot preservation, scoped keys, unmapped mechanisms, unsafe links, conflicting duplicates, distinct report counts, literal search, filter independence and pagination.
+- New browser tests cover source disclosure, detail panels, disease/report links, JSON downloads, gene selection, pending filters, empty results, error/retry, drug/pathway paging and mixed-source report semantics.
+- Four settled 1440px/390px light/dark screenshots passed independent finish review: ship, with no blocking issues within the new research view.
+- Browser screenshot fixtures are explicitly synthetic and do not establish scientific findings.
 
 ## Live verification
-Anonymous frontend proxy POST checks and Chrome confirmed statistics for AACCGGTTNNACGTACGT: length 18, known bases 16, N 2, GC 50%, AT 50%, 14 valid overlapping 2-mer windows and 3 N-excluded windows.
+Both Vercel projects reached Ready after deploying the application commit. Public API/system responses report 566 samples, 506 unique SNVs, 10 genes, 183 drugs and 220 pathways.
 
-Global alignment of ACGTACGT versus ACGTCGT returned score 12, seven exact matches, one gap, 87.5% column identity and traceback ACGTACGT / ACGT-CGT. Chrome displayed the full score matrix and highlighted traceback.
+Research snapshot:
+- SHA a203c4635eac2cdb679f4081c1163a730d70f78745b54f17b566ebf5b5c3b3cb.
+- Retrieved 2026-09-08T13:52:07.254788Z.
+- 186 downloaded candidate rows, 186 accepted target links, zero invalid/excluded/duplicate rows.
+- 279 gene-pathway memberships; 1,052 unmapped disease-label occurrences counted separately.
 
-Local alignment of TTACGTAA versus GGACGTCC returned ACGT / ACGT, score 8 and 1-based inclusive coordinates 3–6 for both inputs. AAAA versus CCCC returned no positive alignment, score zero and null coordinates. NNNN returned null GC/AT and zero valid k-mers. ACGU was rejected with HTTP 422.
+EGFR selection returned 82 drugs/target links and 37 pathways. Consecutive drug pages contained disjoint IDs. A no-match drug query returned zero drugs while retaining the same 37 pathways. GEFITINIB returned CHEMBL939, an EGFR mechanism and 347 distinct source report records. These records are not independent studies or evidence of efficacy.
 
-Live Chrome checked statistics, alignment controls, actual results, source hashes, dark theme and 390px mobile containment. The settled document width was 380px within a 390px viewport.
+Chrome verified Gene explorer to EGFR research navigation, filtering, actual mechanism/report details, report page 2, mixed-source quality labels, dark mode and mobile containment. Settled mobile content width was 380px within a 390px viewport. Desktop rendering was checked at the live 1280px viewport in addition to CI's 1440px captures.
+
+## Previous functionality retained
+The genomic snapshot SHA remains aae580bb94295d59dfa7e18676fd7ce62547881958bd0919169f0b1bcc1ca78f. Live TP53 results remain 267 / 566 matching samples, 181 distinct SNVs and 281 observations. The sequence global-alignment teaching case still returns score 12. Existing sequence reference and genomic integration tests pass in the same suite.
 
 ## Evidence boundaries
-Browser CI screenshots use explicitly synthetic fixtures and establish layout/interaction behavior, not scientific correctness. Numerical evidence above comes from live computation; independent algorithm comparisons run in backend tests.
+The application performs deterministic filtering, counts and overlap without an LLM. Open Targets documents upstream LLM extraction of some AACT trial drug/disease labels; those source assignments are preserved and not independently validated here.
 
-JSON download events passed in Chromium CI. A saved live Chrome download is not claimed. The app does not persist submitted sequences to its database; it sends them to the public research API for computation.
+JSON downloads passed in Chromium CI; a saved live Chrome download is not claimed. Full Docker Compose runtime is not verified end-to-end; PostgreSQL integration tests and the backend Docker build passed.
 
-Full Docker Compose runtime has not been verified end-to-end. PostgreSQL integration tests and the backend Docker build passed.
-
-Genomic exploration still uses the ten-gene GRCh37 TCGA LUAD SNV subset: 566 profiled samples, 506 unique SNVs and 839 observations. This release adds bounded DNA composition and linear-gap alignment; it does not add clinical annotation, inferential statistics, drug response, ML or AI explanations. See [sequence methods](SEQUENCES.md), [genomic methods](GENOMICS.md) and [source provenance](../DATA_SOURCES.md).
+This release provides gene-level research associations and descriptive pathway overlap. It does not provide enrichment statistics, clinical interpretation, variant-specific sensitivity, drug-response modeling, ML or AI explanations. See [research methods](RESEARCH.md), [genomic methods](GENOMICS.md) and [sequence methods](SEQUENCES.md).

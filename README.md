@@ -17,7 +17,8 @@ flowchart TD
   CI[GitHub Actions] --> Tests[PostgreSQL integration + browser tests]
   Data[Public source snapshots] --> Validate[Validate and normalize]
   Validate --> DB
-  DB -.-> Analysis[Future statistics / bioinformatics / ML]
+  API --> Analysis[Genomics / sequences / research overlap]
+  Analysis -.-> Future[Future inference / ML]
   Analysis -.-> Explanation[Optional evidence-based explanation]
 ```
 
@@ -87,7 +88,7 @@ PowerShell environment syntax: `$env:API_BASE_URL='http://localhost:8000'`. For 
 | API_BASE_URL | Frontend server | Yes | Backend URL; not NEXT_PUBLIC |
 | POSTGRES_PASSWORD | Docker only | Yes | Development database password |
 
-No OpenAI API key is required or consumed through Phase 4.
+No OpenAI API key is required or consumed through Phase 5.
 
 ## Tests
 ```sh
@@ -117,7 +118,7 @@ python -m scripts.capture_snapshot --output capture/new-snapshot
 The GitHub Actions **Capture public scientific snapshot** workflow also captures raw bytes and a quality report as an artifact. A successful capture is reviewed and committed before deployment; production never fetches an unpinned live dataset at startup. Re-importing the same checksum is a no-op. A different snapshot retains its own molecular profile and observations. See [data sources](DATA_SOURCES.md) for counts, licensing and scientific limits.
 
 ## Reproducibility example
-Open **Data sources → Download quality report** for the full import report, rejected-row reasons, source manifest and checksum. Click **Export system snapshot** to export the actual database connection state, counts, source catalogue and timestamp. This is infrastructure evidence, not a scientific analysis. Future analysis exports must include method, filters, code revision, dataset checksums, results, limitations and sources.
+Open **Data sources → Download quality report** for the full import report, rejected-row reasons, source manifest and checksum. Click **Export system snapshot** to export the actual database connection state, counts, source catalogue and timestamp. This is infrastructure evidence, not a scientific analysis. Analysis exports include method, filters, code revision, dataset checksums, results, limitations and sources.
 
 ## Deployment
 Create two Vercel projects from this repository:
