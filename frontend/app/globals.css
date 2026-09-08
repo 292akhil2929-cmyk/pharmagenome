@@ -75,7 +75,7 @@
 .modeling-controls :is(select,input):focus-visible{outline:2px solid var(--accent);outline-offset:3px}.drug-record{display:flex;gap:12px;align-items:center;padding:14px 0;border-block:1px solid var(--line)}
 .drug-record div{display:grid;gap:4px}.drug-record strong{font-size:14px}.drug-record span{font-size:11px;color:var(--muted)}
 .modeling-features{border:0;padding:0;margin:24px 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-.modeling-features legend{grid-column:1/-1;font-size:13px;font-weight:650;margin-bottom:6px}.modeling-features legend span{float:right;color:var(--muted);font-weight:400;font-size:11px}
+.modeling-features legend{grid-column:1/-1;font-size:13px;font-weight:650;margin-bottom:6px;display:flex;justify-content:space-between;gap:12px}.modeling-features legend span{float:none;color:var(--muted);font-weight:400;font-size:11px}
 .modeling-features label{display:grid;grid-template-columns:17px 1fr;grid-template-rows:auto auto;column-gap:8px;padding:10px;background:var(--soft);border-radius:7px;color:var(--ink);cursor:pointer}
 .modeling-features input{grid-row:1/3;accent-color:var(--accent);width:16px;height:16px;margin:2px 0}.modeling-features span{font-family:"IBM Plex Mono",monospace;font-size:11px}.modeling-features small{font-size:9px;color:var(--muted);margin-top:3px}
 .modeling-run{display:flex;align-items:center;gap:18px;margin-top:8px}.modeling-run p{font-size:11px;line-height:1.6;color:var(--muted);max-width:54ch}.modeling-inline-error{display:grid;gap:5px;margin-top:18px;padding:14px;background:var(--soft);color:var(--warn);font-size:12px}
