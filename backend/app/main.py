@@ -26,7 +26,7 @@ origins = [x.strip() for x in os.getenv("ALLOWED_ORIGINS", "http://localhost:300
 app.add_middleware(CORSMiddleware, allow_origins=origins,
                    allow_methods=["GET", "POST"], allow_headers=["Content-Type"])
 
-TABLES = ["samples", "variants", "genes", "drugs", "pathways", "drug_responses"]
+TABLES = ["samples", "variants", "genes", "drugs", "pathways"]
 app.include_router(genomics_router)
 app.include_router(sequences_router)
 app.include_router(research_router)

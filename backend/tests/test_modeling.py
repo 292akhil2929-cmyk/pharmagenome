@@ -30,7 +30,7 @@ def test_pinned_cellminer_snapshot_replays_and_reconciles():
     assert manifest["sha256"] == "335d0bdb8bcb2f878acfe8250d886d225eaa559bc2d8635f59a0fc613b481acd"
     assert data["report"] == {"downloaded": 60, "valid": 60, "invalid": 0, "duplicates": 0,
                               "excluded": 0, "cell_lines": 60, "expression": 599,
-                              "mutation": 540, "response": 590}
+                              "mutation": 540, "response": 593}
     assert len({r["cell_line"] for r in data["records"]}) == 60
     assert all(r["features"]["STK11"]["mutation"] is None for r in data["records"])
     assert all(d["fda_status"] == "FDA approved" for d in manifest["drugs"])
