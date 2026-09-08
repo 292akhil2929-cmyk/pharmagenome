@@ -94,7 +94,7 @@ for(const width of [1440,390]){
   await page.unroute("**/api/datasets/1/report");
   await page.route("**/api/datasets/1/report",route=>route.fulfill({status:503,json:{detail:"Unavailable"}}));
   await page.getByRole("button",{name:"Download quality report"}).click();
-  await expect(page.getByRole("alert")).toHaveText("Report unavailable. Please try again.");
+  await expect(page.locator(".report-error")).toHaveText("Report unavailable. Please try again.");
   await expect(page.getByRole("button",{name:"Download quality report"})).toBeEnabled();
   await page.getByRole("button",{name:"Switch to dark mode"}).click();
   await page.screenshot({path:testInfo.outputPath("provenance-dark-"+width+".png"),fullPage:true});

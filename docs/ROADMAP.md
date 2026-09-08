@@ -1,6 +1,6 @@
 # Incremental delivery
 
-Phase 1 establishes the foundation. It does not claim the complete master brief is delivered.
+Phases 1 and 2 are delivered: foundation plus a validated, versioned public dataset. Phase 3 is next. It does not claim the complete master brief is delivered.
 
 | Phase | Scope | Gate |
 |---|---|---|

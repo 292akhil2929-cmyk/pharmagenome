@@ -18,7 +18,7 @@ Explore genomic variants, genes, diseases, pathways and drug-target research ass
 Build incrementally. Phase 1 establishes schema, API, frontend, Docker and tests. No scientific data or analytical results may be fabricated. Optional language-model explanation follows computation; it never replaces it. No diagnosis or treatment recommendations.
 
 ## Evidence on Hand
-User's master build brief. No datasets have been ingested yet. Do not populate example metrics as if observed.
+User's master build brief. The public TCGA LUAD ten-gene SNV snapshot is imported: 566 samples, 506 unique variants and 839 sample observations. Synthetic browser fixtures remain explicitly labeled.
 
 ## Brand Commitments
 Professional scientific dashboard, clean typography, clear tables, subtle cards, responsive dark/light mode, restrained animation.
@@ -27,4 +27,4 @@ Professional scientific dashboard, clean typography, clear tables, subtle cards,
 Provenance is part of every result. Cohort denominators must be explicit. Computation works without LLMs. Scientific limitations remain visible.
 
 ## Open Decisions
-Production PostgreSQL provider and connection string are not supplied. Phase 1 readiness must report this honestly.
+Neon PostgreSQL is connected privately through Vercel. Phase 3 genomic explorers are next; drug/pathway sources and response data remain pending.

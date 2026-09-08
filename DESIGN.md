@@ -40,3 +40,6 @@ Keep source/version evidence, phase disclosures and the research-use limitation 
 
 ## Verification scope
 An independent reviewer inspected desktop/mobile screenshots and code, then marked the unknown-data and keyboard-navigation fixes resolved. CI covers those fixes. Live Chrome checks covered database connection, navigation, theme, mobile drawer and Escape behavior. No image-comp fidelity claim is made.
+
+## Phase 2 populated states
+Retain the forest/sage Operate workspace and existing shadcn-derived table/button controls. Replace the empty collection only when a ready API provides a dataset. Show source/fixture status, assembly, cohort scope, sample observations and distinct variants with different labels. Quality reports distinguish accepted, excluded, invalid and duplicate records; no accuracy claim derives from acceptance fraction. Use responsive definition lists and wrapping checksums; long inventories scroll inside the table. Report download failures display a retryable message. Source connections distinguish an imported subset from planned adapters. Both themes and 390px/1440px views are covered by browser checks.

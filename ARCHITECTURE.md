@@ -1,14 +1,14 @@
 # Architecture
 
-## Phase 1: implemented scope
-Next.js renders the public research workspace. Its server route proxies the read-only FastAPI system endpoint. FastAPI accesses PostgreSQL through parameterized psycopg queries. Dataset counts are live database counts, not sample fixture values. The schema prepares later analytical modules; those modules are not yet implemented.
+## Phase 2: implemented scope
+Next.js renders the public research workspace. Its server route proxies the read-only FastAPI system and dataset-report endpoints. FastAPI accesses PostgreSQL through parameterized psycopg queries. Dataset counts are live database counts, not sample fixture values. The schema prepares later analytical modules; those modules are not yet implemented.
 
 ```mermaid
 flowchart LR
   Browser --> Next[Next.js on Vercel]
   Next --> API[FastAPI on Vercel]
   API --> PG[(PostgreSQL / Neon)]
-  Import[Future validated ingestion] -.-> PG
+  Import[Validated snapshot ingestion] --> PG
   PG -.-> Compute[Future Python analytical services]
   Compute -.-> Explain[Optional result explanation]
 ```
@@ -18,7 +18,7 @@ flowchart LR
 - frontend/components: responsive scientific workspace and shadcn-derived controls
 - backend/app: FastAPI API and database access
 - backend/migrations: immutable SQL migrations
-- backend/scripts: checksummed migration runner
+- backend/scripts: checksummed migration runner, official-source capture/replay and transactional importer
 - backend/tests: health, validation and PostgreSQL constraint tests
 - data/raw, processed, external, fixtures: future ingestion boundaries
 - data_quality: validation policy
@@ -33,7 +33,7 @@ sample_variants carries sample-specific VAF, quality and source version. Populat
 
 Drug-target and drug-disease associations retain dataset versions and evidence. Drug response units, assay type and replicates remain explicit; no cross-assay comparison is implied.
 
-Dataset versions have source, retrieval time, SHA-256 and fixture status. Ingestion reports reconcile downloaded = valid + invalid + duplicate records on successful runs. Analyses retain method version, parameters, results, source versions, random seed and code revision.
+Dataset versions have source, retrieval time, SHA-256 and fixture status. Ingestion reports reconcile downloaded = valid + invalid + excluded + duplicate records on successful runs. Analyses retain method version, parameters, results, source versions, random seed and code revision.
 
 ## Migration safety
 The runner uses a PostgreSQL advisory transaction lock and one atomic transaction. Applied SQL is checksummed. Re-running is a no-op; modifying an applied migration raises an error. Add a new numbered migration for future changes. Migrations never execute during normal HTTP requests.
@@ -45,6 +45,15 @@ FastAPI is supported by Vercel's Python runtime: https://vercel.com/docs/framewo
 
 ## Security and limitations
 Read-only public routes; bounded pagination and symbol input; SQL parameters; request IDs without secret logging; bounded database and HTTP timeouts; restrictive CORS. Public read access is limited to scientific catalog/system metadata. No uploads, PHI, patient identifiers or arbitrary execution are exposed.
-The platform is educational/research software. Phase 1 has no clinical claims, analytical calculations, AI explanations or model training.
+The platform is educational/research software. Phase 2 has no clinical claims, analytical calculations, AI explanations or model training.
 
 The initial Vercel API build applies idempotent migrations in its trusted build environment. Subsequent schema releases should move migration execution to a controlled release job before traffic switches; do not use destructive migrations in preview builds.
+
+## Snapshot ingestion
+The committed cBioPortal LUAD snapshot retains all 566 profiled samples and a declared ten-gene SNV subset. Ensembl GRCh37 metadata supplies bounds. Capture preserves raw response bytes; replay validates the complete manifest and source IDs before Pydantic row validation, coordinate normalization and observation deduplication.
+
+A transaction-scoped advisory lock serializes imports. Validation failures stop before writes; database failures roll back all writes. Successful import reports are stored with the same transaction. Rejected captures retain report evidence in the Actions artifact, not a partly populated production dataset.
+
+Dataset SHA identifies an immutable import. Molecular profiles include the SHA so later imports retain their own sample observations. dataset_genes records source symbols/types and study_dataset_versions records each study/source-version relationship. Global variant identity remains assembly/locus/alleles; counts of global unique variants differ from versioned sample observations. Production blocks synthetic fixtures. No network capture, migration or mutation runs through public HTTP endpoints.
+
+GET /api/datasets/{id}/report returns the source manifest, quality counts, rejection reasons and pipeline metadata. The frontend proxies fixed backend paths with bounded timeouts and displays download failures with retry. Database credentials remain server-only.
