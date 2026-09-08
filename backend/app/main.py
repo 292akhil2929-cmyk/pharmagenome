@@ -13,8 +13,8 @@ from pydantic import BaseModel
 
 from app.db import connection
 from app.genomics import router as genomics_router
-from app.research import router as research_router
 from app.modeling import router as modeling_router
+from app.research import router as research_router
 from app.sequences import router as sequences_router
 from app.statistics import router as statistics_router
 
