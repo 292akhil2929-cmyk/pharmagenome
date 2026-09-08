@@ -7,7 +7,7 @@ from typing import Annotated, Literal
 
 import numpy as np
 import scipy
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, ConfigDict, Field
 from scipy import stats
 
@@ -272,7 +272,7 @@ def analyze_enrichment(req: EnrichmentRequest):
 
 
 @router.get("/options")
-def analysis_options():
-    dataset, datasets, genes, _, pathways, _ = research.read_data()
+def analysis_options(dataset_id: int | None = Query(None, ge=1)):
+    dataset, datasets, genes, _, pathways, _ = research.read_data(dataset_id)
     return {"dataset": dataset, "datasets": datasets, "genes": genes,
             "pathway_count": len({p["id"] for p in pathways})}

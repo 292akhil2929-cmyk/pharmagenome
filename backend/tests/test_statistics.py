@@ -80,7 +80,7 @@ def test_omnibus_analytic_reference_and_rank_invariance():
     groups = [[1, 3, 5, 7, 9], [2, 4, 6, 8, 10], [11, 12, 13, 14, 15]]
     r = calculate("kruskal", groups)
     transformed = calculate("kruskal", [[x ** 3 for x in g] for g in groups])
-    assert r["statistic"] == pytest.approx(8.96)
+    assert r["statistic"] == pytest.approx(12 / (15 * 16) * (25 ** 2 / 5 + 30 ** 2 / 5 + 65 ** 2 / 5) - 3 * 16)
     assert r["p_value"] == transformed["p_value"]
 
 
