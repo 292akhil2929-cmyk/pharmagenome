@@ -61,3 +61,14 @@ The network shows one selected gene between up to three pathways and three drugs
 Filters change from three columns to two at 1000px and one at 650px. Mobile summaries use two columns; the network stacks with its gene first and removes connector strokes. Source actions and pagination wrap, while tables retain contained horizontal scrolling. Inputs and inline details receive accent focus outlines; existing reduced-motion behavior applies.
 
 Keep snapshot/fixture identity, retrieval date, checksum, computation time, revision and limitations visible. Source stage is historical metadata; report counts do not establish efficacy, pathway overlap is not enrichment, and network links do not predict variant response or cohort treatment.
+
+
+## Phase 6 statistical workbench
+
+Extend the existing Operate workspace with three keyboard-accessible tabs: user-supplied measurements, 2 × 2 counts and source-backed pathway enrichment. Preserve the forest/sage palette, compact native controls, ruled data tables and restrained motion. Method help and input constraints sit with the form; synthetic teaching values are explicitly marked.
+
+Results lead with interpretation, test statistic, unadjusted p-value and effect estimate. Detailed sections expose uncertainty, descriptive statistics, exact empirical cumulative distributions, hypotheses, assumptions, limits and provenance. Paired correlations add a scatter plot; enrichment uses a complete paginated table ranked by primary BY q-value. Charts do not animate and exact inputs/results remain in the JSON export.
+
+At 390px, every grid child has zero minimum width so wide analytical tables scroll inside their wrapper instead of widening the document. Metrics stack, distribution plots use one column, controls wrap, and the existing drawer behavior remains intact. Input changes clear stale results. Source errors, validation errors and pending work are distinct and retryable.
+
+Scientific wording distinguishes evidence against a null from practical or clinical importance. It names the ten-gene enrichment universe, all-pathway correction family, BY dependency rationale, post-hoc selection risk and absence of pathway-activation or treatment inference.

@@ -1,6 +1,6 @@
 # Incremental delivery
 
-Phases 1–5 are delivered: foundation, ingestion, genomic explorers, sequence tools and source-linked drug/target/pathway research associations. Phase 6 statistical methods and enrichment is next. It does not claim the complete master brief is delivered.
+Phases 1–6 are delivered: foundation, ingestion, genomic explorers, sequence tools, source-linked drug/target/pathway research associations, and transparent statistical analysis with restricted-universe enrichment. Phase 7 drug-response ML is next and remains gated on a valid response dataset. It does not claim the complete master brief is delivered.
 
 | Phase | Scope | Gate |
 |---|---|---|

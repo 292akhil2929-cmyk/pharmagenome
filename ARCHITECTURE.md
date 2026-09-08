@@ -1,7 +1,7 @@
 # Architecture
 
-## Phase 5: implemented scope
-Next.js renders the public research workspace. Its server route proxies the read-only FastAPI system and dataset-report endpoints. FastAPI accesses PostgreSQL through parameterized psycopg queries. Dataset counts are live database counts, not sample fixture values. Descriptive genomic exploration and stateless sequence algorithms are implemented; drug-target/pathway associations are implemented; inferential modules remain planned.
+## Phase 6: implemented scope
+Next.js renders the public research workspace. Its server route proxies the read-only FastAPI system and dataset-report endpoints. FastAPI accesses PostgreSQL through parameterized psycopg queries. Dataset counts are live database counts, not sample fixture values. Descriptive genomic exploration and stateless sequence algorithms are implemented; drug-target/pathway associations and bounded statistical inference are implemented; drug-response ML remains planned.
 
 ```mermaid
 flowchart LR
@@ -9,7 +9,8 @@ flowchart LR
   Next --> API[FastAPI on Vercel]
   API --> PG[(PostgreSQL / Neon)]
   Import[Validated snapshot ingestion] --> PG
-  PG --> Compute[Genomics / research overlap]
+  PG --> Compute[Genomics / research overlap / enrichment]
+  API --> Stats[Stateless statistical inference]
   API --> Sequence[Stateless DNA algorithms]
   Compute -.-> Explain[Optional result explanation]
 ```
@@ -45,7 +46,7 @@ Two Vercel projects share one GitHub monorepo: pharmagenome (root frontend) and 
 FastAPI is supported by Vercel's Python runtime: https://vercel.com/docs/frameworks/backend/fastapi . Docker Compose supplies a separate PostgreSQL 17 environment for reproducible development. Redis/background workers are deferred until workload evidence requires them.
 
 ## Security and limitations
-Read-only catalogue routes and stateless sequence-computation POST routes; bounded pagination and symbol input; SQL parameters; request IDs without secret logging; bounded database and HTTP timeouts; restrictive CORS. Public read access is limited to scientific catalog/system metadata. Sequence text uploads are bounded and not persisted to the application database. No clinical-data storage or arbitrary execution is exposed.
+Read-only catalogue routes and bounded stateless sequence/statistics POST routes; bounded pagination and symbol input; SQL parameters; request IDs without secret logging; bounded database and HTTP timeouts; restrictive CORS. Public read access is limited to scientific catalog/system metadata. Sequence text uploads are bounded and not persisted to the application database. No clinical-data storage or arbitrary execution is exposed.
 The platform is educational/research software. No clinical validity, AI explanations or model training is claimed.
 
 The initial Vercel API build applies idempotent migrations in its trusted build environment. Subsequent schema releases should move migration execution to a controlled release job before traffic switches; do not use destructive migrations in preview builds.
@@ -67,3 +68,9 @@ POST /api/sequences/statistics and /api/sequences/align normalize and validate D
 
 ## Phase 5 research associations
 Migration 004 adds snapshot-scoped target identity, drug/pathway metadata, memberships, mechanisms, research disease labels and source report rows. Existing global identifiers remain stable; analysis queries use the versioned tables. A second pinned importer validates official Ensembl/Open Targets captures, then writes atomically under an advisory lock. GET /api/research computes distinct drugs, deduplicated report counts and independent pathway overlap. Public requests never mutate imported data. See [methods](docs/RESEARCH.md).
+
+## Phase 6 statistical analysis
+
+POST /api/statistics/measurements validates finite numerical groups and applies the declared test without missing-value deletion or imputation. POST /api/statistics/contingency validates integer 2 × 2 tables and guards sparse chi-square inference. These requests are not written to PostgreSQL. Responses include descriptive distributions, explicit hypotheses and assumptions, effect estimates, available intervals, input hashes, method/software versions and code revision.
+
+GET /api/statistics/options returns the minimal source universe for one research snapshot. POST /api/statistics/enrichment reads immutable snapshot-scoped gene/pathway membership, tests every pathway with a one-sided hypergeometric upper tail, and applies BH and primary BY adjustment to the entire family before sorting. The ten-gene source universe is displayed and exported; results are conditional rather than genome-wide. See [statistical methods](docs/STATISTICS.md).

@@ -3,7 +3,7 @@
 
 An analytical and research platform for exploring relationships between genomic variation and pharmaceutical data.
 
-**Current delivery: Phase 5 research associations.** A live PostgreSQL-backed workspace with a versioned public TCGA LUAD snapshot, validated SNV observations, provenance and downloadable quality reports. Genomic explorers, descriptive charts, DNA statistics and global/local alignment are implemented; drug-target links and pathway overlaps now add source-linked pharmaceutical context. Inferential statistics and ML remain subsequent phases.
+**Current delivery: Phase 6 statistical analysis.** A live PostgreSQL-backed workspace with a versioned public TCGA LUAD snapshot, validated SNV observations, provenance and downloadable quality reports. Genomic explorers, descriptive charts, DNA statistics and global/local alignment are implemented; drug-target links and pathway overlaps add source-linked pharmaceutical context; hypothesis tests, correlations and restricted-universe pathway enrichment now add transparent statistical inference. ML remains a subsequent phase.
 
 ## Why this project exists
 To demonstrate data engineering, bioinformatics and statistical reasoning through reproducible computation. The planned LLM feature explains computed results; it never substitutes for analysis.
@@ -17,12 +17,12 @@ flowchart TD
   CI[GitHub Actions] --> Tests[PostgreSQL integration + browser tests]
   Data[Public source snapshots] --> Validate[Validate and normalize]
   Validate --> DB
-  API --> Analysis[Genomics / sequences / research overlap]
-  Analysis -.-> Future[Future inference / ML]
+  API --> Analysis[Genomics / sequences / statistics / enrichment]
+  Analysis -.-> Future[Future drug-response ML]
   Analysis -.-> Explanation[Optional evidence-based explanation]
 ```
 
-## What works through Phase 5
+## What works through Phase 6
 - Normalized source, cohort, variant, gene, drug, pathway and analysis-record schema.
 - Checksummed, atomic and idempotent migrations.
 - Live API liveness/readiness and database inventory.
@@ -35,6 +35,9 @@ flowchart TD
 - DNA composition, overlapping k-mers, single-record FASTA input, global/local alignment, score-matrix preview and reproducible JSON exports.
 - 183 source-linked drugs, 186 gene-drug associations and 220 pathways from a pinned Open Targets snapshot.
 - Drug filtering, source evidence details, focused association network, pathway overlap ranking and paginated JSON exports.
+- Welch, Mann–Whitney, Pearson, Spearman, one-way ANOVA, Kruskal–Wallis, Fisher exact and chi-square tests with explicit hypotheses and assumptions.
+- Exact empirical distributions, effect sizes, available confidence intervals, complete input hashes and reproducible JSON exports.
+- Hypergeometric over-representation across all 220 imported pathways, with BH and primary BY false-discovery adjustment in the declared ten-gene universe.
 - Honest empty, loading, unavailable and connected states.
 - PostgreSQL constraint tests and browser interaction tests.
 
@@ -42,7 +45,7 @@ flowchart TD
 Next.js 16, React 19, TypeScript, Tailwind CSS 4, shadcn-derived controls; FastAPI, psycopg, PostgreSQL 17; Docker Compose; GitHub Actions; Vercel and Neon.
 
 ## Scientific methods
-Implemented mutation frequencies use distinct matching samples divided by eligible profiled samples; see [genomic methods](docs/GENOMICS.md). Implemented alignments use Needleman-Wunsch and Smith-Waterman directly; see [sequence methods](docs/SEQUENCES.md). Planned enrichment uses a documented gene universe, hypergeometric/Fisher tests and Benjamini-Hochberg adjustment. Planned statistics report assumptions, hypotheses, sample counts, effect sizes and limitations. Inferential methods remain planned.
+Implemented mutation frequencies use distinct matching samples divided by eligible profiled samples; see [genomic methods](docs/GENOMICS.md). Implemented alignments use Needleman-Wunsch and Smith-Waterman directly; see [sequence methods](docs/SEQUENCES.md). Statistical methods include explicit hypotheses, assumptions, sample counts, effects and conditional source-scoped enrichment; see [statistical methods](docs/STATISTICS.md).
 
 ## ML and AI
 Training is gated on valid public response data, patient/study-aware splits, cross-validation and multiple evaluation metrics. Optional explanations require server-side API credentials and a model confirmed accessible to that API account. No LLM, model metrics, clinical predictions or API-key fields are faked through Phase 5.
@@ -88,7 +91,7 @@ PowerShell environment syntax: `$env:API_BASE_URL='http://localhost:8000'`. For 
 | API_BASE_URL | Frontend server | Yes | Backend URL; not NEXT_PUBLIC |
 | POSTGRES_PASSWORD | Docker only | Yes | Development database password |
 
-No OpenAI API key is required or consumed through Phase 5.
+No OpenAI API key is required or consumed through Phase 6.
 
 ## Tests
 ```sh
@@ -131,15 +134,15 @@ See [ARCHITECTURE.md](ARCHITECTURE.md), [DATA_SOURCES.md](DATA_SOURCES.md) and [
 ## Screenshots
 GitHub Actions publishes desktop/mobile browser captures in its browser-evidence artifact. These deterministic screenshots verify empty, unavailable and explicitly synthetic populated states; they do not constitute evidence for scientific counts. See [verification evidence](docs/VERIFICATION.md).
 
-## Live Phase 5 release
+## Live Phase 6 release
 - Workspace: https://pharmagenome.vercel.app
 - API documentation: https://pharmagenome-api.vercel.app/docs
 - Database: Neon PostgreSQL, migrations through 004_research_associations applied; public TCGA LUAD subset imported.
 
 ## Limitations
-Genomic exploration covers ten selected genes and unambiguous GRCh37 SNVs only. Sequence tools operate on user-supplied DNA with documented size and scoring limits. This release contains no inferential statistical tests, drug-response dataset, ML or AI explanation layer. The schema alone does not validate biological annotations. No clinical validity is claimed.
+Genomic exploration covers ten selected genes and unambiguous GRCh37 SNVs only. Sequence tools operate on user-supplied DNA with documented size and scoring limits. The enrichment universe is a deliberately selected ten-gene import, so results are conditional and not genome-wide. This release contains no drug-response dataset, ML or AI explanation layer. The schema alone does not validate biological annotations. No clinical validity is claimed.
 
 ## Scientific disclaimer
 This platform is intended for educational, research, and analytical purposes. Results are not medical advice and should not be used to diagnose disease or make treatment decisions.
 
-Phase 5 evidence and boundaries: [research methods](docs/RESEARCH.md). Open Targets' AACT trial labels can include upstream LLM extraction; this app's filtering and overlap computations do not use an LLM. Clinical report counts are not independent study or efficacy counts.
+Phase 6 evidence and boundaries: [statistical methods](docs/STATISTICS.md). Phase 5 association methods remain in [research methods](docs/RESEARCH.md). Open Targets' AACT trial labels can include upstream LLM extraction; this app's filtering and overlap computations do not use an LLM. Clinical report counts are not independent study or efficacy counts.
