@@ -2,3 +2,4 @@
 pytest==9.0.2
 httpx==0.28.1
 ruff==0.16.6
+biopython==1.88

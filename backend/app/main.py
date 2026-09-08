@@ -7,22 +7,25 @@ from datetime import UTC, datetime
 import psycopg
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 from app.db import connection
 from app.genomics import router as genomics_router
+from app.sequences import router as sequences_router
 
 logger = logging.getLogger("pharmagenome")
 logging.basicConfig(level=logging.INFO)
-app = FastAPI(title="PharmaGenome", version="0.3.0",
+app = FastAPI(title="PharmaGenome", version="0.4.0",
               description="Research analytics foundation. No medical advice.")
 origins = [x.strip() for x in os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",") if x.strip()]
 app.add_middleware(CORSMiddleware, allow_origins=origins,
-                   allow_methods=["GET"], allow_headers=["Content-Type"])
+                   allow_methods=["GET", "POST"], allow_headers=["Content-Type"])
 
 TABLES = ["samples", "variants", "genes", "drugs", "pathways"]
 app.include_router(genomics_router)
+app.include_router(sequences_router)
 
 EXPECTED_MIGRATION = "003_genomics"
 
@@ -107,7 +110,7 @@ def system():
                     ORDER BY started_at DESC LIMIT 1
                 ) r ON true ORDER BY d.retrieved_at DESC LIMIT 100
             """).fetchall()
-    return {"service": "PharmaGenome", "version": app.version, "phase": 3,
+    return {"service": "PharmaGenome", "version": app.version, "phase": 4,
             "checked_at": datetime.now(UTC), "database": state,
             "counts": counts, "datasets": datasets,
             "limitations": ["The current import covers a ten-gene GRCh37 SNV subset, not an exome-wide catalogue.",
@@ -157,3 +160,10 @@ def dataset_report(dataset_id: int):
     if not row:
         raise HTTPException(404, "Completed dataset report not found.")
     return row
+
+
+@app.exception_handler(RequestValidationError)
+async def invalid_request(request: Request, exc: RequestValidationError):
+    # Do not echo submitted sequence bodies in validation errors.
+    problems = [".".join(str(x) for x in e["loc"] if x != "body") + ": " + e["msg"] for e in exc.errors()]
+    return JSONResponse(status_code=422, content={"detail": "; ".join(problems)})
