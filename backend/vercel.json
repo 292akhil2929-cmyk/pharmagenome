@@ -1,5 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "fastapi",
-  "buildCommand": "python -m scripts.migrate && python -m scripts.load_snapshot"
+  "buildCommand": "python -m scripts.migrate && python -m scripts.load_snapshot && python -m scripts.load_associations"
 }

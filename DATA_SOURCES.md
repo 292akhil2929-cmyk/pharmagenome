@@ -40,3 +40,11 @@ Record release, license and attribution before adding these sources. No drug/pat
 Official APIs only. Preserve raw bytes and retrieval times. Verify every checksum before normalization. Reject inconsistent cohorts, assemblies and manifests. Classify invalid, excluded and duplicate rows separately. Reconcile downloaded = accepted + invalid + excluded + duplicates. Production promotion fails on invalid records. Import all rows atomically under an advisory transaction lock. Identical snapshots are no-ops; later snapshots preserve separate observation profiles.
 
 Tests use explicitly synthetic fixtures in isolated, rolled-back schemas. They are never production seed data.
+
+## Phase 5: Open Targets research associations
+
+Imported a bounded ten-gene snapshot from https://api.platform.opentargets.org/api/v4/graphql on 2026-09-08. Target identifiers are resolved through official Ensembl REST symbol lookup. Open Targets supplies source-linked drug mechanisms, modality, historical maximum stage, research diseases, report identifiers/URLs and Reactome pathway memberships. Refresh is manual and versioned, aligned with source releases; the app does not query changing upstream data during analysis.
+
+183 drugs, 186 target links, 220 pathways and 279 memberships. Manifest SHA: a203c4635eac2cdb679f4081c1163a730d70f78745b54f17b566ebf5b5c3b3cb. Raw requests and responses are committed; database reports record exclusions, invalid records and missing labels. Open Targets Platform data is CC0 1.0 with upstream source attribution preserved. See [licensing](backend/data/research_associations/SOURCE_LICENSE.md) and [research methods](docs/RESEARCH.md).
+
+Source labels are not independently validated clinical findings. AACT trial entity labels include upstream LLM extraction, as documented by Open Targets. Report counts mix trials and other source records and do not quantify efficacy or independent studies. No response measurements, treatment ranking or variant-specific drug sensitivity is included.

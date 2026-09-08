@@ -30,6 +30,9 @@ LIMITATIONS = [
     "Pathway overlap counts selected genes; no enrichment, p-value, causal or treatment claim.",
     "Absence of a source link is not evidence that no biological relationship exists.",
     "No drug-response measurements or individual patient matching are included.",
+    "Open Targets uses upstream LLM extraction for AACT trial drug/disease labels; these assignments are not independently validated here.",
+    "Reports can include warnings or withdrawals; more reports do not establish stronger efficacy evidence.",
+    "Disease filtering selects associations; report lists retain all source records for each selected association.",
 ]
 
 

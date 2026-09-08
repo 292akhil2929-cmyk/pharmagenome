@@ -1,7 +1,7 @@
 # Architecture
 
-## Phase 4: implemented scope
-Next.js renders the public research workspace. Its server route proxies the read-only FastAPI system and dataset-report endpoints. FastAPI accesses PostgreSQL through parameterized psycopg queries. Dataset counts are live database counts, not sample fixture values. Descriptive genomic exploration and stateless sequence algorithms are implemented; drug and inferential modules remain planned.
+## Phase 5: implemented scope
+Next.js renders the public research workspace. Its server route proxies the read-only FastAPI system and dataset-report endpoints. FastAPI accesses PostgreSQL through parameterized psycopg queries. Dataset counts are live database counts, not sample fixture values. Descriptive genomic exploration and stateless sequence algorithms are implemented; drug-target/pathway associations are implemented; inferential modules remain planned.
 
 ```mermaid
 flowchart LR
@@ -63,3 +63,6 @@ GET /api/genomics reads one completed snapshot and computes bounded descriptive 
 
 ## Phase 4 sequence computation
 POST /api/sequences/statistics and /api/sequences/align normalize and validate DNA, then compute without PostgreSQL. The frontend streams and bounds JSON request bodies before forwarding to fixed API paths. Inputs and scoring changes invalidate displayed results. Exports include normalized inputs, hashes, methods, parameters and code revision. See [sequence methods](docs/SEQUENCES.md).
+
+## Phase 5 research associations
+Migration 004 adds snapshot-scoped target identity, drug/pathway metadata, memberships, mechanisms, research disease labels and source report rows. Existing global identifiers remain stable; analysis queries use the versioned tables. A second pinned importer validates official Ensembl/Open Targets captures, then writes atomically under an advisory lock. GET /api/research computes distinct drugs, deduplicated report counts and independent pathway overlap. Public requests never mutate imported data. See [methods](docs/RESEARCH.md).
