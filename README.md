@@ -110,7 +110,12 @@ Connect Neon PostgreSQL to the API project only. Apply migrations once from a tr
 See [ARCHITECTURE.md](ARCHITECTURE.md), [DATA_SOURCES.md](DATA_SOURCES.md) and [roadmap](docs/ROADMAP.md).
 
 ## Screenshots
-GitHub Actions publishes desktop/mobile browser captures in its browser-evidence artifact. These deterministic screenshots verify the empty-database interface and do not represent real genomic results.
+GitHub Actions publishes desktop/mobile browser captures in its browser-evidence artifact. These deterministic screenshots verify the empty-database interface and do not represent real genomic results. See [verification evidence](docs/VERIFICATION.md).
+
+## Live Phase 1 release
+- Workspace: https://pharmagenome.vercel.app
+- API documentation: https://pharmagenome-api.vercel.app/docs
+- Database: Neon PostgreSQL, migration 001_foundation applied. No scientific datasets imported.
 
 ## Limitations
 Phase 1 contains no scientific ingestion, mutation calculations, statistical analysis, sequence algorithms, drug-response dataset, ML or AI explanation layer. The schema alone does not validate biological annotations. No clinical validity is claimed.
