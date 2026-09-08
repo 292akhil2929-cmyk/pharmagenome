@@ -1,6 +1,6 @@
 # Incremental delivery
 
-Phases 1–6 are delivered: foundation, ingestion, genomic explorers, sequence tools, source-linked drug/target/pathway research associations, and transparent statistical analysis with restricted-universe enrichment. Phase 7 drug-response ML is next and remains gated on a valid response dataset. It does not claim the complete master brief is delivered.
+Phases 1–7 are delivered: foundation, ingestion, genomic explorers, sequence tools, source-linked drug/target/pathway research associations, transparent statistical analysis, and NCI-60 drug-response modeling. Phase 8 optional explanation remains gated on verified API model access. It does not claim the complete master brief is delivered.
 
 | Phase | Scope | Gate |
 |---|---|---|
@@ -10,7 +10,7 @@ Phases 1–6 are delivered: foundation, ingestion, genomic explorers, sequence t
 | 4 | Sequence statistics, global/local alignment | Edge cases and known alignment score/traceback tests |
 | 5 | Drugs, targets, pathway membership | Source-linked research associations, no recommendations |
 | 6 | Hypothesis tests, correlations, enrichment | Null/alternative, assumptions, effect size, correction, reference tests |
-| 7 | Drug-response ML | Valid response dataset, group-aware split, CV, multiple metrics |
+| 7 | Drug-response ML | Delivered: aligned CellMiner data, repeated stratified CV, baseline, multiple metrics, held-out importance |
 | 8 | Optional explanation | Verified API model access, server-only key, evidence-constrained output |
 | 9 | Full analytical dashboard | Real results, working controls, desktop/mobile accessibility |
 | 10 | Full portfolio release | Reproducible demo, documentation, all applicable tests |

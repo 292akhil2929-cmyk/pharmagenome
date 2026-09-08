@@ -1,42 +1,40 @@
-# Phase 6 verification
+# Phase 7 verification
 
-Verified application commit: f65885480a52e78dba561f8b86406fbe293edb56.
+Verified application commit: c17926609e0a7aef7a63d9f95e25dac9490813e4.
 
-- [GitHub Actions run 34242373011](https://github.com/292akhil2929-cmyk/pharmagenome/actions/runs/34242373011): success.
-- Backend: Ruff passed; 132 tests passed against PostgreSQL 17; backend Docker image built.
-- Frontend: TypeScript and production build passed; 23 Playwright tests passed.
-- Backend reference tests cover descriptive sample denominators and quartile interpolation, Welch analytic values and swap symmetry, exact/permutation Mann–Whitney, Pearson, exact-enumerated Spearman with ties, ANOVA, monotonic-transform Kruskal invariance, Fisher boundary serialization, chi-square expected counts and sparse-table rejection.
-- Enrichment tests independently verify a hypergeometric probability and hand-calculated BH/BY adjustments, include zero-overlap pathways in the family, and confirm 220 source pathways through PostgreSQL and FastAPI.
-- Bounds tests reject missing, non-finite, non-numeric, Boolean, oversized and too-small inputs. Production/CI dependency manifest parity is tested so Vercel includes NumPy and SciPy.
-- Browser tests cover keyboard tabs, loading/error/retry states, stale-result clearing, strict numeric parsing, all analysis forms, expected-count and descriptive tables, empirical-distribution and paired plots, full JSON downloads, pathway paging, BY-first labels, responsive containment and dark mode.
-- Browser captures use explicit synthetic teaching/interface fixtures. They establish layout and interaction evidence, not scientific findings.
+- [GitHub Actions run 34251633271](https://github.com/292akhil2929-cmyk/pharmagenome/actions/runs/34251633271): success.
+- Backend: Ruff passed; 137 tests passed against PostgreSQL 17; backend Docker image built.
+- Frontend: TypeScript and production build passed; 26 Playwright tests passed.
+- CellMiner snapshot tests pin the curated SHA-256, reconcile 60 cells, 599 expression values, 540 mutation-status values and 593 drug responses, preserve STK11 mutation as unavailable, and verify all ten chosen drug records have FDA-approved source status.
+- Modeling reference tests independently check the predeclared zero z-score target, deterministic 5-fold × 3-repeat predictions, exactly three held-out predictions per sample, class balance, a 0.5 prior-baseline ROC-AUC, confusion-matrix reconciliation, predictor allowlisting and duplicate rejection.
+- PostgreSQL integration tests cover atomic idempotent import, dataset provenance, ten drugs, eleven predictor options, mutation-group eligibility, the real 59-measurement Erlotinib path, complete predictions and unknown-drug rejection.
+- Browser tests cover 1440px and 390px response/model states, request construction, result focus, metric and confusion evidence, complete JSON export, feature-count guard, API error recovery and page containment.
+- Browser fixtures are explicitly synthetic UI evidence. Scientific counts and values below come from the live imported source.
 
-## Statistical reference results
+## Live dataset and API
 
-The backend reference suite checks Welch t = -3, df = 8, p = 0.0170716812, mean difference -3 and 95% CI [-5.306004, -0.693996] for [1,2,3,4,5] versus [4,5,6,7,8]. It checks Fisher's two-sided p = 0.1025641026 and odds ratio 12 for [[6,2],[1,4]], plus chi-square = 6.666667 and Cramér V = 1/3 for [[20,10],[10,20]].
+Both Vercel projects reached Ready. The live health endpoint returned version 0.7.0. Readiness reported migration `005_drug_response_modeling`; system state reported Phase 7, 626 total samples, 193 drugs, 10 genes, 506 variants and 220 pathways.
 
-The Spearman tie test independently enumerates all 24 labeled pairings. Hypergeometric and false-discovery tests are compared with hand calculations rather than only reusing the implementation under test.
+The live modeling options endpoint returned CellMiner version `cellminer-2025.3-curated-v1`, ten drugs, eleven selectable predictors and eight mutation genes with at least three cell lines in each comparison group. Dataset SHA-256 is `335d0bdb8bcb2f878acfe8250d886d225eaa559bc2d8635f59a0fc613b481acd`.
 
-## Live verification
+A live Erlotinib/TP53 comparison returned 59 measured cell lines, 29 mutation-present and 30 no-called-mutation values, with unadjusted Mann–Whitney p = 0.7386871647. This value is a deployment check, not a biological claim.
 
-Both Vercel projects reached Ready. Anonymous frontend HTML returned the expected PharmaGenome title and all eight referenced CSS/JavaScript assets returned HTTP 200. Chrome verified the deployed statistical workbench at 390px: the result page width was 380px, two ECDF panels rendered, and the Welch teaching result displayed t = -3 and p = 0.0170717 without errors.
+All three live estimators completed and returned 177 held-out predictions for 59 measured cell lines. With the full eleven-feature request and the predeclared zero boundary, there were 27 positive and 32 comparison cell lines. Logistic regression returned mean fold ROC-AUC 0.4879894, random forest 0.4210582 and histogram gradient boosting 0.4476190; the shared prior baseline was 0.5. These are internal panel results and are not a model-selection or efficacy claim. Returned code revisions matched the deployed commits.
 
-Direct live API checks completed successfully for Mann–Whitney, Pearson, Spearman, ANOVA, Kruskal–Wallis, Fisher exact and chi-square. Their returned code revision matched the deployed Phase 6 release.
+## Live browser and responsive inspection
 
-The live options endpoint returned research dataset 2, ten genes, 220 pathways and snapshot SHA a203c4635eac2cdb679f4081c1163a730d70f78745b54f17b566ebf5b5c3b3cb. A live EGFR enrichment request and Chrome result used all 220 pathways, reported zero BY q < 0.05, showed the declared ten-gene universe, and retained hypotheses, assumptions, correction rationale and source provenance. Twenty rows appeared on the first page while the JSON response retained the complete family.
+Chrome loaded the deployed CellMiner manifest, all ten drug options, all eleven predictors and the real TP53 response distribution. Running the full eleven-feature logistic model completed and moved focus to Evaluation ledger. The interface exposed fold mean and standard deviation, prior baselines, pooled held-out ROC, confusion matrix, permutation importance, complete JSON export and the clinical-use boundary.
 
-## Finish review
+Fresh live Chrome captures at 1440px and 390px reported document scroll width exactly equal to viewport width. A first inspection found the metric ledger could overflow at an intermediate app-panel width; commit `53f7ddb` added the breakpoint. The final `c179266` recapture also exposed the retrieval date, separated the predictor summary and gave F1 the complete last responsive row. The independent finish reviewer returned `ship` with no visible regressions.
 
-An independent Impeccable review checked 1440px and 390px light/dark statistics, correlation and enrichment captures. Its first pass found two screenshot-fixture truth issues: a Spearman capture inherited Welch wording, and enrichment combined a disconnected status with a database-backed claim. Both fixtures were corrected and recaptured. The verdict pass scored both fixes resolved and returned `ship`. Its scope was visual/interaction/scientific-copy consistency; the numerical and deployment claims above come from CI and live checks.
+## Scientific and reproducibility boundaries
+
+NCI-60 contains immortalized cancer cell lines rather than patients. Activity values are CellMiner experimental z scores. The binary target uses a predeclared activity z-score boundary of zero, independent of held-out outcomes; it is not a clinical response threshold. Five-fold cross-validation repeated three times estimates performance within this small panel; it is not external validation.
+
+Imputation and logistic scaling are fitted inside each training fold. Response values and identifiers are outside the predictor allowlist. The models use fixed hyperparameters and no tuning search. The prior dummy classifier uses identical splits. Pooled ROC and confusion values duplicate each cell line across three repeats and are descriptive; the fold standard deviations are not independent confidence intervals.
+
+Permutation importance is computed only on held-out fold data. It has no effect direction, can share credit among correlated predictors and can be negative through sampling noise. Mutation comparison labels say “no called mutation” because absence in the processed summary does not prove wild type. No result supports diagnosis, treatment choice, dosing, safety or patient benefit.
 
 ## Previous functionality retained
 
-The genomic snapshot SHA remains aae580bb94295d59dfa7e18676fd7ce62547881958bd0919169f0b1bcc1ca78f. Live system inventory remains 566 samples, 506 unique SNVs, 10 genes, 183 drugs and 220 pathways. Existing genomic, sequence and research-association tests pass in the same suite. The sequence global-alignment teaching case remains score 12; EGFR remains 82 drugs and 37 overlapping pathways in the research explorer.
-
-## Evidence boundaries
-
-Measurement and contingency inputs are submitted to FastAPI and are not persisted to the application database; exported JSON contains them. Statistical results are exploratory and do not establish clinical importance, equivalence, causality or treatment effect.
-
-Enrichment is conditional on the deliberately selected ten-gene imported universe. It is not genome-wide. Pathway overlap and adjusted p-values do not establish pathway activation, causality, treatment relevance or drug response. BY is primary because overlapping pathway tests may be dependent; BH is reported secondarily.
-
-No drug-response dataset, machine-learning model, clinical prediction or AI explanation is included in Phase 6. Full Docker Compose runtime is not claimed; PostgreSQL integration and the backend Docker build passed.
+The Phase 6 statistical suite, Phase 5 source-linked associations, sequence tools, genomic explorers, ingestion constraints and browser flows pass in the same CI run. The TCGA LUAD snapshot remains 566 cohort samples, 839 accepted observations and 506 unique SNVs. The Open Targets snapshot remains 183 source-linked drugs and 220 pathways; CellMiner adds ten separate NSC drug identities and 60 separate study samples.

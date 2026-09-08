@@ -34,7 +34,7 @@ Gene identifiers, symbols and types come from cBioPortal. Full names and genomic
 | [ChEMBL](https://www.ebi.ac.uk/chembl/) | Compounds, targets, research evidence | Imported via Open Targets |
 | [Reactome](https://reactome.org/) | Human gene-pathway memberships | Imported via Open Targets |
 
-The genomic import does not itself supply drug/pathway records. Phase 5 adds the separately versioned Open Targets research snapshot below, retaining source attribution and retrieval times. No clinical conclusions are supplied. Drug-response and ML modules remain gated on usable data, coherent units and defensible group-aware evaluation.
+The genomic import does not itself supply drug/pathway records. Phase 5 adds the separately versioned Open Targets research snapshot below, retaining source attribution and retrieval times. No clinical conclusions are supplied. The separately versioned CellMiner snapshot below supplies drug-response measurements with coherent source z-score units and matched cell-line features.
 
 ## Import contract
 Official APIs only. Preserve raw bytes and retrieval times. Verify every checksum before normalization. Reject inconsistent cohorts, assemblies and manifests. Classify invalid, excluded and duplicate rows separately. Reconcile downloaded = accepted + invalid + excluded + duplicates. Production promotion fails on invalid records. Import all rows atomically under an advisory transaction lock. Identical snapshots are no-ops; later snapshots preserve separate observation profiles.
@@ -48,3 +48,24 @@ Imported a bounded ten-gene snapshot from https://api.platform.opentargets.org/a
 183 drugs, 186 target links, 220 pathways and 279 memberships. Manifest SHA: a203c4635eac2cdb679f4081c1163a730d70f78745b54f17b566ebf5b5c3b3cb. Raw requests and responses are committed; database reports record exclusions, invalid records and missing labels. Open Targets Platform data is CC0 1.0 with upstream source attribution preserved. See [licensing](backend/data/research_associations/SOURCE_LICENSE.md) and [research methods](docs/RESEARCH.md).
 
 Source labels are not independently validated clinical findings. AACT trial entity labels include upstream LLM extraction, as documented by Open Targets. Report counts mix trials and other source records and do not quantify efficacy or independent studies. No response measurements, treatment ranking or variant-specific drug sensitivity is included.
+
+
+## Phase 7: NCI CellMiner drug response
+
+Imported a curated, aligned subset of [NCI CellMiner 2025.3](https://discover.nci.nih.gov/cellminer/) processed downloads. The source panel contains 60 diverse human cancer cell lines. Activity data are CellMiner DTP compound-activity average z scores; higher values mean greater sensitivity. Expression values are five-platform gene-transcript average z scores. Mutation values indicate a protein-function-affecting exome variant in the processed summary.
+
+| Scope | Value |
+|---|---|
+| Cell lines | 60 |
+| Expression measurements | 599 |
+| Mutation-status measurements | 540 |
+| Drug-response measurements | 593 |
+| Selected genes | 10 |
+| Predeclared FDA-status drugs | 10 |
+| Curated CSV SHA-256 | `335d0bdb8bcb2f878acfe8250d886d225eaa559bc2d8635f59a0fc613b481acd` |
+
+The manifest pins the original processed ZIP names, source dates and SHA-256 values. Ten drug names and one NSC per name were chosen before model evaluation. The ten genes inherit the existing PharmaGenome panel. Missing values stay missing; the absent STK11 row in the mutation source is never translated into a negative call.
+
+NCI's reuse policy asks for National Cancer Institute credit, which is retained in the [source notice](backend/data/drug_response/SOURCE_LICENSE.md). CellMiner requests citation of Shankavaram et al. (BMC Genomics, 2009) and Reinhold et al. (Cancer Research, 2012). The software license does not relicense source data.
+
+NCI-60 consists of immortalized cell lines, not patients. Its activity z scores are experimental research measurements, not clinical response labels, dose recommendations or treatment evidence. See [modeling methods](docs/MODELING.md).

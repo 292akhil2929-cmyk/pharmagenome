@@ -3,7 +3,7 @@
 
 An analytical and research platform for exploring relationships between genomic variation and pharmaceutical data.
 
-**Current delivery: Phase 6 statistical analysis.** A live PostgreSQL-backed workspace with a versioned public TCGA LUAD snapshot, validated SNV observations, provenance and downloadable quality reports. Genomic explorers, descriptive charts, DNA statistics and global/local alignment are implemented; drug-target links and pathway overlaps add source-linked pharmaceutical context; hypothesis tests, correlations and restricted-universe pathway enrichment now add transparent statistical inference. ML remains a subsequent phase.
+**Current delivery: Phase 7 drug-response modeling.** A live PostgreSQL-backed workspace with a versioned public TCGA LUAD snapshot, validated SNV observations, provenance and downloadable quality reports. Genomic explorers, descriptive charts, DNA statistics and global/local alignment are implemented; drug-target links and pathway overlaps add source-linked pharmaceutical context; hypothesis tests, correlations and restricted-universe pathway enrichment add transparent statistical inference; a pinned CellMiner NCI-60 panel now supports cell-line response comparisons and leakage-aware model evaluation.
 
 ## Why this project exists
 To demonstrate data engineering, bioinformatics and statistical reasoning through reproducible computation. The planned LLM feature explains computed results; it never substitutes for analysis.
@@ -18,11 +18,11 @@ flowchart TD
   Data[Public source snapshots] --> Validate[Validate and normalize]
   Validate --> DB
   API --> Analysis[Genomics / sequences / statistics / enrichment]
-  Analysis -.-> Future[Future drug-response ML]
-  Analysis -.-> Explanation[Optional evidence-based explanation]
+  Analysis --> Model[Drug-response ML]
+  Model -.-> Explanation[Optional evidence-based explanation]
 ```
 
-## What works through Phase 6
+## What works through Phase 7
 - Normalized source, cohort, variant, gene, drug, pathway and analysis-record schema.
 - Checksummed, atomic and idempotent migrations.
 - Live API liveness/readiness and database inventory.
@@ -38,6 +38,9 @@ flowchart TD
 - Welch, Mann–Whitney, Pearson, Spearman, one-way ANOVA, Kruskal–Wallis, Fisher exact and chi-square tests with explicit hypotheses and assumptions.
 - Exact empirical distributions, effect sizes, available confidence intervals, complete input hashes and reproducible JSON exports.
 - Hypergeometric over-representation across all 220 imported pathways, with BH and primary BY false-discovery adjustment in the declared ten-gene universe.
+- CellMiner NCI-60 response comparisons for ten predeclared FDA-status drugs and the established ten-gene panel.
+- Logistic regression, random forest and histogram gradient boosting with fixed hyperparameters, 5-fold × 3-repeat stratified validation and a prior baseline.
+- Accuracy, balanced accuracy, precision, recall, F1, ROC-AUC, pooled ROC/confusion matrix, held-out permutation importance and complete prediction exports.
 - Honest empty, loading, unavailable and connected states.
 - PostgreSQL constraint tests and browser interaction tests.
 
@@ -45,10 +48,10 @@ flowchart TD
 Next.js 16, React 19, TypeScript, Tailwind CSS 4, shadcn-derived controls; FastAPI, psycopg, PostgreSQL 17; Docker Compose; GitHub Actions; Vercel and Neon.
 
 ## Scientific methods
-Implemented mutation frequencies use distinct matching samples divided by eligible profiled samples; see [genomic methods](docs/GENOMICS.md). Implemented alignments use Needleman-Wunsch and Smith-Waterman directly; see [sequence methods](docs/SEQUENCES.md). Statistical methods include explicit hypotheses, assumptions, sample counts, effects and conditional source-scoped enrichment; see [statistical methods](docs/STATISTICS.md).
+Implemented mutation frequencies use distinct matching samples divided by eligible profiled samples; see [genomic methods](docs/GENOMICS.md). Implemented alignments use Needleman-Wunsch and Smith-Waterman directly; see [sequence methods](docs/SEQUENCES.md). Statistical methods include explicit hypotheses, assumptions, sample counts, effects and conditional source-scoped enrichment; see [statistical methods](docs/STATISTICS.md). Drug-response target construction, leakage controls and evaluation are specified in [modeling methods](docs/MODELING.md).
 
 ## ML and AI
-Training is gated on valid public response data, patient/study-aware splits, cross-validation and multiple evaluation metrics. Optional explanations require server-side API credentials and a model confirmed accessible to that API account. No LLM, model metrics, clinical predictions or API-key fields are faked through Phase 5.
+The implemented ML module uses aligned NCI-60 cell lines, training-fold preprocessing, repeated stratified cross-validation, a prior baseline and multiple metrics. It is internal cell-line validation, not patient/study or external validation. Optional explanations require server-side API credentials and a model confirmed accessible to that API account. No LLM, clinical prediction or API-key field is faked.
 
 ## Quick start: Docker
 Requires Docker with Compose.
@@ -72,6 +75,7 @@ pip install -r requirements-dev.txt
 python -m scripts.migrate
 python -m scripts.load_snapshot
 python -m scripts.load_associations
+python -m scripts.load_modeling
 uvicorn app.main:app --reload
 ```
 In another terminal:
@@ -91,7 +95,7 @@ PowerShell environment syntax: `$env:API_BASE_URL='http://localhost:8000'`. For 
 | API_BASE_URL | Frontend server | Yes | Backend URL; not NEXT_PUBLIC |
 | POSTGRES_PASSWORD | Docker only | Yes | Development database password |
 
-No OpenAI API key is required or consumed through Phase 6.
+No OpenAI API key is required or consumed through Phase 7.
 
 ## Tests
 ```sh
@@ -134,15 +138,15 @@ See [ARCHITECTURE.md](ARCHITECTURE.md), [DATA_SOURCES.md](DATA_SOURCES.md) and [
 ## Screenshots
 GitHub Actions publishes desktop/mobile browser captures in its browser-evidence artifact. These deterministic screenshots verify empty, unavailable and explicitly synthetic populated states; they do not constitute evidence for scientific counts. See [verification evidence](docs/VERIFICATION.md).
 
-## Live Phase 6 release
+## Live Phase 7 release
 - Workspace: https://pharmagenome.vercel.app
 - API documentation: https://pharmagenome-api.vercel.app/docs
-- Database: Neon PostgreSQL, migrations through 004_research_associations applied; public TCGA LUAD subset imported.
+- Database: Neon PostgreSQL, migrations through 005_drug_response_modeling applied; TCGA LUAD, Open Targets and CellMiner snapshots imported.
 
 ## Limitations
-Genomic exploration covers ten selected genes and unambiguous GRCh37 SNVs only. Sequence tools operate on user-supplied DNA with documented size and scoring limits. The enrichment universe is a deliberately selected ten-gene import, so results are conditional and not genome-wide. This release contains no drug-response dataset, ML or AI explanation layer. The schema alone does not validate biological annotations. No clinical validity is claimed.
+Genomic exploration covers ten selected genes and unambiguous GRCh37 SNVs only. Sequence tools operate on user-supplied DNA with documented size and scoring limits. The enrichment universe is a deliberately selected ten-gene import, so results are conditional and not genome-wide. The CellMiner module is cell-line-only internal validation. This release contains no clinical prediction or AI explanation layer. The schema alone does not validate biological annotations. No clinical validity is claimed.
 
 ## Scientific disclaimer
 This platform is intended for educational, research, and analytical purposes. Results are not medical advice and should not be used to diagnose disease or make treatment decisions.
 
-Phase 6 evidence and boundaries: [statistical methods](docs/STATISTICS.md). Phase 5 association methods remain in [research methods](docs/RESEARCH.md). Open Targets' AACT trial labels can include upstream LLM extraction; this app's filtering and overlap computations do not use an LLM. Clinical report counts are not independent study or efficacy counts.
+Phase 7 methods: [drug-response modeling](docs/MODELING.md). Phase 6 evidence and boundaries: [statistical methods](docs/STATISTICS.md). Phase 5 association methods remain in [research methods](docs/RESEARCH.md). Open Targets' AACT trial labels can include upstream LLM extraction; this app's filtering and overlap computations do not use an LLM. Clinical report counts are not independent study or efficacy counts.

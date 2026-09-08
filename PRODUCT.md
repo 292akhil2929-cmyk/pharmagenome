@@ -27,4 +27,4 @@ Professional scientific dashboard, clean typography, clear tables, subtle cards,
 Provenance is part of every result. Cohort denominators must be explicit. Computation works without LLMs. Scientific limitations remain visible.
 
 ## Open Decisions
-Neon PostgreSQL is connected privately through Vercel. Phase 6 genomic explorers, sequence tools, drug/pathway research associations, statistical tests, correlation and restricted-universe enrichment are implemented. Valid drug-response data and modeling remain pending.
+Neon PostgreSQL is connected privately through Vercel. Through Phase 7, genomic explorers, sequence tools, drug/pathway research associations, statistical inference and CellMiner NCI-60 response modeling are implemented. Optional evidence-constrained explanation remains gated on verified OpenAI API model access; external model validation and clinical use remain outside the delivered scope.
