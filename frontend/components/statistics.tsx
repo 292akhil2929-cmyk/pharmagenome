@@ -99,7 +99,7 @@ export function Statistics(){
  <div className="sequence-actions"><Button type="submit" disabled={disabled}>{busy?<RefreshCw className="spin" size={15}/>:<Play size={15}/>} {busy?"Computing…":tab==="enrichment"?"Test pathway enrichment":"Run statistical test"}</Button>{tab!=="enrichment"&&<Button type="button" variant="outline" disabled={busy} onClick={teaching}>Load synthetic example</Button>}<button type="button" className="text-action" disabled={busy} onClick={()=>{clear();setValues("");setCells(["","","",""]);setGenes([]);setUnit("");setExample(false);}}>Clear inputs</button></div>
  {example&&<p className="example-note">Synthetic teaching values · not observed biological measurements</p>}
  </form>
- <p className="sequence-privacy">{tab==="enrichment"?"Uses source-backed pathway membership from PostgreSQL; no LLM inference.":"Values are sent to the research API for computation. The application does not save them to its database. JSON exports contain the submitted measurements."}</p>
+ <p className="sequence-privacy">{tab==="enrichment"?(options?.dataset.is_fixture||result?.dataset?.is_fixture?"Uses an explicitly synthetic development snapshot for interface testing; no live-source finding is claimed.":"Uses source-backed pathway membership from PostgreSQL; no LLM inference."):"Values are sent to the research API for computation. The application does not save them to its database. JSON exports contain the submitted measurements."}</p>
  </section>
  {busy&&<p role="status" className="sequence-pending">Computing the declared test and its assumptions…</p>}
  {error&&<section role="alert" className="panel statistics-error"><h2>Check the analysis request</h2><p>{error}</p><p>Edit the input or method, then run again.</p></section>}

@@ -3,15 +3,15 @@ import {readFile} from "node:fs/promises";
 const meta={method:"welch",method_version:"1.0.0",computed_at:"2026-09-08T08:00:00Z",code_revision:"synthetic-browser-fixture",software:{scipy:"1.18.0",numpy:"2.3.3"},parameters:{},inputs:{groups:[[1,2,3,4,5],[4,5,6,7,8]],unit:"synthetic units"},input_sha256:"a".repeat(64),null_hypothesis:"Population means are equal.",alternative_hypothesis:"Population means differ.",assumptions:["Independent observations."],limitations:["Synthetic browser fixture; not biological evidence."],interpretation:"Evidence against the stated null at unadjusted alpha 0.05."};
 const stats={...meta,statistic:-3,p_value:0.0170716812337826,effect:{label:"Mean A minus mean B",value:-3},confidence_interval:{label:"95% CI for mean A minus mean B",low:-5.306,high:-0.694},descriptive:[{n:5,mean:3,median:3,variance:2.5,standard_deviation:Math.sqrt(2.5),q1:2,q3:4,minimum:1,maximum:5,distribution:[1,2,3,4,5].map((value,i)=>({value,count:1,cumulative_fraction:(i+1)/5}))},{n:5,mean:6,median:6,variance:2.5,standard_deviation:Math.sqrt(2.5),q1:5,q3:7,minimum:4,maximum:8,distribution:[4,5,6,7,8].map((value,i)=>({value,count:1,cumulative_fraction:(i+1)/5}))}],details:{degrees_of_freedom:8}};
 const dataset={id:2,name:"Synthetic source snapshot",sha256:"b".repeat(64),retrieved_at:meta.computed_at,is_fixture:true};
-const options={dataset,datasets:[dataset],genes:["EGFR","TP53","BRAF","KRAS","MET","NF1","PIK3CA","RB1","STK11","KEAP1"].map((symbol,id)=>({id,symbol})),pathway_count:21};
-const enriched={...meta,method:"one-sided hypergeometric over-representation",dataset,input_sha256:undefined,inputs:undefined,null_hypothesis:"Selected genes are a uniform random subset of the declared imported universe.",alternative_hypothesis:"A pathway contains more selected genes than expected under that null.",assumptions:["Selection is independent of pathway membership under the null.","Every imported pathway is in the test family."],limitations:["Restricted ten-gene source universe; not genome-wide.","Membership does not establish pathway activation or treatment relevance."],parameters:{universe:options.genes.map(g=>g.symbol),selected_genes:["EGFR"]},interpretation:"Conditional exploratory test within the ten-gene source universe; not genome-wide enrichment.",tested_pathways:21,rejected_by:0,rejected_bh:0,rows:Array.from({length:21},(_,i)=>({id:"R-HSA-"+i,name:"Synthetic pathway "+i,overlap:i===20?0:1,pathway_genes_in_universe:2,genes:i===20?[]:["EGFR"],expected_overlap:0.2,fold_enrichment:i===20?0:5,p_value:0.2,q_bh:0.3,q_by:1,url:"https://reactome.org/content/detail/R-HSA-"+i}))};
+const options={dataset,datasets:[dataset],genes:["EGFR","TP53","BRAF","KRAS","MET","NF1","PIK3CA","RB1","STK11","KEAP1"].map((symbol,id)=>({id,symbol})),pathway_count:220};
+const enriched={...meta,method:"one-sided hypergeometric over-representation",dataset,input_sha256:undefined,inputs:undefined,null_hypothesis:"Selected genes are a uniform random subset of the declared imported universe.",alternative_hypothesis:"A pathway contains more selected genes than expected under that null.",assumptions:["Selection is independent of pathway membership under the null.","Every imported pathway is in the test family."],limitations:["Restricted ten-gene source universe; not genome-wide.","Membership does not establish pathway activation or treatment relevance."],parameters:{universe:options.genes.map(g=>g.symbol),selected_genes:["EGFR"]},interpretation:"Conditional exploratory test within the ten-gene source universe; not genome-wide enrichment.",tested_pathways:220,rejected_by:0,rejected_bh:0,rows:Array.from({length:220},(_,i)=>({id:"R-HSA-"+i,name:"Synthetic pathway "+i,overlap:i===219?0:1,pathway_genes_in_universe:2,genes:i===219?[]:["EGFR"],expected_overlap:0.2,fold_enrichment:i===219?0:5,p_value:0.2,q_bh:0.3,q_by:1,url:"https://reactome.org/content/detail/R-HSA-"+i}))};
 async function setup(page:Page,width=1440){
  await page.setViewportSize({width,height:1000});await page.emulateMedia({reducedMotion:"reduce"});
- await page.route("**/api/system",route=>route.fulfill({json:{version:"0.6.0",phase:6,checked_at:meta.computed_at,database:{status:"not_configured",schema_version:null},counts:null,datasets:[],limitations:[]}}));
+ await page.route("**/api/system",route=>route.fulfill({json:{version:"0.6.0",phase:6,checked_at:meta.computed_at,database:{status:"ready",schema_version:"004_research_associations"},counts:{samples:566,variants:506,genes:10,drugs:183,pathways:220},datasets:[dataset],limitations:[]}}));
  await page.route("**/api/statistics/measurements",route=>route.fulfill({json:stats}));
  await page.route("**/api/statistics/options",route=>route.fulfill({json:options}));
  await page.route("**/api/statistics/enrichment",route=>route.fulfill({json:enriched}));
- await page.goto("/");await expect(page.getByRole("status")).toContainText("Database not configured");
+ await page.goto("/");await expect(page.getByRole("status")).toContainText("Database connected");
  if(width<=650)await page.getByRole("button",{name:"Open navigation"}).click();
  await page.getByRole("button",{name:"Statistics",exact:true}).click();
 }
@@ -43,7 +43,7 @@ for(const width of [1440,390]){
   await page.getByRole("button",{name:"Next pathway test page"}).click();
   await expect(page.getByRole("cell",{name:"Synthetic pathway 20",exact:false})).toBeVisible();
   const full=page.waitForEvent("download");await page.getByRole("button",{name:"Export statistics JSON"}).click();
-  expect(JSON.parse(await readFile((await (await full).path())!,"utf8")).rows).toHaveLength(21);
+  expect(JSON.parse(await readFile((await (await full).path())!,"utf8")).rows).toHaveLength(220);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   await page.screenshot({path:info.outputPath("enrichment-"+width+".png"),fullPage:true});
   await page.getByRole("button",{name:"Switch to dark mode"}).click();
@@ -75,9 +75,11 @@ test("paired plot, source retry and empty selection",async({page},info)=>{
  await page.getByLabel("Statistical method").selectOption("spearman");
  await page.getByRole("button",{name:"Load synthetic example"}).click();
  await page.unroute("**/api/statistics/measurements");
- await page.route("**/api/statistics/measurements",route=>route.fulfill({json:{...stats,method:"spearman",effect:{label:"Spearman rho",value:0.9},p_value:0.083,confidence_interval:null,details:{p_value_method:"Exact pairing permutation",seed:20260908,resamples:9999}}}));
+ await page.route("**/api/statistics/measurements",route=>route.fulfill({json:{...stats,method:"spearman",statistic:0.9,effect:{label:"Spearman rho",value:0.9},p_value:0.083,confidence_interval:null,interpretation:"Insufficient evidence against the stated null at unadjusted alpha 0.05.",null_hypothesis:"Pairings are exchangeable under independence.",alternative_hypothesis:"A monotonic association departs from exchangeable pairings.",assumptions:["Independent paired observations.","Permutation inference requires exchangeability under the null."],details:{p_value_method:"Exact pairing permutation",seed:20260908,resamples:9999}}}));
  await page.getByRole("button",{name:"Run statistical test"}).click();
  await expect(page.getByRole("heading",{name:"Paired observations"})).toBeVisible();
+ await expect(page.getByLabel("Statistical test results")).toContainText("Spearman rho0.9");
+ await expect(page.getByText("Insufficient evidence against the stated null",{exact:false})).toBeVisible();
  await page.screenshot({path:info.outputPath("paired-plot.png"),fullPage:true});
  await page.unroute("**/api/statistics/options");
  await page.route("**/api/statistics/options",route=>route.fulfill({status:503,json:{detail:"Research source unavailable."}}));
