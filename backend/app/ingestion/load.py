@@ -95,6 +95,10 @@ def load_validated(manifest, data):
                     INSERT INTO variant_genes(variant_id,gene_id,consequence) VALUES (%s,%s,%s)
                     ON CONFLICT(variant_id,gene_id) DO NOTHING
                 """, (variant_id, int(gene_id), consequence))
+                conn.execute("""
+                    INSERT INTO dataset_variant_genes(dataset_id,variant_id,gene_id,consequence)
+                    VALUES (%s,%s,%s,%s) ON CONFLICT(dataset_id,variant_id,gene_id) DO NOTHING
+                """, (dataset_id, variant_id, int(gene_id), consequence))
             conn.execute("""
                 INSERT INTO sample_variants(sample_id,variant_id,profile_id,dataset_id,variant_allele_fraction)
                 VALUES (%s,%s,%s,%s,%s)

@@ -11,17 +11,20 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 from app.db import connection
+from app.genomics import router as genomics_router
 
 logger = logging.getLogger("pharmagenome")
 logging.basicConfig(level=logging.INFO)
-app = FastAPI(title="PharmaGenome", version="0.2.0",
+app = FastAPI(title="PharmaGenome", version="0.3.0",
               description="Research analytics foundation. No medical advice.")
 origins = [x.strip() for x in os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",") if x.strip()]
 app.add_middleware(CORSMiddleware, allow_origins=origins,
                    allow_methods=["GET"], allow_headers=["Content-Type"])
 
 TABLES = ["samples", "variants", "genes", "drugs", "pathways"]
-EXPECTED_MIGRATION = "002_ingestion"
+app.include_router(genomics_router)
+
+EXPECTED_MIGRATION = "003_genomics"
 
 
 @app.middleware("http")
@@ -104,10 +107,10 @@ def system():
                     ORDER BY started_at DESC LIMIT 1
                 ) r ON true ORDER BY d.retrieved_at DESC LIMIT 100
             """).fetchall()
-    return {"service": "PharmaGenome", "version": app.version, "phase": 2,
+    return {"service": "PharmaGenome", "version": app.version, "phase": 3,
             "checked_at": datetime.now(UTC), "database": state,
             "counts": counts, "datasets": datasets,
-            "limitations": ["Phase 2 imports a ten-gene GRCh37 SNV subset, not an exome-wide catalogue.",
+            "limitations": ["The current import covers a ten-gene GRCh37 SNV subset, not an exome-wide catalogue.",
                             "Indels and other variant types are excluded and counted separately.",
                             "Research and education only; not medical advice."]}
 

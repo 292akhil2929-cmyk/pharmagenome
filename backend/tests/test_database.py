@@ -20,7 +20,7 @@ def schema():
 def test_migration_is_idempotent():
     migrate()
     with connection() as conn:
-        assert conn.execute("SELECT count(*) AS n FROM schema_migrations").fetchone()["n"] == 2
+        assert conn.execute("SELECT count(*) AS n FROM schema_migrations").fetchone()["n"] == 3
 
 
 def test_readiness_and_empty_counts():
