@@ -1,7 +1,10 @@
-import {NextRequest,NextResponse} from "next/server";
-const backend=process.env.BACKEND_URL||"http://localhost:8000";
-export async function POST(request:NextRequest){
- try{const response=await fetch(backend+"/api/modeling/evaluate",{method:"POST",headers:{"Content-Type":"application/json"},body:await request.text(),cache:"no-store"});
-  return NextResponse.json(await response.json(),{status:response.status});}
+import {NextResponse} from "next/server";
+export const dynamic="force-dynamic";
+export async function POST(request:Request){
+ const base=process.env.API_BASE_URL;if(!base)return NextResponse.json({detail:"API connection is not configured."},{status:503});
+ const text=await request.text();if(new TextEncoder().encode(text).byteLength>20000)return NextResponse.json({detail:"Model request exceeds 20 KB."},{status:413});
+ let body:unknown;try{body=JSON.parse(text);}catch{return NextResponse.json({detail:"Request must contain valid JSON."},{status:400});}
+ try{const response=await fetch(new URL("/api/modeling/evaluate",base),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body),cache:"no-store",signal:AbortSignal.timeout(30000)});const result=await response.json();
+  return NextResponse.json(response.ok?result:{detail:typeof result.detail==="string"?result.detail:"Model evaluation unavailable."},{status:response.ok?200:response.status});}
  catch{return NextResponse.json({detail:"Model evaluation service unavailable."},{status:503});}
 }
