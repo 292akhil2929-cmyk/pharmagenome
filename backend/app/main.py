@@ -14,24 +14,26 @@ from pydantic import BaseModel
 from app.db import connection
 from app.genomics import router as genomics_router
 from app.research import router as research_router
+from app.modeling import router as modeling_router
 from app.sequences import router as sequences_router
 from app.statistics import router as statistics_router
 
 logger = logging.getLogger("pharmagenome")
 logging.basicConfig(level=logging.INFO)
-app = FastAPI(title="PharmaGenome", version="0.6.0",
+app = FastAPI(title="PharmaGenome", version="0.7.0",
               description="Research analytics foundation. No medical advice.")
 origins = [x.strip() for x in os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",") if x.strip()]
 app.add_middleware(CORSMiddleware, allow_origins=origins,
                    allow_methods=["GET", "POST"], allow_headers=["Content-Type"])
 
-TABLES = ["samples", "variants", "genes", "drugs", "pathways"]
+TABLES = ["samples", "variants", "genes", "drugs", "pathways", "drug_responses"]
 app.include_router(genomics_router)
 app.include_router(sequences_router)
 app.include_router(research_router)
 app.include_router(statistics_router)
+app.include_router(modeling_router)
 
-EXPECTED_MIGRATION = "004_research_associations"
+EXPECTED_MIGRATION = "005_drug_response_modeling"
 
 
 @app.middleware("http")
@@ -114,11 +116,12 @@ def system():
                     ORDER BY started_at DESC LIMIT 1
                 ) r ON true ORDER BY d.retrieved_at DESC LIMIT 100
             """).fetchall()
-    return {"service": "PharmaGenome", "version": app.version, "phase": 6,
+    return {"service": "PharmaGenome", "version": app.version, "phase": 7,
             "checked_at": datetime.now(UTC), "database": state,
             "counts": counts, "datasets": datasets,
             "limitations": ["The current import covers a ten-gene GRCh37 SNV subset, not an exome-wide catalogue.",
                             "Indels and other variant types are excluded and counted separately.",
+                            "NCI-60 drug-response modeling is cell-line-only and has no clinical interpretation.",
                             "Research and education only; not medical advice."]}
 
 

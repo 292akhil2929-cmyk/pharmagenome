@@ -1,0 +1,108 @@
+{
+  "name": "CellMiner NCI-60 \u00b7 ten-gene / ten-drug modeling panel",
+  "version": "cellminer-2025.3-curated-v1",
+  "retrieved_at": "2026-09-08T00:00:00Z",
+  "sha256": "335d0bdb8bcb2f878acfe8250d886d225eaa559bc2d8635f59a0fc613b481acd",
+  "is_fixture": false,
+  "source_url": "https://discover.nci.nih.gov/cellminer/loadDownload.do",
+  "database_version": "2.15",
+  "genome_build": "HG-19",
+  "activity_metric": "CellMiner compound activity average z score; higher means greater sensitivity",
+  "genes": [
+    "BRAF",
+    "EGFR",
+    "KRAS",
+    "MET",
+    "NF1",
+    "PIK3CA",
+    "RB1",
+    "STK11",
+    "TP53",
+    "KEAP1"
+  ],
+  "drugs": [
+    {
+      "nsc": "718781",
+      "name": "Erlotinib",
+      "fda_status": "FDA approved",
+      "mechanism": "PK:YK,EGFR"
+    },
+    {
+      "nsc": "715055",
+      "name": "Gefitinib",
+      "fda_status": "FDA approved",
+      "mechanism": "PK:YK,EGFR"
+    },
+    {
+      "nsc": "119875",
+      "name": "Cisplatin",
+      "fda_status": "FDA approved",
+      "mechanism": "A7|AlkAg"
+    },
+    {
+      "nsc": "125973",
+      "name": "Paclitaxel",
+      "fda_status": "FDA approved",
+      "mechanism": "TUBB|Tu-stab"
+    },
+    {
+      "nsc": "123127",
+      "name": "Doxorubicin",
+      "fda_status": "FDA approved",
+      "mechanism": "TOP2"
+    },
+    {
+      "nsc": "761431",
+      "name": "Vemurafenib",
+      "fda_status": "FDA approved",
+      "mechanism": "PK:YK,BRAF"
+    },
+    {
+      "nsc": "758246",
+      "name": "Trametinib",
+      "fda_status": "FDA approved",
+      "mechanism": "PK:STK,MAP2K,MAP2K1,MAP2K2"
+    },
+    {
+      "nsc": "779217",
+      "name": "Osimertinib",
+      "fda_status": "FDA approved",
+      "mechanism": "PK:EGFR"
+    },
+    {
+      "nsc": "756645",
+      "name": "Crizotinib",
+      "fda_status": "FDA approved",
+      "mechanism": "PK:YK,MET,ALK"
+    },
+    {
+      "nsc": "750690",
+      "name": "Sunitinib",
+      "fda_status": "FDA approved",
+      "mechanism": "PK:YK,PDGFR,KIT,VEGFR,Multikinase"
+    }
+  ],
+  "cell_lines": 60,
+  "upstream_files": [
+    {
+      "name": "DTP_NCI60_ZSCORE.zip",
+      "sha256": "17e6a62597a32caa5d43d2e8f81422c108b47bcefd51a3b2269834001da1d7aa",
+      "source_date": "2025-09-17"
+    },
+    {
+      "name": "nci60_DNA__Exome_Seq_Protein_function_affecting.zip",
+      "sha256": "150284e66ae679ac1b271747bf8fb3e36a089ec3c9cf9e5e2a3b595f015510d6",
+      "source_date": "2025-09-11"
+    },
+    {
+      "name": "nci60_RNA__5_Platform_Gene_Transcript_Average_z_scores.zip",
+      "sha256": "9ce447892b86e48af2cc353d91abe0f8311ce4496569789d46991b17ec748709",
+      "source_date": "2025-09-11"
+    }
+  ],
+  "missingness": {
+    "empty_fields": "Unavailable in the processed source; never encoded as absence",
+    "STK11_mutation": "Source table has no STK11 row; retained as unavailable"
+  },
+  "selection": "Ten genes were fixed by the pre-existing PharmaGenome panel. Ten named FDA-approved drugs were fixed before model evaluation; one NSC per named drug."
+}
