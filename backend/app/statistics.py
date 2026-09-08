@@ -61,9 +61,13 @@ def finite(value):
 def describe(values):
     a = np.asarray(values, dtype=float)
     q = np.quantile(a, [0.25, 0.5, 0.75], method="linear")
+    unique, counts = np.unique(a, return_counts=True)
+    cumulative = np.cumsum(counts) / len(a)
     return {"n": len(a), "mean": float(a.mean()), "median": float(q[1]),
             "variance": float(a.var(ddof=1)), "standard_deviation": float(a.std(ddof=1)),
-            "q1": float(q[0]), "q3": float(q[2]), "minimum": float(a.min()), "maximum": float(a.max())}
+            "q1": float(q[0]), "q3": float(q[2]), "minimum": float(a.min()), "maximum": float(a.max()),
+            "distribution": [{"value": float(v), "count": int(c), "cumulative_fraction": float(p)}
+                             for v, c, p in zip(unique, counts, cumulative, strict=True)]}
 
 
 def measurement(req):

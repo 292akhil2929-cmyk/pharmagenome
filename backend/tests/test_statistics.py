@@ -26,6 +26,9 @@ def test_descriptive_sample_denominator_and_interpolation():
     assert d["variance"] == pytest.approx(5 / 3)
     assert d["standard_deviation"] == pytest.approx(math.sqrt(5 / 3))
     assert (d["q1"], d["q3"]) == (1.75, 3.25)
+    assert describe([1, 1, 2])["distribution"] == [
+        {"value": 1, "count": 2, "cumulative_fraction": 2 / 3},
+        {"value": 2, "count": 1, "cumulative_fraction": 1}]
 
 
 def test_welch_equal_variance_analytic_reference_and_swap():
