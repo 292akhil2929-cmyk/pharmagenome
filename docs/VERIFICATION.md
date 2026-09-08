@@ -1,27 +1,29 @@
-# Phase 3 verification
+# Phase 4 verification
 
-Verified application commit: 70adedaf4f38a3f7229381760339203b40f9993e.
+Verified application commit: 52a3bcf8cc4ed5556c4a45648a6a864020f05fed.
 
-- [GitHub Actions run 34203642122](https://github.com/292akhil2929-cmyk/pharmagenome/actions/runs/34203642122): success.
-- Backend: Ruff passed, 56 tests passed with PostgreSQL 17; Docker image built.
-- Frontend: TypeScript and production build passed; 11 Playwright tests passed.
-- New backend coverage: distinct sample numerator, full and gene-specific eligible denominator, cohort versus variant filters, empty cohort null frequency, missing/discordant VAF, histogram endpoint 1.0, literal search, sorting, pagination, profile deduplication, snapshot isolation and invalid API parameters.
-- Pinned public snapshot was imported into an isolated test schema and queried through FastAPI. TP53 result: 267 / 566, 181 unique SNVs; pagination leaves summary unchanged. Tests roll back the isolated schema.
-- New browser coverage: genomic chart/table rendering, inline gene and variant details, explicit missing metadata, JSON exports, filters, pagination, no-match result, service failure/recovery, dedicated explorer navigation, mobile overflow and reduced-motion dark captures.
-- Independent finish review: ship; explicit filter labels and settled dark 1440px/390px screenshots confirmed. Scientific computation was verified separately from the fixture screenshots.
+- [GitHub Actions run 34205739558](https://github.com/292akhil2929-cmyk/pharmagenome/actions/runs/34205739558): success.
+- Backend: Ruff passed, 94 tests passed with PostgreSQL 17; backend Docker build passed.
+- Frontend: TypeScript and production build passed; 15 Playwright tests passed.
+- Algorithm coverage includes 180 deterministic score comparisons against Biopython 1.88; returned tracebacks independently reconstruct inputs and recompute scores.
+- Edge cases cover all-N sequences, overlapping k-mers, multiple FASTA records, invalid symbols, strict scores, local zero-score behavior, deterministic ties and 1,000-by-1,000 alignment.
+- Browser coverage includes empty inputs, explicit teaching examples, file input, validation/retry, keyboard tabs, result invalidation, JSON downloads, no-positive alignment and all-N statistics. Previous genomic and workspace regression tests also pass.
+- Independent finish review: ship, with no blocking frontend findings after source and desktop/mobile light/dark evidence review.
 
 ## Live verification
-The live public API returned 566 eligible samples, 459 matching samples, 506 unique SNVs, 839 sample–variant observations and 10 affected genes. The TP53 query returned 267 matching samples, 181 unique variants and frequency 267/566.
+Anonymous frontend proxy POST checks and Chrome confirmed statistics for AACCGGTTNNACGTACGT: length 18, known bases 16, N 2, GC 50%, AT 50%, 14 valid overlapping 2-mer windows and 3 N-excluded windows.
 
-Live API checks confirmed no overlapping variant IDs between two consecutive TP53 pages, unchanged cohort denominator across those pages, 566 eligible samples retained for an empty variant search, and 40 coded samples on matrix page 2.
+Global alignment of ACGTACGT versus ACGTCGT returned score 12, seven exact matches, one gap, 87.5% column identity and traceback ACGTACGT / ACGT-CGT. Chrome displayed the full score matrix and highlighted traceback.
 
-Chrome verified the populated Genomics view, TP53 filter, 47.2% display with numerator and denominator, variant page 2, dedicated explorer navigation and mobile dark rendering. Settled mobile page width remained within the viewport; captured console error list was empty.
+Local alignment of TTACGTAA versus GGACGTCC returned ACGT / ACGT, score 8 and 1-based inclusive coordinates 3–6 for both inputs. AAAA versus CCCC returned no positive alignment, score zero and null coordinates. NNNN returned null GC/AT and zero valid k-mers. ACGU was rejected with HTTP 422.
 
-JSON export download events passed in Chromium CI. The desktop browser tool's live download observer timed out, so a saved live browser download is not claimed. Live source data and calculation responses were independently inspected.
+Live Chrome checked statistics, alignment controls, actual results, source hashes, dark theme and 390px mobile containment. The settled document width was 380px within a 390px viewport.
 
 ## Evidence boundaries
-Browser screenshots use explicitly synthetic test fixtures; they are layout/interaction evidence, not scientific data. Actual counts above come from the pinned public source snapshot and live/API integration checks.
+Browser CI screenshots use explicitly synthetic fixtures and establish layout/interaction behavior, not scientific correctness. Numerical evidence above comes from live computation; independent algorithm comparisons run in backend tests.
 
-This release supports descriptive genomics only within the ten-gene GRCh37 SNV subset. It does not provide full gene metadata, clinical annotation, population frequency, inferential statistics, sequence algorithms, drug response, ML or AI explanations. All accepted SNVs are included; this is not necessarily cBioPortal's default consequence-filtered alteration query. See [methods](GENOMICS.md) and [source provenance](../DATA_SOURCES.md).
+JSON download events passed in Chromium CI. A saved live Chrome download is not claimed. The app does not persist submitted sequences to its database; it sends them to the public research API for computation.
 
-Full Docker Compose runtime is not verified end-to-end; PostgreSQL integration tests and the backend Docker build passed.
+Full Docker Compose runtime has not been verified end-to-end. PostgreSQL integration tests and the backend Docker build passed.
+
+Genomic exploration still uses the ten-gene GRCh37 TCGA LUAD SNV subset: 566 profiled samples, 506 unique SNVs and 839 observations. This release adds bounded DNA composition and linear-gap alignment; it does not add clinical annotation, inferential statistics, drug response, ML or AI explanations. See [sequence methods](SEQUENCES.md), [genomic methods](GENOMICS.md) and [source provenance](../DATA_SOURCES.md).

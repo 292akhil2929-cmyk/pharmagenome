@@ -1,6 +1,6 @@
 # Incremental delivery
 
-Phases 1–3 are delivered: foundation, ingestion and descriptive genomic explorers. Phase 4 is next. It does not claim the complete master brief is delivered.
+Phases 1–4 are delivered: foundation, ingestion, descriptive genomic explorers and DNA sequence tools. Phase 5 drug/target/pathway research associations is next. It does not claim the complete master brief is delivered.
 
 | Phase | Scope | Gate |
 |---|---|---|

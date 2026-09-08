@@ -1,7 +1,7 @@
 # Architecture
 
-## Phase 3: implemented scope
-Next.js renders the public research workspace. Its server route proxies the read-only FastAPI system and dataset-report endpoints. FastAPI accesses PostgreSQL through parameterized psycopg queries. Dataset counts are live database counts, not sample fixture values. Descriptive genomic exploration is implemented; sequence, drug and inferential modules remain planned.
+## Phase 4: implemented scope
+Next.js renders the public research workspace. Its server route proxies the read-only FastAPI system and dataset-report endpoints. FastAPI accesses PostgreSQL through parameterized psycopg queries. Dataset counts are live database counts, not sample fixture values. Descriptive genomic exploration and stateless sequence algorithms are implemented; drug and inferential modules remain planned.
 
 ```mermaid
 flowchart LR
@@ -44,8 +44,8 @@ Two Vercel projects share one GitHub monorepo: pharmagenome (root frontend) and 
 FastAPI is supported by Vercel's Python runtime: https://vercel.com/docs/frameworks/backend/fastapi . Docker Compose supplies a separate PostgreSQL 17 environment for reproducible development. Redis/background workers are deferred until workload evidence requires them.
 
 ## Security and limitations
-Read-only public routes; bounded pagination and symbol input; SQL parameters; request IDs without secret logging; bounded database and HTTP timeouts; restrictive CORS. Public read access is limited to scientific catalog/system metadata. No uploads, PHI, patient identifiers or arbitrary execution are exposed.
-The platform is educational/research software. Phase 2 has no clinical claims, analytical calculations, AI explanations or model training.
+Read-only catalogue routes and stateless sequence-computation POST routes; bounded pagination and symbol input; SQL parameters; request IDs without secret logging; bounded database and HTTP timeouts; restrictive CORS. Public read access is limited to scientific catalog/system metadata. Sequence text uploads are bounded and not persisted to the application database. No clinical-data storage or arbitrary execution is exposed.
+The platform is educational/research software. No clinical validity, AI explanations or model training is claimed.
 
 The initial Vercel API build applies idempotent migrations in its trusted build environment. Subsequent schema releases should move migration execution to a controlled release job before traffic switches; do not use destructive migrations in preview builds.
 
@@ -60,3 +60,6 @@ GET /api/datasets/{id}/report returns the source manifest, quality counts, rejec
 
 ## Phase 3 genomic exploration
 GET /api/genomics reads one completed snapshot and computes bounded descriptive results. The core separates eligible profiled samples from matching variant observations, preserves gene-specific denominators, deduplicates sample identities and returns explicit nulls for undefined frequencies. New dataset_variant_genes associations prevent future source versions from borrowing earlier consequences. The frontend uses Recharts charts adapted from shadcn registry examples, semantic tables and native filter controls. See [methods and API](docs/GENOMICS.md).
+
+## Phase 4 sequence computation
+POST /api/sequences/statistics and /api/sequences/align normalize and validate DNA, then compute without PostgreSQL. The frontend streams and bounds JSON request bodies before forwarding to fixed API paths. Inputs and scoring changes invalidate displayed results. Exports include normalized inputs, hashes, methods, parameters and code revision. See [sequence methods](docs/SEQUENCES.md).

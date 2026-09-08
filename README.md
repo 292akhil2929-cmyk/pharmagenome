@@ -3,7 +3,7 @@
 
 An analytical and research platform for exploring relationships between genomic variation and pharmaceutical data.
 
-**Current delivery: Phase 3 genomic exploration.** A live PostgreSQL-backed workspace with a versioned public TCGA LUAD snapshot, validated SNV observations, provenance and downloadable quality reports. Genomic explorers and descriptive charts are implemented; sequence tools, inferential statistics, drugs and ML remain subsequent phases.
+**Current delivery: Phase 4 sequence tools.** A live PostgreSQL-backed workspace with a versioned public TCGA LUAD snapshot, validated SNV observations, provenance and downloadable quality reports. Genomic explorers, descriptive charts, DNA statistics and global/local alignment are implemented; inferential statistics, drugs and ML remain subsequent phases.
 
 ## Why this project exists
 To demonstrate data engineering, bioinformatics and statistical reasoning through reproducible computation. The planned LLM feature explains computed results; it never substitutes for analysis.
@@ -21,7 +21,7 @@ flowchart TD
   Analysis -.-> Explanation[Optional evidence-based explanation]
 ```
 
-## What works through Phase 3
+## What works through Phase 4
 - Normalized source, cohort, variant, gene, drug, pathway and analysis-record schema.
 - Checksummed, atomic and idempotent migrations.
 - Live API liveness/readiness and database inventory.
@@ -31,6 +31,7 @@ flowchart TD
 - Source catalogue, scope limitations, quality report download, dark/light mode and JSON system snapshot.
 - Gene/variant search, cohort filters, deterministic sorting and pagination.
 - Gene mutation frequencies with profiled denominators; interactive charts, VAF histogram, mutation matrix and reproducible JSON exports.
+- DNA composition, overlapping k-mers, single-record FASTA input, global/local alignment, score-matrix preview and reproducible JSON exports.
 - Honest empty, loading, unavailable and connected states.
 - PostgreSQL constraint tests and browser interaction tests.
 
@@ -38,10 +39,10 @@ flowchart TD
 Next.js 16, React 19, TypeScript, Tailwind CSS 4, shadcn-derived controls; FastAPI, psycopg, PostgreSQL 17; Docker Compose; GitHub Actions; Vercel and Neon.
 
 ## Scientific methods
-Implemented mutation frequencies use distinct matching samples divided by eligible profiled samples; see [genomic methods](docs/GENOMICS.md). Planned alignments implement Needleman-Wunsch and Smith-Waterman directly. Planned enrichment uses a documented gene universe, hypergeometric/Fisher tests and Benjamini-Hochberg adjustment. Planned statistics report assumptions, hypotheses, sample counts, effect sizes and limitations. Sequence algorithms and inferential methods remain planned.
+Implemented mutation frequencies use distinct matching samples divided by eligible profiled samples; see [genomic methods](docs/GENOMICS.md). Implemented alignments use Needleman-Wunsch and Smith-Waterman directly; see [sequence methods](docs/SEQUENCES.md). Planned enrichment uses a documented gene universe, hypergeometric/Fisher tests and Benjamini-Hochberg adjustment. Planned statistics report assumptions, hypotheses, sample counts, effect sizes and limitations. Inferential methods remain planned.
 
 ## ML and AI
-Training is gated on valid public response data, patient/study-aware splits, cross-validation and multiple evaluation metrics. Optional explanations require server-side API credentials and a model confirmed accessible to that API account. No LLM, model metrics, clinical predictions or API-key fields are faked in Phase 2.
+Training is gated on valid public response data, patient/study-aware splits, cross-validation and multiple evaluation metrics. Optional explanations require server-side API credentials and a model confirmed accessible to that API account. No LLM, model metrics, clinical predictions or API-key fields are faked through Phase 4.
 
 ## Quick start: Docker
 Requires Docker with Compose.
@@ -83,7 +84,7 @@ PowerShell environment syntax: `$env:API_BASE_URL='http://localhost:8000'`. For 
 | API_BASE_URL | Frontend server | Yes | Backend URL; not NEXT_PUBLIC |
 | POSTGRES_PASSWORD | Docker only | Yes | Development database password |
 
-No OpenAI API key is required or consumed in Phase 2.
+No OpenAI API key is required or consumed through Phase 4.
 
 ## Tests
 ```sh
@@ -126,13 +127,13 @@ See [ARCHITECTURE.md](ARCHITECTURE.md), [DATA_SOURCES.md](DATA_SOURCES.md) and [
 ## Screenshots
 GitHub Actions publishes desktop/mobile browser captures in its browser-evidence artifact. These deterministic screenshots verify empty, unavailable and explicitly synthetic populated states; they do not constitute evidence for scientific counts. See [verification evidence](docs/VERIFICATION.md).
 
-## Live Phase 3 release
+## Live Phase 4 release
 - Workspace: https://pharmagenome.vercel.app
 - API documentation: https://pharmagenome-api.vercel.app/docs
 - Database: Neon PostgreSQL, migrations through 003_genomics applied; public TCGA LUAD subset imported.
 
 ## Limitations
-Phase 3 covers ten selected genes and unambiguous GRCh37 SNVs only. It contains no inferential statistical tests, sequence algorithms, drug-response dataset, ML or AI explanation layer. The schema alone does not validate biological annotations. No clinical validity is claimed.
+Genomic exploration covers ten selected genes and unambiguous GRCh37 SNVs only. Sequence tools operate on user-supplied DNA with documented size and scoring limits. This release contains no inferential statistical tests, drug-response dataset, ML or AI explanation layer. The schema alone does not validate biological annotations. No clinical validity is claimed.
 
 ## Scientific disclaimer
 This platform is intended for educational, research, and analytical purposes. Results are not medical advice and should not be used to diagnose disease or make treatment decisions.
