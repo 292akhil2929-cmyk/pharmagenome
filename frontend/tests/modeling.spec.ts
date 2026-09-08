@@ -46,6 +46,6 @@ test("feature guard, reset and service error are recoverable",async({page})=>{
  await expect(page.getByRole("button",{name:"Run repeated cross-validation"})).toBeEnabled();
  await page.unroute("**/api/modeling/evaluate");await page.route("**/api/modeling/evaluate",route=>route.fulfill({status:422,json:{detail:"At least 30 response measurements are required."}}));
  await page.getByRole("button",{name:"Run repeated cross-validation"}).click();
- await expect(page.getByRole("alert")).toContainText("At least 30");
+ await expect(page.locator(".modeling-inline-error")).toContainText("At least 30");
  await expect(page.getByRole("button",{name:"Run repeated cross-validation"})).toBeEnabled();
 });
