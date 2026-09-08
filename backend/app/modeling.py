@@ -36,6 +36,7 @@ from app.ingestion.load_modeling import DATASET
 
 router = APIRouter(prefix="/api/modeling", tags=["Drug-response modeling"])
 SEED = 20260908
+TARGET_THRESHOLD = 0.0
 GENES = ["BRAF", "EGFR", "KRAS", "MET", "NF1", "PIK3CA", "RB1", "STK11", "TP53", "KEAP1"]
 FEATURES = [f"expression_{g}" for g in GENES] + ["mutation_count"]
 ALGORITHMS = {"logistic": "Regularized logistic regression", "random_forest": "Random forest",
@@ -125,10 +126,10 @@ def evaluate(records, drug_id, algorithm, features):
     if len(usable) < 30:
         raise ValueError("At least 30 response measurements are required.")
     y_cont = np.array([r["responses"][drug_id] for r in usable], dtype=float)
-    threshold = float(np.median(y_cont))
+    threshold = TARGET_THRESHOLD
     y = (y_cont > threshold).astype(int)
     if min(np.bincount(y)) < 10:
-        raise ValueError("The median-defined classes are too small for five-fold stratification.")
+        raise ValueError("The predeclared z-score classes are too small for five-fold stratification.")
     X = np.array([[r.get(feature, np.nan) for feature in features] for r in usable], dtype=float)
     cv = RepeatedStratifiedKFold(n_splits=5, n_repeats=3, random_state=SEED)
     pipe, dummy = estimator(algorithm), DummyClassifier(strategy="prior")
@@ -181,7 +182,7 @@ def options(dataset_id: int | None = Query(None, ge=1)):
             "mutation_groups": [{"gene": gene, "mutated": count, "wild_type": len(records) - count}
                                 for gene, count in eligible.items() if count >= 3 and len(records) - count >= 3],
             "protocol": {"cross_validation": "5 folds × 3 repeats, stratified, seed 20260908",
-                         "target": "Above the selected drug's dataset median activity z score",
+                         "target": "Activity z score above the independently pinned zero threshold",
                          "positive_class": "more sensitive",
                          "pipeline": "Median imputation and scaling fit inside each training fold"}}
 
@@ -228,7 +229,7 @@ def evaluate_model(req: ModelRequest):
               "algorithm": req.algorithm, "features": req.features}
     result.update(metadata(ALGORITHMS[req.algorithm], {
         "cross_validation": {"folds": 5, "repeats": 3, "stratified": True, "seed": SEED},
-        "target": "activity z score > full-dataset median", "decision_threshold": .5,
+        "target": "activity z score > 0 (predeclared independently of outcomes)", "target_threshold": TARGET_THRESHOLD, "decision_threshold": .5,
         "imputation": "median fit within each training fold", "class_weight": "balanced",
         "importance": "held-out permutation decrease in ROC-AUC, five shuffles per fold"}, inputs))
     result.update(dataset=dataset, drug=next(d for d in drugs if d["id"] == req.drug_id),
@@ -236,7 +237,7 @@ def evaluate_model(req: ModelRequest):
                   interpretation="Repeated cross-validation estimates discrimination inside this small cell-line panel; it is not external validation.",
                   limitations=[
                       "NCI-60 is small and heterogeneous; repeated folds are correlated and metric standard deviations are descriptive.",
-                      "The response median defines a balanced teaching target using the full outcome vector.",
+                      "The zero z-score boundary is predeclared from the source metric and is not a clinical response threshold.",
                       "No hyperparameter search was performed; the fixed models were specified before comparison.",
                       "Permutation importance can share credit among correlated features and does not give causal direction.",
                       "Performance is not evidence of patient benefit and must not guide treatment."])

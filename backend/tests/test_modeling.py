@@ -16,7 +16,7 @@ client = TestClient(app)
 def synthetic_records(n=40):
     rows = []
     for i in range(n):
-        value = float(i - n / 2)
+        value = float(i - (n - 1) / 2)
         row = {"cell_line": f"TEST:{i:02d}", "tissue": "TEST", "responses": {"NSC:1": value},
                "mutation_count": i % 4}
         for j, gene in enumerate(GENES):
@@ -42,6 +42,7 @@ def test_repeated_cv_is_deterministic_and_uses_only_held_out_predictions():
     second = modeling.evaluate(synthetic_records(), "NSC:1", "logistic", features)
     assert first == second
     assert first["n"] == 40
+    assert first["threshold"] == 0
     assert first["class_counts"] == {"more_sensitive": 20, "less_sensitive_or_equal": 20}
     assert len(first["predictions"]) == 120
     assert {(p["repeat"], p["fold"]) for p in first["predictions"]} == {

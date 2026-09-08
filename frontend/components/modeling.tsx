@@ -51,14 +51,14 @@ export function Modeling(){
    <h2>{options.dataset.name}</h2>
    <p>{options.dataset.manifest.activity_metric}</p>
    <dl><div><dt>Panel</dt><dd>60 cancer cell lines</dd></div><div><dt>Scope</dt><dd>10 genes · 10 FDA-status drugs</dd></div><div><dt>Validation</dt><dd>{options.protocol.cross_validation}</dd></div><div><dt>Positive class</dt><dd>{options.protocol.positive_class}</dd></div></dl>
-   <code title={options.dataset.sha256}>{options.dataset.sha256.slice(0,16)}…</code>
+   <code title={options.dataset.sha256}>retrieved {options.dataset.retrieved_at.slice(0,10)} · sha256 {options.dataset.sha256.slice(0,16)}…</code>
   </section>
 
   <section className="panel modeling-controls">
    <div className="section-title"><div><h2>Set the experimental question</h2><p>Choose one drug response and one mutation split. Higher activity z scores mean greater sensitivity.</p></div><FlaskConical size={21}/></div>
    <div className="modeling-selectors"><label>Drug<select aria-label="Modeling drug" value={drug} onChange={e=>setDrug(e.target.value)}>{options.drugs.map(d=><option key={d.id} value={d.id}>{d.name} · {d.id}</option>)}</select></label><label>Mutation group<select aria-label="Response mutation gene" value={gene} onChange={e=>setGene(e.target.value)}>{options.mutation_groups.map(g=><option key={g.gene} value={g.gene}>{g.gene} · {g.mutated} called</option>)}</select></label><label>Model<select aria-label="Model algorithm" value={algorithm} onChange={e=>{setAlgorithm(e.target.value);setModel(null);}}>{options.algorithms.map(a=><option key={a.id} value={a.id}>{a.name}</option>)}</select></label></div>
    {selectedDrug&&<div className="drug-record"><Activity size={18}/><div><strong>{selectedDrug.name}</strong><span>{selectedDrug.mechanism} · {selectedDrug.status}</span></div></div>}
-   <fieldset className="modeling-features"><legend>Predictor panel <span>{features.length} selected</span></legend>{options.features.map(feature=><label key={feature}><input type="checkbox" checked={features.includes(feature)} onChange={e=>{setModel(null);setFeatures(current=>e.target.checked?[...current,feature]:current.filter(x=>x!==feature));}}/><span>{feature.replace("expression_","").replace("_"," ")}</span><small>{feature.startsWith("expression")?"RNA z score":"called variants"}</small></label>)}</fieldset>
+   <fieldset className="modeling-features"><legend>Predictor panel{" "}<span>{features.length} selected</span></legend>{options.features.map(feature=><label key={feature}><input type="checkbox" checked={features.includes(feature)} onChange={e=>{setModel(null);setFeatures(current=>e.target.checked?[...current,feature]:current.filter(x=>x!==feature));}}/><span>{feature.replace("expression_","").replace("_"," ")}</span><small>{feature.startsWith("expression")?"RNA z score":"called variants"}</small></label>)}</fieldset>
    <div className="modeling-run"><Button onClick={run} disabled={running||features.length<2}>{running?<LoaderCircle className="spin" size={16}/>:<Play size={16}/>}Run repeated cross-validation</Button><p>{features.length<2?"Select at least two predictors.":options.protocol.pipeline+"."}</p></div>
    {error&&<div className="modeling-inline-error" role="alert"><strong>Analysis stopped</strong><span>{error}</span></div>}
   </section>
