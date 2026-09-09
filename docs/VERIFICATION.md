@@ -2,11 +2,11 @@
 
 ## Phase 9 analytical dashboard
 
-Verified implementation commit: `eba18b93196952a5b467e73c3e797e2178530477`.
+Verified implementation commit: `27f6868dc2f91dcd85486da0acc81fa5d17c8631`.
 
-- [GitHub Actions run 34303847610](https://github.com/292akhil2929-cmyk/pharmagenome/actions/runs/34303847610): success.
+- [GitHub Actions run 34304781389](https://github.com/292akhil2929-cmyk/pharmagenome/actions/runs/34304781389): success.
 - Backend: Ruff passed; 141 tests passed against PostgreSQL 17; backend Docker image built.
-- Frontend: TypeScript and production build passed; 33 Playwright tests passed.
+- Frontend: TypeScript and production build passed; 34 Playwright tests passed.
 - Dashboard browser tests cover real-response rendering, chart scope labels, drug-target evidence, browser-local recent-analysis metadata, failure recovery, the Research Assistant boundary and navigation at 1440 px, 700 px and 390 px.
 - Live Vercel API reports version 0.9.0, Phase 9, database status ready and migration `005_drug_response_modeling`.
 - Live inventory reports 626 samples, 506 variants, 10 genes, 193 drugs and 220 pathways. These are database table counts across imported datasets; the genomic cohort remains 566 eligible samples.
