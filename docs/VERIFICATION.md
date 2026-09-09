@@ -2,7 +2,15 @@
 
 ## Phase 10 portfolio release
 
-The final release adds a standard-library reproducer for genomic, bioinformatics, statistical and drug-response outputs; audits setup, environment, ingestion, testing and deployment instructions; and marks the application 1.0.0 / Phase 10. The final commit and CI run are recorded after the release gate completes.
+Verified implementation commit: `295552bf49428f5227f925ce3588393454839dbd`.
+
+- [GitHub Actions run 34305726512](https://github.com/292akhil2929-cmyk/pharmagenome/actions/runs/34305726512): success.
+- Backend: Ruff passed for the application, tests and example reproducer; the reproducer compiled; 141 tests passed against PostgreSQL 17; the Docker image built.
+- Frontend: TypeScript and production build passed; 34 Playwright tests passed.
+- Both Vercel production deployments reached Ready and their canonical aliases resolve.
+- Anonymous frontend HTML and a hashed Next.js asset returned 200. The API reports version 1.0.0, Phase 10, ready database status and migration `005_drug_response_modeling`.
+- The live standard-library reproducer completed across all six result files. It confirmed database readiness, alignment score 2, source/input SHA-256 values and 177 held-out model prediction rows.
+- The reproducer does not use GPT-6 Astra. Optional production explanation remains unavailable because no server-side OpenAI API key is configured.
 
 ## Phase 9 analytical dashboard
 
