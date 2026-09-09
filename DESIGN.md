@@ -111,3 +111,8 @@ The drug-target view uses a three-part evidence layout instead of a decorative n
 Public navigation names match the research task rather than implementation components. The Research Assistant entry point explains the compute, inspect, explain sequence and current server-side model availability. It uses no chat composer, mascot or generated sample answer.
 
 Desktop uses the existing fixed rail. At 1100 px dashboard charts stack; at 760 px the rail becomes the existing accessible drawer and all evidence rows stack. Verification covers 1440, 700, 653 and 390 px, light and dark appearance, and page-level horizontal containment.
+
+
+## Phase 10 portfolio release
+
+The final release keeps the Phase 9 interface unchanged apart from the v1.0 and Phase 10 release labels. Portfolio completeness is established through real data, runnable controls, exports, source manifests, reproducible example output and verification evidence rather than additional decoration.

@@ -3,7 +3,7 @@
 
 An analytical and research platform for exploring relationships between genomic variation and pharmaceutical data.
 
-**Current delivery: Phase 9 analytical dashboard.** A live PostgreSQL-backed workspace with a versioned public TCGA LUAD snapshot, validated SNV observations, provenance and downloadable quality reports. Genomic explorers, descriptive charts, DNA statistics and global/local alignment are implemented; drug-target links and pathway overlaps add source-linked pharmaceutical context; hypothesis tests, correlations and restricted-universe pathway enrichment add transparent statistical inference; a pinned CellMiner NCI-60 panel supports cell-line response comparisons and leakage-aware model evaluation; an optional server-only GPT-6 Astra layer can explain compact computed evidence when API access is configured.
+**Current delivery: Phase 10 portfolio release.** A live PostgreSQL-backed workspace with a versioned public TCGA LUAD snapshot, validated SNV observations, provenance and downloadable quality reports. Genomic explorers, descriptive charts, DNA statistics and global/local alignment are implemented; drug-target links and pathway overlaps add source-linked pharmaceutical context; hypothesis tests, correlations and restricted-universe pathway enrichment add transparent statistical inference; a pinned CellMiner NCI-60 panel supports cell-line response comparisons and leakage-aware model evaluation; an optional server-only GPT-6 Astra layer can explain compact computed evidence when API access is configured.
 
 ## Why this project exists
 To demonstrate data engineering, bioinformatics and statistical reasoning through reproducible computation. The optional LLM feature explains computed results; it never substitutes for analysis.
@@ -22,7 +22,7 @@ flowchart TD
   Model -.-> Explanation[Optional evidence-based explanation]
 ```
 
-## What works through Phase 9
+## What works in the portfolio release
 - Normalized source, cohort, variant, gene, drug, pathway and analysis-record schema.
 - Checksummed, atomic and idempotent migrations.
 - Live API liveness/readiness and database inventory.
@@ -129,8 +129,10 @@ python -m scripts.capture_snapshot --output capture/new-snapshot
 ```
 The GitHub Actions **Capture public scientific snapshot** workflow also captures raw bytes and a quality report as an artifact. A successful capture is reviewed and committed before deployment; production never fetches an unpinned live dataset at startup. Re-importing the same checksum is a no-op. A different snapshot retains its own molecular profile and observations. See [data sources](DATA_SOURCES.md) for counts, licensing and scientific limits.
 
-## Reproducibility example
-Open **Data sources → Download quality report** for the full import report, rejected-row reasons, source manifest and checksum. Click **Export system snapshot** to export the actual database connection state, counts, source catalogue and timestamp. This is infrastructure evidence, not a scientific analysis. Analysis exports include method, filters, code revision, dataset checksums, results, limitations and sources.
+## Reproducibility examples
+Open **Data Sources → Download quality report** for the full import report, rejected-row reasons, source manifest and checksum. Click **Export system snapshot** to export the actual database connection state, counts, source catalogue and timestamp. This is infrastructure evidence, not a scientific analysis. Analysis exports include method, filters, code revision, dataset checksums, results, limitations and sources.
+
+Run `python examples/reproduce.py --api http://localhost:8000 --out reproduced-analysis` to create a complete multi-module JSON bundle. See [the reproducible example contract](examples/README.md) for the live-deployment command, expected structural checks and scientific boundaries.
 
 ## Deployment
 Create two Vercel projects from this repository:
@@ -138,12 +140,12 @@ Create two Vercel projects from this repository:
 2. `pharmagenome`, root `frontend`, Next.js framework.
 Connect Neon PostgreSQL to the API project only. The backend build applies migrations and the pinned, idempotent snapshot import using its private DATABASE_URL. Set the frontend API_BASE_URL to the backend production URL. Set ALLOWED_ORIGINS to the frontend origin. Deploy and verify /api/health, /api/ready, /api/system, then desktop and mobile pages.
 
-See [ARCHITECTURE.md](ARCHITECTURE.md), [DATA_SOURCES.md](DATA_SOURCES.md) and [roadmap](docs/ROADMAP.md).
+See [ARCHITECTURE.md](ARCHITECTURE.md), [DATA_SOURCES.md](DATA_SOURCES.md), [reproducible analysis example](examples/README.md) and [roadmap](docs/ROADMAP.md).
 
 ## Screenshots
 GitHub Actions publishes desktop/mobile browser captures in its browser-evidence artifact. These deterministic screenshots verify empty, unavailable and explicitly synthetic populated states; they do not constitute evidence for scientific counts. See [verification evidence](docs/VERIFICATION.md).
 
-## Live Phase 9 release
+## Live Phase 10 release
 - Workspace: https://pharmagenome.vercel.app
 - API documentation: https://pharmagenome-api.vercel.app/docs
 - Database: Neon PostgreSQL, migrations through 005_drug_response_modeling applied; TCGA LUAD, Open Targets and CellMiner snapshots imported.

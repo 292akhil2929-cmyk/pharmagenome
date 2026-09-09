@@ -1,5 +1,9 @@
 # Verification evidence
 
+## Phase 10 portfolio release
+
+The final release adds a standard-library reproducer for genomic, bioinformatics, statistical and drug-response outputs; audits setup, environment, ingestion, testing and deployment instructions; and marks the application 1.0.0 / Phase 10. The final commit and CI run are recorded after the release gate completes.
+
 ## Phase 9 analytical dashboard
 
 Verified implementation commit: `27f6868dc2f91dcd85486da0acc81fa5d17c8631`.

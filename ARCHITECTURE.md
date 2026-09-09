@@ -1,6 +1,6 @@
 # Architecture
 
-## Phase 9: implemented scope
+## Phase 10: implemented scope
 Next.js renders the public research workspace. Its server route proxies the read-only FastAPI system and dataset-report endpoints. FastAPI accesses PostgreSQL through parameterized psycopg queries. Dataset counts are live database counts, not sample fixture values. Descriptive genomic exploration and stateless sequence algorithms are implemented; drug-target/pathway associations, bounded statistical inference and CellMiner cell-line response modeling are implemented.
 
 ```mermaid
@@ -100,3 +100,10 @@ The dashboard composes existing API results rather than adding a second analytic
 Successful statistical and model runs write only a small navigation record to browser local storage: analysis kind, display title, short result summary, source name and timestamp. Raw groups, contingency tables, gene selections, cell-line points and prediction records are never stored in recent history. The server does not receive this history. Storage writes are best-effort and cannot change a successful analytical result into an error.
 
 The navigation keeps separate purpose labels for Drugs and Pathways, and for Drug Response and ML Analysis, while reusing their common evidence workspaces. The Research Assistant overview exposes the existing compute-first explanation boundary. At viewport widths through 760 px the fixed rail becomes an inert, focus-trapped drawer; the application page remains horizontally contained.
+
+
+## Phase 10 reproducible release
+
+`examples/reproduce.py` uses only the Python standard library and the public FastAPI contract. It writes complete, reviewable JSON for system provenance, genomic distributions, sequence statistics, global alignment, a Welch test and a fixed drug-response evaluation. A manifest records the API version, phase, result filenames, source/input hashes and explicit interpretation boundaries. The script does not call the optional explanation endpoint, so reproduction does not require an OpenAI API key.
+
+CI lint-checks and compiles the reproducer alongside the application. The release gate remains the full PostgreSQL test suite, production frontend build, browser suite and anonymous deployment verification.

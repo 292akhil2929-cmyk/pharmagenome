@@ -1,6 +1,6 @@
 # Incremental delivery
 
-Phases 1–9 are delivered. Phase 8's server-only GPT-6 Astra integration remains gated on a configured API key for live generation. Phase 9 adds the full real-data analytical dashboard, purpose-named navigation, browser-local recent-analysis metadata and verified desktop, tablet and mobile behavior. The complete master brief is not yet claimed.
+Phases 1–10 are delivered. Phase 8's server-only GPT-6 Astra integration remains gated on a configured API key for live generation. Phase 9 adds the full real-data analytical dashboard, purpose-named navigation, browser-local recent-analysis metadata and verified desktop, tablet and mobile behavior. The portfolio release includes the required working application, reproducible examples, tests, documentation and deployment evidence.
 
 | Phase | Scope | Gate |
 |---|---|---|
@@ -13,6 +13,6 @@ Phases 1–9 are delivered. Phase 8's server-only GPT-6 Astra integration remain
 | 7 | Drug-response ML | Delivered: aligned CellMiner data, repeated stratified CV, baseline, multiple metrics, held-out importance |
 | 8 | Optional explanation | Integration delivered; production generation awaits server-only API access verification |
 | 9 | Full analytical dashboard | Delivered: real results, working controls, desktop/tablet/mobile accessibility |
-| 10 | Full portfolio release | Reproducible demo, documentation, all applicable tests |
+| 10 | Full portfolio release | Delivered: reproducible demo, documentation, all applicable tests |
 
 No navigation control pretends that a future analytical module already works. Core computational results must not depend on an LLM. A model name configured in this Codex session does not prove availability in the user's OpenAI API account.

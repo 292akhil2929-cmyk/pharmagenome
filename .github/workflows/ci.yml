@@ -29,7 +29,8 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements-dev.txt
-      - run: ruff check app scripts tests
+      - run: ruff check app scripts tests ../examples/reproduce.py
+      - run: python -m py_compile ../examples/reproduce.py
       - run: python -m scripts.migrate
       - run: pytest -q
       - run: docker build -t pharmagenome-api .
