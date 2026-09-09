@@ -34,7 +34,7 @@ export function Workspace() {
  const [mobile,setMobile]=useState(false);
  const sidebar=useRef<HTMLElement>(null);
  const menuTrigger=useRef<HTMLButtonElement>(null);
- useEffect(()=>{const mq=window.matchMedia("(max-width:650px)");const update=()=>{setMobile(mq.matches);if(!mq.matches)setMenu(false);};update();mq.addEventListener("change",update);return()=>mq.removeEventListener("change",update);},[]);
+ useEffect(()=>{const mq=window.matchMedia("(max-width:760px)");const update=()=>{setMobile(mq.matches);if(!mq.matches)setMenu(false);};update();mq.addEventListener("change",update);return()=>mq.removeEventListener("change",update);},[]);
  useEffect(()=>{
   if(!menu||!mobile)return;
   const drawer=sidebar.current;
