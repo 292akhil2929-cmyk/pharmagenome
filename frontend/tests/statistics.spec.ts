@@ -51,6 +51,21 @@ for(const width of [1440,390]){
   await page.screenshot({path:info.outputPath("enrichment-dark-"+width+".png"),fullPage:true});
  });
 }
+test("blocked recent-history storage does not invalidate a result",async({page})=>{
+ await page.addInitScript(()=>{
+  const original=Storage.prototype.setItem;
+  Storage.prototype.setItem=function(key:string,value:string){
+   if(key==="pharmagenome-analysis-history-v1")throw new DOMException("Storage blocked","QuotaExceededError");
+   return original.call(this,key,value);
+  };
+ });
+ await setup(page);
+ await page.getByRole("button",{name:"Load synthetic example"}).click();
+ await page.getByRole("button",{name:"Run statistical test"}).click();
+ await expect(page.getByRole("heading",{name:"Analysis result",exact:true})).toBeFocused();
+ await expect(page.locator(".statistics-error")).toHaveCount(0);
+});
+
 test("strict numeric parsing, API errors, retry and keyboard tabs",async({page})=>{
  await setup(page);
  await page.getByLabel("Groups A, B",{exact:true}).fill("1,,2\n3,4");

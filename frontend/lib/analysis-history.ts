@@ -6,7 +6,11 @@ export function readAnalysisHistory():AnalysisHistoryItem[]{
 }
 export function recordAnalysis(item:Omit<AnalysisHistoryItem,"id"|"created_at">){
  if(typeof window==="undefined")return;
- const next:AnalysisHistoryItem={...item,id:crypto.randomUUID(),created_at:new Date().toISOString()};
- localStorage.setItem(KEY,JSON.stringify([next,...readAnalysisHistory()].slice(0,6)));
- window.dispatchEvent(new Event("pharmagenome:analysis-history"));
+ try{
+  const next:AnalysisHistoryItem={...item,id:crypto.randomUUID(),created_at:new Date().toISOString()};
+  localStorage.setItem(KEY,JSON.stringify([next,...readAnalysisHistory()].slice(0,6)));
+  window.dispatchEvent(new Event("pharmagenome:analysis-history"));
+ }catch{
+  // Recent navigation metadata is optional and must never change a completed analysis.
+ }
 }

@@ -12,7 +12,8 @@ Verified implementation commit: `eba18b93196952a5b467e73c3e797e2178530477`.
 - Live inventory reports 626 samples, 506 variants, 10 genes, 193 drugs and 220 pathways. These are database table counts across imported datasets; the genomic cohort remains 566 eligible samples.
 - Live browser inspection confirmed all four evidence views, complete purpose-named navigation, the honest unavailable `gpt-6-astra` state and light/dark appearance.
 - A live 653 px inspection found 98 px of horizontal overflow at the previous 650 px drawer boundary. Commit `ea690d6` raised the responsive boundary to 760 px; the deployed recheck reported a 653 px viewport, a 643 px document width and the mobile drawer.
-- Recent-analysis history is browser-local metadata only. Raw measurements, contingency cells, gene selections, cell-line points and prediction rows are excluded.
+- Recent-analysis history is browser-local metadata only. Raw measurements, contingency cells, gene selections, cell-line points and prediction rows are excluded. Storage failure is isolated from the successful analytical result.
+- If analytical records exist while the system dataset catalogue is empty, the collection panel reports incomplete catalogue provenance instead of claiming that no data is imported.
 
 ## Phase 8 explanation integration
 

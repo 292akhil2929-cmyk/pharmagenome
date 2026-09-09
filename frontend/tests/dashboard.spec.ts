@@ -19,6 +19,8 @@ for(const width of [1440,700,390]){
   await expect(page.getByRole("heading",{name:"Drug-target network"})).toBeVisible();
   await expect(page.getByText("24",{exact:true})).toBeVisible();
   await expect(page.getByText("ROC-AUC 0.721 · 60 cell lines")).toBeVisible();
+  await expect(page.getByRole("heading",{name:"System catalogue is incomplete."})).toBeVisible();
+  await expect(page.getByRole("heading",{name:"No datasets imported yet."})).toHaveCount(0);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
   await page.screenshot({path:testInfo.outputPath("dashboard-"+width+".png"),fullPage:true});
   if(width<760){
