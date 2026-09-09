@@ -27,7 +27,7 @@ export function Dashboard({onNavigate}:Props){
  const top=genomics?.genes.slice(0,6).map(g=>({...g,percent:g.frequency==null?0:g.frequency*100}))||[];
  const chromosomes=[...(genomics?.chromosomes||[])].sort((a,b)=>b.count-a.count).slice(0,10);
  const genes=[...new Set(research?.drugs.items.flatMap(drug=>drug.targets)||[])].slice(0,6);
- if(loading)return <section className="panel dashboard-state" role="status"><RefreshCw className="spin" size={19}/><div><h2>Assembling the evidence dashboard</h2><p>Reading genomic distributions and source-linked pharmaceutical context.</p></div></section>;
+ if(loading)return <section className="panel dashboard-state" aria-live="polite"><RefreshCw className="spin" size={19}/><div><h2>Assembling the evidence dashboard</h2><p>Reading genomic distributions and source-linked pharmaceutical context.</p></div></section>;
  if(error||!genomics||!research)return <section className="panel dashboard-state dashboard-error" role="alert"><Activity size={19}/><div><h2>Dashboard evidence unavailable</h2><p>{error}</p><Button variant="outline" onClick={load}>Retry dashboard evidence</Button></div></section>;
  return <div className="dashboard-evidence">
   <div className="dashboard-grid">
