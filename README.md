@@ -3,7 +3,7 @@
 
 An analytical and research platform for exploring relationships between genomic variation and pharmaceutical data.
 
-**Current delivery: Phase 8 evidence-constrained research explanation.** A live PostgreSQL-backed workspace with a versioned public TCGA LUAD snapshot, validated SNV observations, provenance and downloadable quality reports. Genomic explorers, descriptive charts, DNA statistics and global/local alignment are implemented; drug-target links and pathway overlaps add source-linked pharmaceutical context; hypothesis tests, correlations and restricted-universe pathway enrichment add transparent statistical inference; a pinned CellMiner NCI-60 panel supports cell-line response comparisons and leakage-aware model evaluation; an optional server-only GPT-6 Astra layer can explain compact computed evidence when API access is configured.
+**Current delivery: Phase 9 analytical dashboard.** A live PostgreSQL-backed workspace with a versioned public TCGA LUAD snapshot, validated SNV observations, provenance and downloadable quality reports. Genomic explorers, descriptive charts, DNA statistics and global/local alignment are implemented; drug-target links and pathway overlaps add source-linked pharmaceutical context; hypothesis tests, correlations and restricted-universe pathway enrichment add transparent statistical inference; a pinned CellMiner NCI-60 panel supports cell-line response comparisons and leakage-aware model evaluation; an optional server-only GPT-6 Astra layer can explain compact computed evidence when API access is configured.
 
 ## Why this project exists
 To demonstrate data engineering, bioinformatics and statistical reasoning through reproducible computation. The optional LLM feature explains computed results; it never substitutes for analysis.
@@ -22,7 +22,7 @@ flowchart TD
   Model -.-> Explanation[Optional evidence-based explanation]
 ```
 
-## What works through Phase 8
+## What works through Phase 9
 - Normalized source, cohort, variant, gene, drug, pathway and analysis-record schema.
 - Checksummed, atomic and idempotent migrations.
 - Live API liveness/readiness and database inventory.
@@ -42,6 +42,9 @@ flowchart TD
 - Logistic regression, random forest and histogram gradient boosting with fixed hyperparameters, 5-fold × 3-repeat stratified validation and a prior baseline.
 - Accuracy, balanced accuracy, precision, recall, F1, ROC-AUC, pooled ROC/confusion matrix, held-out permutation importance and complete prediction exports.
 - Optional GPT-6 Astra explanations through the Responses API, with compact evidence allowlisting, structured claim-to-evidence references, exact-number verification and an honest unavailable state.
+- A live dashboard of top mutated genes, cohort VAF pattern, chromosome distribution and source-linked drug-target context.
+- Browser-local recent-analysis metadata that never retains submitted measurements, sample rows or prediction records.
+- Dedicated, purpose-named navigation for Dashboard, Genomics, Variants, Genes, Pathways, Drugs, Drug Response, Statistics, ML Analysis, Sequence Analysis, Research Assistant and Data Sources.
 - Honest empty, loading, unavailable and connected states.
 - PostgreSQL constraint tests and browser interaction tests.
 
@@ -140,7 +143,7 @@ See [ARCHITECTURE.md](ARCHITECTURE.md), [DATA_SOURCES.md](DATA_SOURCES.md) and [
 ## Screenshots
 GitHub Actions publishes desktop/mobile browser captures in its browser-evidence artifact. These deterministic screenshots verify empty, unavailable and explicitly synthetic populated states; they do not constitute evidence for scientific counts. See [verification evidence](docs/VERIFICATION.md).
 
-## Live Phase 8 release
+## Live Phase 9 release
 - Workspace: https://pharmagenome.vercel.app
 - API documentation: https://pharmagenome-api.vercel.app/docs
 - Database: Neon PostgreSQL, migrations through 005_drug_response_modeling applied; TCGA LUAD, Open Targets and CellMiner snapshots imported.
@@ -151,4 +154,4 @@ Genomic exploration covers ten selected genes and unambiguous GRCh37 SNVs only. 
 ## Scientific disclaimer
 This platform is intended for educational, research, and analytical purposes. Results are not medical advice and should not be used to diagnose disease or make treatment decisions.
 
-Phase 8 contract: [research explanations](docs/AI_EXPLANATIONS.md). Phase 7 methods: [drug-response modeling](docs/MODELING.md). Phase 6 evidence and boundaries: [statistical methods](docs/STATISTICS.md). Phase 5 association methods remain in [research methods](docs/RESEARCH.md). Open Targets' AACT trial labels can include upstream LLM extraction; this app's filtering and overlap computations do not use an LLM. Clinical report counts are not independent study or efficacy counts.
+Phase 9 dashboard behavior: [design system](DESIGN.md). Phase 8 contract: [research explanations](docs/AI_EXPLANATIONS.md). Phase 7 methods: [drug-response modeling](docs/MODELING.md). Phase 6 evidence and boundaries: [statistical methods](docs/STATISTICS.md). Phase 5 association methods remain in [research methods](docs/RESEARCH.md). Open Targets' AACT trial labels can include upstream LLM extraction; this app's filtering and overlap computations do not use an LLM. Clinical report counts are not independent study or efficacy counts.

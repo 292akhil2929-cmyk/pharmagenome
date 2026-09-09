@@ -1,6 +1,6 @@
 # PharmaGenome design system
 
-This records the implemented Phase 1 scientific workspace. It does not imply completed analytics or an approved image composition.
+This records the scientific workspace through the implemented Phase 9 analytical dashboard. It does not imply clinical validity or generated evidence.
 
 ## Palette
 | Role | Light | Dark |
@@ -26,7 +26,7 @@ Panels use 12px radii, 24px padding and one-pixel borders without shadows. Compa
 The semantic dataset table scrolls inside its wrapper. Source plans appear separately from imported records. The relationship diagram is explicitly a schema model.
 
 ## Responsive behavior
-At 1160px the rail narrows to 218px and content padding to 24px. At 900px panels stack and relationship steps use two columns. At 650px navigation becomes a 260px drawer, main padding is 18px, panels have 20px padding, inventory wraps 3+2, and relationship steps return to one column.
+At 1160px the rail narrows to 218px and content padding to 24px. At 900px panels stack and relationship steps use two columns. At 760px navigation becomes a 260px drawer, main padding is 18px, panels have 20px padding, inventory wraps 3+2, and relationship steps return to one column.
 The table retains a 540px minimum width inside horizontal overflow. The page itself must not overflow.
 
 ## Interaction and accessibility
@@ -100,3 +100,14 @@ Keep all model states explicit: checking access, unavailable, ready, generating,
 At 650px the rail narrows, the model label wraps naturally, actions become full width and findings stack in one column. The docket, tables and plots stay within the viewport; evidence order does not change. Reduced-motion and shared focus styles continue to apply.
 
 The visual hierarchy must never make generated prose look more authoritative than metrics, assumptions or provenance. Show the exact `gpt-6-astra` model ID and describe explanations as optional. Never display a generated answer when server credentials are absent. Raw measurements, sample or person identifiers and full prediction rows stay outside the explanation request; every generated statement displays its supporting evidence keys. AI prose cannot modify calculations, recommend treatment or imply clinical validity.
+
+
+## Phase 9 analytical dashboard
+
+The dashboard extends the established forest, sage and ruled-ledger system. Inventory remains a borderless five-value row. Four evidence views use paired panels on wide screens and a single reading column at 1100 px: profiled-sample gene frequency, cohort VAF pattern, chromosome distribution and a source-linked drug-target map. Every chart has a concise scope statement and a source or denominator footline. Charts do not animate.
+
+The drug-target view uses a three-part evidence layout instead of a decorative network simulation: selected genes, an explicit link count and source-ranked drug rows. Recent analyses are browser-local navigation metadata and say so beside the heading. The empty state leads to Statistics or ML Analysis without inventing activity.
+
+Public navigation names match the research task rather than implementation components. The Research Assistant entry point explains the compute, inspect, explain sequence and current server-side model availability. It uses no chat composer, mascot or generated sample answer.
+
+Desktop uses the existing fixed rail. At 1100 px dashboard charts stack; at 760 px the rail becomes the existing accessible drawer and all evidence rows stack. Verification covers 1440, 700, 653 and 390 px, light and dark appearance, and page-level horizontal containment.
