@@ -17,9 +17,9 @@ Verified implementation commit: `27f6868dc2f91dcd85486da0acc81fa5d17c8631`.
 
 ## Phase 8 explanation integration
 
-Verified application commit: `a651cee7c2074e5b334f524ed7faef2add6aa528`.
+Verified application commit: `d511c7907a8a93111d3768f4a318de3ee8f6093f`.
 
-- [GitHub Actions run 34255566590](https://github.com/292akhil2929-cmyk/pharmagenome/actions/runs/34254481171): success.
+- [GitHub Actions run 34256698150](https://github.com/292akhil2929-cmyk/pharmagenome/actions/runs/34256698150): success.
 - Backend: Ruff passed; 141 tests passed against PostgreSQL 17; backend Docker image built.
 - Frontend: TypeScript and production build passed; 28 Playwright tests passed.
 - Backend tests cover missing-key behavior, request-bound evidence validation, exact model/request settings, structured claim references and rejection of an invented numeric claim.
