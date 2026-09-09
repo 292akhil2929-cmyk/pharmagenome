@@ -67,6 +67,6 @@ test("dedicated explorer navigation",async({page})=>{
  await expect(page.getByRole("heading",{name:"Gene explorer",exact:true})).toBeVisible();
  await expect(page.getByRole("heading",{name:"Variant explorer",exact:true})).toHaveCount(0);
  await page.getByRole("button",{name:"Variants",exact:true}).click();
- await expect(page.getByRole("heading",{name:"Variants",exact:true})).toBeVisible();
- await expect(page.getByRole("heading",{name:"Genes",exact:true})).toHaveCount(0);
+ await expect(page.getByRole("heading",{name:"Variant explorer",exact:true})).toBeVisible();
+ await expect(page.getByRole("heading",{name:"Gene explorer",exact:true})).toHaveCount(0);
 });
