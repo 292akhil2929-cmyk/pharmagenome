@@ -4,6 +4,7 @@ import {Activity,BrainCircuit,Database,Download,FlaskConical,LoaderCircle,Play,R
 import {Bar,BarChart,CartesianGrid,Cell,ComposedChart,Line,ReferenceLine,ResponsiveContainer,Scatter,Tooltip,XAxis,YAxis} from "recharts";
 import {Button} from "@/components/ui/button";
 import {ResearchExplanation} from "@/components/research-explanation";
+import {recordAnalysis} from "@/lib/analysis-history";
 
 type Dataset={id:number;name:string;version:string;sha256:string;retrieved_at:string;source:string;url:string;manifest:{activity_metric:string;database_version:string;selection:string}};
 type Drug={id:string;name:string;mechanism:string;status:string};
@@ -41,7 +42,7 @@ export function Modeling(){
  async function run(){
   if(!drug||features.length<2)return;setRunning(true);setError(null);setModel(null);
   try{const value=await json<ModelResult>("/api/modeling/evaluate",{method:"POST",headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({drug_id:drug,algorithm,features})});setModel(value);}
+    body:JSON.stringify({drug_id:drug,algorithm,features})});setModel(value);recordAnalysis({kind:"Drug-response model",title:`${value.method} · ${value.drug.name}`,summary:`ROC-AUC ${nice(value.metrics.roc_auc.mean)} · ${value.n} cell lines`,view:"ML Analysis",source:value.dataset.name});}
   catch(e){setError(e instanceof Error?e.message:"Evaluation failed.");}finally{setRunning(false);}
  }
  if(loading)return <section className="panel modeling-state" aria-live="polite"><LoaderCircle className="spin"/><h2>Loading the CellMiner panel</h2><p>Checking aligned cell lines, drugs and genomic features.</p></section>;

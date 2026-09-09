@@ -21,7 +21,7 @@ from app.statistics import router as statistics_router
 
 logger = logging.getLogger("pharmagenome")
 logging.basicConfig(level=logging.INFO)
-app = FastAPI(title="PharmaGenome", version="0.8.0",
+app = FastAPI(title="PharmaGenome", version="0.9.0",
               description="Research analytics foundation. No medical advice.")
 origins = [x.strip() for x in os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",") if x.strip()]
 app.add_middleware(CORSMiddleware, allow_origins=origins,
@@ -118,7 +118,7 @@ def system():
                     ORDER BY started_at DESC LIMIT 1
                 ) r ON true ORDER BY d.retrieved_at DESC LIMIT 100
             """).fetchall()
-    return {"service": "PharmaGenome", "version": app.version, "phase": 8,
+    return {"service": "PharmaGenome", "version": app.version, "phase": 9,
             "checked_at": datetime.now(UTC), "database": state,
             "counts": counts, "datasets": datasets,
             "limitations": ["The current import covers a ten-gene GRCh37 SNV subset, not an exome-wide catalogue.",

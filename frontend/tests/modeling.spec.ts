@@ -17,7 +17,7 @@ async function setup(page:Page,width=1440){
  await page.route("**/api/modeling/evaluate",route=>route.fulfill({json:model}));
  await page.goto("/");await expect(page.getByRole("status")).toContainText("Database connected");
  if(width<=650)await page.getByRole("button",{name:"Open navigation"}).click();
- await page.getByRole("button",{name:"Drug response",exact:true}).click();
+ await page.getByRole("button",{name:"Drug Response",exact:true}).click();
  await expect(page.getByRole("heading",{name:dataset.name})).toBeVisible();
 }
 for(const width of [1440,390]){

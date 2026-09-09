@@ -9,7 +9,7 @@ test("empty database, navigation, export and theme",async({page})=>{
  await expect(page.getByRole("heading",{name:"Imported datasets"})).toBeVisible();
  await page.getByRole("button",{name:"Architecture",exact:true}).click();
  await expect(page.getByRole("heading",{name:"Computation comes first."})).toBeVisible();
- await page.getByRole("button",{name:"Workspace",exact:true}).click();
+ await page.getByRole("button",{name:"Dashboard",exact:true}).click();
  const download=page.waitForEvent("download");
  await page.getByRole("button",{name:"Export system snapshot"}).click();
  expect((await download).suggestedFilename()).toBe("pharmagenome-system-snapshot.json");
@@ -25,7 +25,7 @@ test("API error remains unavailable and can recover",async({page})=>{
  await expect(page.getByRole("button",{name:"Export system snapshot"})).toBeDisabled();
  await expect(page.getByRole("heading",{name:"Collection unavailable."})).toBeVisible();
  await expect(page.getByRole("heading",{name:"No datasets imported yet."})).toHaveCount(0);
- await page.getByRole("button",{name:"Data sources",exact:true}).click();
+ await page.getByRole("button",{name:"Data Sources",exact:true}).click();
  await expect(page.getByText("Imported dataset inventory unavailable.")).toBeVisible();
  await expect(page.getByText(/Unknown registered versions/)).toBeVisible();
  await page.unroute("**/api/system");
@@ -43,7 +43,7 @@ for(const width of [1440,390]){
   await page.screenshot({path:testInfo.outputPath("workspace-"+width+".png"),fullPage:true});
   if(width===390){
    await page.getByRole("button",{name:"Open navigation"}).click();
-   await page.getByRole("button",{name:"Data sources",exact:true}).click();
+   await page.getByRole("button",{name:"Data Sources",exact:true}).click();
    await expect(page.getByRole("heading",{name:"Imported datasets"})).toBeVisible();
   }
  });

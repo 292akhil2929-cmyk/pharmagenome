@@ -6,6 +6,7 @@ import {Button} from "@/components/ui/button";
 import {Textarea} from "@/components/ui/textarea";
 import {Table,TableHeader,TableBody,TableRow,TableHead,TableCell} from "@/components/ui/table";
 import {ResearchExplanation} from "@/components/research-explanation";
+import {recordAnalysis} from "@/lib/analysis-history";
 
 type Tab="measurements"|"contingency"|"enrichment";
 type Method="welch"|"mann_whitney"|"pearson"|"spearman"|"anova"|"kruskal";
@@ -71,7 +72,7 @@ export function Statistics(){
    else payload={genes,dataset_id:Number(dataset)};
   }catch(e){setError(e instanceof Error?e.message:"Check the inputs.");return;}
   setBusy(true);
-  try{const r=await fetch("/api/statistics/"+tab,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});const body=await r.json();if(!r.ok)throw new Error(typeof body.detail==="string"?body.detail:"Check the inputs and sample sizes.");setResult(body);}
+  try{const r=await fetch("/api/statistics/"+tab,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});const body:Result=await r.json();if(!r.ok)throw new Error(typeof (body as unknown as {detail?:string}).detail==="string"?(body as unknown as {detail:string}).detail:"Check the inputs and sample sizes.");setResult(body);recordAnalysis({kind:tab==="enrichment"?"Pathway enrichment":"Statistical test",title:body.method,summary:tab==="enrichment"?`${body.tested_pathways??0} pathways tested · ${body.rejected_by??0} BY discoveries`:`p = ${body.p_value==null?"not estimable":pval(body.p_value)}`,view:"Statistics",source:body.dataset?.name||"User-supplied measurements"});}
   catch(e){setError(e instanceof Error?e.message:"Computation is unavailable. Try again.");}finally{setBusy(false);}
  }
  const paired=method==="pearson"||method==="spearman";

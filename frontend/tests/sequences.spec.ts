@@ -11,7 +11,7 @@ async function setup(page:import("@playwright/test").Page,width:number){
  await page.goto("/");
  await expect(page.getByRole("status")).toContainText("Database not configured");
  if(width<=650)await page.getByRole("button",{name:"Open navigation"}).click();
- await page.getByRole("button",{name:"Sequence analysis",exact:true}).click();
+ await page.getByRole("button",{name:"Sequence Analysis",exact:true}).click();
 }
 for(const width of [1440,390]){
  test("statistics, alignment, exports and responsive states "+width,async({page},info)=>{

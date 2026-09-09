@@ -14,7 +14,7 @@ async function setup(page:Page){
  });
  await page.goto("/");await expect(page.getByText("Database connected",{exact:true})).toBeVisible();
 }
-async function open(page:Page,width=1440){if(width===390)await page.getByRole("button",{name:"Open navigation",exact:true}).click();await page.getByRole("button",{name:"Research associations",exact:true}).click();await expect(page.getByRole("heading",{name:"Drug research catalogue",exact:true})).toBeVisible();}
+async function open(page:Page,width=1440){if(width===390)await page.getByRole("button",{name:"Open navigation",exact:true}).click();await page.getByRole("button",{name:"Drugs",exact:true}).click();await expect(page.getByRole("heading",{name:"Drug research catalogue",exact:true})).toBeVisible();}
 for(const width of [1440,390])test("research evidence, navigation and responsive states "+width,async({page},testInfo)=>{
  await page.setViewportSize({width,height:1000});await page.emulateMedia({reducedMotion:"reduce"});await setup(page);await open(page,width);
  await expect(page.locator(".research-source")).toContainText("Synthetic development fixture");
@@ -53,7 +53,7 @@ test("filter scope, pending state, empty results and recovery",async({page})=>{
  await expect(page.getByRole("heading",{name:"Drug research catalogue",exact:true})).toBeVisible();
 });
 test("mixed source inventory uses correct record semantics",async({page})=>{
- await setup(page);await page.getByRole("button",{name:"Data sources",exact:true}).click();
+ await setup(page);await page.getByRole("button",{name:"Data Sources",exact:true}).click();
  await expect(page.getByText("Accepted target links",{exact:true})).toBeVisible();
  await expect(page.getByText("Missing tumour VAF",{exact:true})).toHaveCount(0);
  await expect(page.getByText("Accepted records are source drug-target links",{exact:false})).toBeVisible();
