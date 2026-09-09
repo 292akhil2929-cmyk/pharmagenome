@@ -8,7 +8,7 @@ async function mock(page:Page){
  await page.route("**/api/research?**",route=>route.fulfill({json:research}));
  await page.route("**/api/research/explain/status",route=>route.fulfill({json:{available:false,model:"gpt-6-astra",reason:"Model credentials are not configured.",policy:"Optional explanation only."}}));
 }
-for(const width of [1440,390]){
+for(const width of [1440,700,390]){
  test("analytical dashboard renders real evidence "+width,async({page},testInfo)=>{
   await page.setViewportSize({width,height:1000});
   await page.addInitScript(()=>localStorage.setItem("pharmagenome-analysis-history-v1",JSON.stringify([{id:"run-1",kind:"Drug-response model",title:"Repeated stratified logistic regression · Erlotinib",summary:"ROC-AUC 0.721 · 60 cell lines",view:"ML Analysis",created_at:"2026-09-08T09:00:00Z",source:"NCI-60 curated release"}])));
@@ -21,7 +21,7 @@ for(const width of [1440,390]){
   await expect(page.getByText("ROC-AUC 0.721 · 60 cell lines")).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
   await page.screenshot({path:testInfo.outputPath("dashboard-"+width+".png"),fullPage:true});
-  if(width===390){
+  if(width<760){
    await page.getByRole("button",{name:"Open navigation"}).click();
    for(const label of ["Dashboard","Genomics","Variants","Genes","Pathways","Drugs","Drug Response","Statistics","ML Analysis","Sequence Analysis","Research Assistant","Data Sources"])await expect(page.getByRole("button",{name:label,exact:true})).toBeVisible();
   }
